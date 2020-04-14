@@ -12,7 +12,7 @@ My computer configuration setup
 Run this file to start the setup installation
 
 ### lib/
-#### config_file_installer.py
+**config_file_installer.py**
 This file contains a function for the installation of configuration files in the etc/ folder. The configuration will automatically be updated when altering these files using the magical symlinking (no need to run the config_file_installer.py after altering files etc/)
 
 
