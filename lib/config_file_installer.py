@@ -3,6 +3,8 @@
 import os
 import sys
 
+FILEPATH = "lib/config_file_installer.py"
+
 def install_config_files(source_path):
     " Function to install the system configuration files"
 
@@ -17,7 +19,8 @@ def install_config_files(source_path):
         if not os.path.isfile(source_files[tag]):
             print((
                 f"\x1b[31mError: \x1b[39mSource file '{source_files[tag]}' missing. Exitting..."
-                "\n(Please add the file or remove the source file from the code)"
+                f"\n(Please add the file '{source_files[tag]}' or remove the source file from "
+                f"'{FILEPATH}')"
             ))
             sys.exit()
 
@@ -31,7 +34,11 @@ def install_config_files(source_path):
         file_map[home_dir] = [source_files["bashrc"], source_files["inputrc"]]
         file_map[nvim_dir] = [source_files["nvim_config"]]
     except KeyError as err:
-        print(f"\x1b[31mError: \x1b[39mTrying to map an unknown source file: {err}...")
+        print((
+            f"\x1b[31mError: \x1b[39mTrying to map an unknown source file in '{FILEPATH}'"
+            f": {err}..."
+        ))
+        sys.exit()
 
     # Add the source files to the correct directory
     files_saved = 0
@@ -79,4 +86,4 @@ def install_config_files(source_path):
                         files_saved += 1
                         print(f"File '{dest}' overwritten...")
 
-    print(f"{files_saved}/{total_files} files saved")
+    print(f"{files_saved}/{total_files} configuration files saved")
