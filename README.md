@@ -12,15 +12,13 @@ My computer configuration setup
 Run this file to start the setup installation
 
 ### lib/
-**config_file_installer.py**
-This file contains a function for the installation of configuration files in the etc/ folder. The configuration will automatically be updated when altering these files using the magical symlinking (no need to run the config_file_installer.py after altering files etc/)
+**config_file_installer.py**: This file contains a function for the installation of configuration files in the etc/ folder. The configuration will automatically be updated when altering these files using the magical symlinking (no need to run the config_file_installer.py after altering files etc/)
 
 
 ### etc/
 This folder contains configuration files for the terminal and neovim. They will automatically be updated when altered after the installation
 
-#### .bashrc
-The .bashrc contains some shell configuration
+**.bashrc**: The .bashrc contains some shell configuration
 - Case insensitivity
 - Append history rather than overwrite it
 - Autocorrection
@@ -29,13 +27,11 @@ The .bashrc contains some shell configuration
 - Costumised terminal coloring
 - Added some aliases
 
-#### .inputrc
-The .inputrc contains some keymappings and shell configuration
+**.inputrc**: The .inputrc contains some keymappings and shell configuration
 - Added forwarding per word
 - Tweaked the Tab autocompletion
 
-#### input.vim
-Vim config
+**input.vim**: Vim config
 
 ## Developent
 ### Issues
