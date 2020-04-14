@@ -18,20 +18,20 @@ Run this file to start the setup installation
 ### etc/
 This folder contains configuration files for the terminal and neovim. They will automatically be updated when altered after the installation
 
-**.bashrc**: The .bashrc contains some shell configuration
-- Case insensitivity
-- Append history rather than overwrite it
-- Autocorrection
-- Auto cd
-- Tab completion
-- Costumised terminal coloring
-- Added some aliases
+* **.bashrc**: The .bashrc contains some shell configuration
+    * Case insensitivity
+    * Append history rather than overwrite it
+    * Autocorrection
+    * Auto cd
+    * Tab completion
+    * Costumised terminal coloring
+    * Added some aliases
 
-**.inputrc**: The .inputrc contains some keymappings and shell configuration
-- Added forwarding per word
-- Tweaked the Tab autocompletion
+* **.inputrc**: The .inputrc contains some keymappings and shell configuration
+    * Added forwarding per word
+    * Tweaked the Tab autocompletion
 
-**input.vim**: Vim config
+* **input.vim**: Vim config
 
 ## Developent
 ### Issues
