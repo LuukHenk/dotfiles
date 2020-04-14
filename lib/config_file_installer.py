@@ -7,6 +7,7 @@ FILEPATH = "lib/config_file_installer.py"
 
 def install_config_files(source_path):
     " Function to install the system configuration files"
+    print("\033[1m Config file installer\033[0m")
 
     # Obtain files from source path
     source_files = {}

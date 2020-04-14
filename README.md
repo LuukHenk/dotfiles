@@ -42,7 +42,8 @@ This folder contains configuration files for the terminal and neovim. They will 
 
 ### Changelog
 
-#### To do
+### To do
+
 ## References
 - Thanks to [Sidney Liebrand](https://github.com/SidOfc) for helping with the basic configuration setup
 - Thanks to [mathiasbynens](https://github.com/mathiasbynens/dotfiles) for some useful configuration settings
