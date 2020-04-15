@@ -43,8 +43,37 @@ This folder contains configuration files for the terminal and neovim. They will 
 
 ### To do
 - T-A001: Ask for installation of ubuntu gui config files --> Do they still work on 20.04?
-- T-A002: Make a program installer
-  - Use snap and apt for most of the programms and use asdf for programming languages
+- T-A002: Make a program installer:
+	1. First check the current installed program anywhere on the system
+	2. not sure yet: Show the user what version this tool tries to install on which location and let the user choose to install the tool version (??????and the user can choose to remove the other versions)
+	- Current treeset (asdf installation (standard and/or webbuilding), apt installation, other installations):
+		- ASDF - standard
+			- Rust
+			- Python3 (and pip3?)
+			- Lua (love?)
+
+		- ASDF - web building
+			- html
+			- css
+			- js
+
+		- apt - standard
+			- ncdu
+			- neovim
+			- htop
+			- gsettings
+			- terminator (also add config files to /etc)
+
+		- snap (always ask for the installation)
+			- spotify
+			- dropbox
+
+		- Exceptions (idk how to install yet) (always ask for installation)
+			- steam
+			- discord
+			- firefox
+			- additional file manager (at the moment it is nautilus in .bashrc)
+			- nvidea driver (if available)
 
 ## References
 - Thanks to [Sidney Liebrand](https://github.com/SidOfc) for helping with the basic configuration setup

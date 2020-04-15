@@ -157,7 +157,7 @@ augroup Files
   au FocusLost,VimLeave,WinLeave,BufWinLeave *
   \ setlocal statusline& cursorline&
   au BufWritePre * %s/\s\+$//e    " remove trailing whitespace before saving buffer
-  au FileType markdown,vim call s:IndentSize(2) " 2 space indents for markdown and python
+  au FileType vim call s:IndentSize(2) " 2 space indents for markdown and python
 augroup END
 
 
