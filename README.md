@@ -11,11 +11,11 @@ My computer configuration setup
 ### setup_installer
 Run this file to start the setup installation
 
-### lib/
-**config_file_installer.py**: This file contains a function for the installation of configuration files in the etc/ folder. The files in etc/ will stay synchronized with the files in your home after the installation using the magical symlinking (so no need to run the config_file_installer.py again after altering files in the etc/ folder)
+### /lib
+**config_file_installer.py**: This file contains a function for the installation of configuration files in the /etc folder. The files in /etc will stay synchronized with the files in your home after the installation using the magical symlinking (so no need to run the config_file_installer.py again after altering files in the /etc folder)
 
 
-### etc/
+### /etc
 This folder contains configuration files for the terminal and neovim. They will automatically be updated when altered after the installation
 
 * **.bashrc**: The .bashrc contains some terminal configuration
