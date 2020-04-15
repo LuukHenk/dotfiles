@@ -1,15 +1,13 @@
 " Load plugins
 call plug#begin('~/.vim/plugged')
 Plug 'chriskempson/base16-vim'				" Base 16 colorset
-Plug 'itchyny/lightline.vim'					" Light cursor line
 Plug 'tpope/vim-commentary'						" Easy commenting of line using 'gcc'
 Plug 'tpope/vim-endwise'							" Automatically add end to certain structures
 Plug 'tpope/vim-repeat'               " Use '.' to repeat last used command
 Plug 'tpope/vim-surround'             " Easily change surrounding using 'cs<previous_surr><new_surr>'
 Plug 'w0rp/ale'												" Syntax linting
-Plug 'haya14busa/incsearch.vim'				" Use '/' to search in text
-Plug 'junegunn/vim-easy-align'        " Easily allign text usng 'gaip'
-Plug 'junegunn/fzf.vim'               " ?
+Plug 'haya14busa/incsearch.vim'				" FIXME add config
+Plug 'junegunn/vim-easy-align'        " FIXME
 Plug 'machakann/vim-highlightedyank'  " Highlight when yanked
 Plug 'google/vim-searchindex'         " Shows how many times a searched pattern occurs
 call plug#end()
@@ -18,20 +16,22 @@ call plug#end()
 
 set ignorecase " Ignore case
 set smartcase  " Use case when it thinks you entendidly added it
-set shiftwidth=2 " Set tabsize as 2 spaces
-set softtabstop=2 " Set tabsize as 2 spaces
-set tabstop=2 " Set tabsize as 2 spaces
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
 set noshowmode " Don't show insert
 set cursorline " Highlight the cursor line
 set nobackup " Don't make backup files
 set termguicolors " Use the colors of the terminal gui
 set noswapfile " Don't use swap files
-"
+
 " Colors
-"
-colorscheme base16-default=dark
+
+colorscheme base16-default-dark " Set color sceme
 
 " Map keys
+"
+" Check keymapping: :h <key>
 imap <Up> <Nop>
 imap <Down> <Nop>
 imap <Left> <Nop>
@@ -79,71 +79,57 @@ nnoremap <S-tab> <<
 vnoremap <tab>   >><Esc>gv
 vnoremap <S-tab> <<<Esc>gv
 
-" Lightline {{{
-  let s:base1   = '#C8CACB'
-  let s:base0   = '#AEB0B1'
-  let s:base00  = '#949697'
-  let s:base02  = '#626465'
-  let s:base023 = '#484A4B'
-  let s:base03  = '#2F3132'
-  let s:red     = '#cd3f45'
-  let s:orange  = '#db7b55'
-  let s:yellow  = '#e6cd69'
-  let s:green   = '#9fca56'
-  let s:cyan    = '#55dbbe'
-  let s:blue    = '#55b5db'
-  let s:magenta = '#a074c4'
-
-  let s:p                = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
-  let s:p.normal.left    = [ [ s:blue,   s:base03  ], [ s:base03, s:blue   ] ]
-  let s:p.normal.middle  = [ [ s:base1,  s:base03  ]  ]
-  let s:p.normal.right   = [ [ s:base03, s:blue    ], [ s:base00, s:base03 ] ]
-  let s:p.normal.error   = [ [ s:red,    s:base023 ]  ]
-  let s:p.normal.warning = [ [ s:yellow, s:base02  ]  ]
-
-  let s:p.inactive.left   = [ [ s:base1,   s:base03  ], [ s:base03, s:base03  ] ]
-  let s:p.inactive.middle = [ [ s:base03,  s:base03  ]  ]
-  let s:p.inactive.right  = [ [ s:base03,  s:base03  ], [ s:base03, s:base03  ] ]
-
-  let s:p.insert.left     = [ [ s:green,   s:base03  ], [ s:base03, s:green   ] ]
-  let s:p.insert.right    = [ [ s:base03,  s:green   ], [ s:base00, s:base03  ] ]
-  let s:p.replace.left    = [ [ s:orange,  s:base03  ], [ s:base03, s:orange  ] ]
-  let s:p.replace.right   = [ [ s:base03,  s:orange  ], [ s:base00, s:base03  ] ]
-  let s:p.visual.left     = [ [ s:magenta, s:base03  ], [ s:base03, s:magenta ] ]
-  let s:p.visual.right    = [ [ s:base03,  s:magenta ], [ s:base00, s:base03  ] ]
-
-	let g:lightline#colorscheme#base16_seti#palette = lightline#colorscheme#fill(s:p)
-  let g:lightline = {
-        \ 'colorscheme':      'base16_seti',
-        \ 'separator':        { 'left': "", 'right': "" },
-        \ 'subseparator':     { 'left': "│", 'right': "│" },
-        \ 'active': {
-        \   'left': [ [ 'mode', 'paste' ],
-        \             [ 'modified', 'fugitive', 'label' ] ],
-        \   'right': [ [ 'lineinfo' ],
-        \              [ 'filetype' ] ]
-        \ },
-        \ 'component': {
-        \   'mode':     '%{lightline#mode()[0]}',
-        \   'readonly': '%{&filetype=="help"?"":&readonly?"!":""}',
-        \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-        \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}',
-        \   'label':    '%{substitute(expand("%"), "NetrwTreeListing \\d\\+", "netrw", "")}'
-        \ },
-        \ 'component_visible_condition': {
-        \   'paste':    '(&paste!="nopaste")',
-        \   'readonly': '(&filetype!="help"&& &readonly)',
-        \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-        \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+" {{{ Status bar
+  let g:mode_colors = {
+        \ 'n':  'StatusLineSection',
+        \ 'v':  'StatusLineSectionV',
+        \ '': 'StatusLineSectionV',
+        \ 'i':  'StatusLineSectionI',
+        \ 'c':  'StatusLineSectionC',
+        \ 'r':  'StatusLineSectionR'
         \ }
-        \ }
+
+  fun! StatusLineRenderer()
+    let hl = '%#' . get(g:mode_colors, tolower(mode()), g:mode_colors.n) . '#'
+
+    return hl
+          \ . (&modified ? ' + │' : '')
+          \ . ' %{StatusLineFilename()} %#StatusLine#%='
+          \ . hl
+          \ . ' %l:%c '
+  endfun
+
+  fun! StatusLineFilename()
+    if (&ft ==? 'netrw') | return '*' | endif
+    return substitute(expand('%'), '^' . getcwd() . '/\?', '', 'i')
+  endfun
+
+  fun! <SID>StatusLineHighlights()
+    hi StatusLine         ctermbg=8  guibg=#313131 ctermfg=15 guifg=#cccccc
+    hi StatusLineNC       ctermbg=0  guibg=#313131 ctermfg=8  guifg=#999999
+    hi StatusLineSection  ctermbg=8  guibg=#55b5db ctermfg=0  guifg=#333333
+    hi StatusLineSectionV ctermbg=11 guibg=#a074c4 ctermfg=0  guifg=#000000
+    hi StatusLineSectionI ctermbg=10 guibg=#9fca56 ctermfg=0  guifg=#000000
+    hi StatusLineSectionC ctermbg=12 guibg=#db7b55 ctermfg=0  guifg=#000000
+    hi StatusLineSectionR ctermbg=12 guibg=#ed3f45 ctermfg=0  guifg=#000000
+  endfun
+
+  call <SID>StatusLineHighlights()
+
+  " only set default status line once on initial startup.
+  " ignored on subsequent 'so $MYVIMRC' calls to prevent
+  " active buffer statusline from being 'blurred'.
+  if has('vim_starting')
+    let &statusline = ' %{StatusLineFilename()}%= %l:%c '
+  endif
 " }}}
 
 " Ale {{{
+" FIXME add python and bash
   let g:ale_set_highlights       = 0                            " only show errors in sign column
   let g:ale_echo_msg_error_str   = 'E'                          " error sign
   let g:ale_echo_msg_warning_str = 'W'                          " warning sign
-  let g:ale_echo_msg_format      = '[%linter%] %s [%severity%]' " status line format
+  let g:ale_echo_msg_format      = '[%linter%] [%severity%] %s' " status line format
   let g:ale_statusline_format    = ['⨉ %d', '⚠ %d', '⬥ ok']     " error status format
   let g:ale_lint_delay           = 500                      " relint max once per [amount] milliseconds
   let g:ale_linters              = {
@@ -153,20 +139,25 @@ vnoremap <S-tab> <<<Esc>gv
         \ }
 " }}}
 
-fun! s:StripWS()
-  if (&ft =~ 'vader') | return | endif
-  %s/\s\+$//e
-endfun
-  " convenience function for setting filetype specific spacing
-if !exists('*s:IndentSize')
-  function! s:IndentSize(amount)
-    exe "setlocal expandtab ts=" . a:amount . " sts=" . a:amount . " sw=" . a:amount
-  endfunction
-endif
+" convenience function for setting filetype specific spacing
+function! s:IndentSize(amount)
+  exe "setlocal expandtab ts=" . a:amount . " sts=" . a:amount . " sw=" . a:amount
+endfunction
 
 augroup Files
   au!
-  au BufWritePre *                call s:StripWS()     " remove trailing whitespace before saving buffer
-  au FileType javascript,jsx,json call s:IndentSize(4) " 4 space indents for JS/JSX/JSON
-  au FileType markdown,python     call s:IndentSize(4) " 4 space indents for markdown and python
+  " auto reload file changes outside of vim, toggle custom status bar,
+  " and toggle cursorline for active buffer.
+  au FocusGained,VimEnter,WinEnter,BufWinEnter *
+    \ setlocal cursorline& statusline& |
+    \ setlocal cursorline  statusline=%!StatusLineRenderer() |
+    \ checktime
+
+  " restore above settings when leaving buffer / vim
+  au FocusLost,VimLeave,WinLeave,BufWinLeave *
+  \ setlocal statusline& cursorline&
+  au BufWritePre * %s/\s\+$//e    " remove trailing whitespace before saving buffer
+  au FileType markdown,vim call s:IndentSize(2) " 2 space indents for markdown and python
 augroup END
+
+

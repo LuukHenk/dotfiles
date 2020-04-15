@@ -1,84 +1,14 @@
-### Settings ###
+#!/usr/bin/env bash
 
-# Case-insensitive globbing (used in pathname expansion)
-shopt -s nocaseglob;
-#
-# Append to the Bash history file, rather than overwriting it
-shopt -s histappend;
-#
-# Autocorrect typos in path names when using `cd`
-shopt -s cdspell;
-#
-# * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
-# * Recursive globbing, e.g. `echo **/*.txt`
-for option in autocd globstar; do
-  shopt -s "$option" 2> /dev/null;
-done;
-#
-# Add tab completion for many Bash commands
-if which brew &> /dev/null && [ -f "$(brew --prefix)/share/bash-completion/bash_completi
-on" ]; then
-  source "$(brew --prefix)/share/bash-completion/bash_completion";
-elif [ -f /etc/bash_completion ]; then
-  source /etc/bash_completion;
-fi;
+# My .bashrc
+# Heavily inspired by mathiasbynens: https://github.com/mathiasbynens/dotfiles
 #
 #
 
-### Colors ###
+### Aliases {{{
 
-# Set colorcode
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
-#
-# Determine if the color prompt is availible
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-  # We have color support; assume it's compliant with Ecma-48
-  # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-  # a case would tend to support setf rather than setaf.)
-  color_prompt=yes
-    else
-  color_prompt=
-    fi
-fi
-#
-# ANSI color codes
-RS="\[\033[0m\]"    # reset
-HC="\[\033[1m\]"    # hicolor
-UL="\[\033[4m\]"    # underline
-INV="\[\033[7m\]"   # inverse background and foreground
-FBLK="\[\033[30m\]" # foreground black
-FRED="\[\033[31m\]" # foreground red
-FGRN="\[\033[32m\]" # foreground green
-FYEL="\[\033[33m\]" # foreground yellow
-FBLE="\[\033[34m\]" # foreground blue
-FMAG="\[\033[35m\]" # foreground magenta
-FCYN="\[\033[36m\]" # foreground cyan
-FWHT="\[\033[37m\]" # foreground white
-BBLK="\[\033[40m\]" # background black
-BRED="\[\033[41m\]" # background red
-BGRN="\[\033[42m\]" # background green
-BYEL="\[\033[43m\]" # background yellow
-BBLE="\[\033[44m\]" # background blue
-BMAG="\[\033[45m\]" # background magenta
-BCYN="\[\033[46m\]" # background cyan
-BWHT="\[\033[47m\]" # background whiteS="\[\033[0m\]"    # reset
-#
-# Set shell colors
-if [ "$color_prompt" = yes ]; then
-    PS1="$HC$FYEL${debian_chroot:+($debian_chroot)}\u$FMAG@\h$FWHT: $FBLE\w$FWHT\$ $RS"
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-#
-unset color_prompt force_color_prompt
 #
 #
-
-### Aliases ###
-
 # Bash statement shortcuts
 alias qq='exit'
 alias ls='ls --color=auto'
@@ -101,3 +31,144 @@ alias .....='cd ../../../..'
 alias files='nautilus .'
 alias storage='ncdu'
 alias python=python3
+# }}}
+#
+
+### Settings {{{
+
+#
+#
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob;
+#
+# Append to the Bash history file, rather than overwriting it
+shopt -s histappend;
+#
+# Autocorrect typos in path names when using `cd`
+shopt -s cdspell;
+#
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+#
+# * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
+# * Recursive globbing, e.g. `echo **/*.txt`
+for option in autocd globstar; do
+  shopt -s "$option" 2> /dev/null;
+done;
+#
+# Add tab completion for many Bash commands
+
+if which brew &> /dev/null && [ -f "$(brew --prefix)/share/bash-completion/bash_completi
+on" ]; then
+  source "$(brew --prefix)/share/bash-completion/bash_completion";
+elif [ -f /etc/bash_completion ]; then
+  source /etc/bash_completion;
+fi;
+#
+# }}}
+
+### Colors {{{
+
+#
+#
+if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+	export TERM='gnome-256color';
+elif infocmp xterm-256color >/dev/null 2>&1; then
+	export TERM='xterm-256color';
+fi;
+#
+if tput setaf 1 &> /dev/null; then
+	tput sgr0; # reset colors
+	bold=$(tput bold);
+	reset=$(tput sgr0);
+	# Solarized colors, taken from http://git.io/solarized-colors.
+	black=$(tput setaf 0);
+	blue=$(tput setaf 26);
+	cyan=$(tput setaf 37);
+	green=$(tput setaf 64);
+	orange=$(tput setaf 166);
+	purple=$(tput setaf 135);
+	red=$(tput setaf 124);
+	violet=$(tput setaf 57);
+	white=$(tput setaf 15);
+	yellow=$(tput setaf 221);
+else
+	bold='';
+	reset="\e[0m";
+	black="\e[1;30m";
+	blue="\e[1;34m";
+	cyan="\e[1;36m";
+	green="\e[1;32m";
+	orange="\e[1;33m";
+	purple="\e[1;35m";
+	red="\e[1;31m";
+	violet="\e[1;35m";
+	white="\e[1;37m";
+	yellow="\e[1;33m";
+fi;
+# }}}
+#
+
+### Terminal prompt {{{
+
+#
+#
+# Find git information
+
+prompt_git() {
+	local s='';
+	local branchName='';
+	#
+	# Check if the current directory is in a Git repository.
+	git rev-parse --is-inside-work-tree &>/dev/null || return;
+	#
+	# Check for what branch we’re on.
+	# Get the short symbolic ref. If HEAD isn’t a symbolic ref, get a
+	# tracking remote branch or tag. Otherwise, get the
+	# short SHA for the latest commit, or give up.
+	branchName="$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
+		git describe --all --exact-match HEAD 2> /dev/null || \
+		git rev-parse --short HEAD 2> /dev/null || \
+		echo '(unknown)')";
+		#
+	repoUrl="$(git config --get remote.origin.url)";
+	if grep -q 'chromium/src.git' <<< "${repoUrl}"; then
+		s+='*';
+	else
+		# Check for uncommitted changes in the index.
+		if ! $(git diff --quiet --ignore-submodules --cached); then
+			s+='+';
+		fi;
+		# Check for unstaged changes.
+		if ! $(git diff-files --quiet --ignore-submodules --); then
+			s+='!';
+		fi;
+		# Check for untracked files.
+		if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+			s+='?';
+		fi;
+		# Check for stashed files.
+		if $(git rev-parse --verify refs/stash &>/dev/null); then
+			s+='$';
+		fi;
+	fi;
+	#
+	[ -n "${s}" ] && s=" [${s}]";
+	#
+	echo -e "${1}${branchName}${2}${s}";
+}
+#
+# Set the terminal title and prompt.
+
+PS1="${red}${debian_chroot:+($debian_chroot)}"; # Are we root?
+PS1+="\[${yellow}\]\u"; # Username
+PS1+="\[${white}\]@"; # @
+PS1+="\[${purple}\]\h"; # Host
+PS1+="\[${white}\]: "; # :
+PS1+="\[${blue}\]\w"; # Working directory
+PS1+="\$(prompt_git \"\[${yellow}\] \")"; # Git repository details
+PS1+="\[${white}\]$ \[${reset}\]"; # $ and reset
+export PS1;
+# }}}
+#
