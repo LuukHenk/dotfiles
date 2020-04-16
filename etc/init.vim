@@ -16,7 +16,7 @@ Plug 'tpope/vim-repeat'               " Use '.' to repeat last used command
 Plug 'tpope/vim-surround'             " Easily change surrounding using 'cs<previous_surr><new_surr>'
 Plug 'w0rp/ale'												" Syntax linting
 Plug 'haya14busa/incsearch.vim'				" FIXME add config
-Plug 'junegunn/vim-easy-align'        " FIXME
+Plug 'junegunn/vim-easy-align'        " Align in visual mode using ga<position>
 Plug 'machakann/vim-highlightedyank'  " Highlight when yanked
 Plug 'google/vim-searchindex'         " Shows how many times a searched pattern occurs
 call plug#end()
@@ -72,14 +72,14 @@ inoremap ""   ""<Left>
 inoremap ''   ''<Left>
 inoremap ``   ``<Left>
 
-" ????????????????????????????????????????????????????????????
+" Remap indenting to tab and prevent getting out of visual mode when indenting
 nmap >> <Nop>
 nmap << <Nop>
 vmap >> <Nop>
 vmap << <Nop>
 nnoremap <tab>   >>
 nnoremap <S-tab> <<
-vnoremap <tab>   >><Esc>gv
+vnoremap <tab> >><Esc>gv
 vnoremap <S-tab> <<<Esc>gv
 
 " Use control-s to save and return to normal mode
@@ -151,6 +151,17 @@ endif
 "
 " }}}
 
+""" Plugin; vim-easy-align {{{
+"
+" Use ga<align_charater> in visual mode
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+"
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+"
+" }}}
+
 """ Plugin; Ale {{{
 "
 let g:ale_set_highlights = 0 " Only show errors in sign column
@@ -173,7 +184,7 @@ let g:ale_lint_delay = 500 " Relint max once per [amount] milliseconds
 
 
 
-
+" TODO finish rebuilding init.vim
 
 " convenience function for setting filetype specific spacing
 "

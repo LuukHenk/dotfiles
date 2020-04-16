@@ -1,3 +1,5 @@
+#!/usr/bin/env python3.6
+
 """ Installation of the system configuration files """
 
 import os

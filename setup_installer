@@ -15,7 +15,12 @@ def main():
     from lib import config_file_installer
     config_file_installer.install_config_files(source_path)
 
-    sys.exit()
+    # sys.exit()
+    print("DEVELOPMENT MODE IS RUNNING")
+    programs_to_install = ["htop"]
+
+    b = os.system("which ncdu")
+    print(b)
 
 # Warn the user that this programm wil alter important system files
 RUN_PROGRAM = input((
