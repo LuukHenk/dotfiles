@@ -35,7 +35,6 @@ This folder contains configuration files for the terminal and neovim. They will 
 ### Issues
 - I-A001a: .bashrc prompt overwrites current line when line is too long instead of using a newline
 - I-A003: Rebuild init.vim and add readme info about init.vim
-- I-A004: Automatically perform Pluginstaller for vim
 
 ### Changelog
 - I-A001: Rebuild .bashrc
@@ -51,6 +50,7 @@ This folder contains configuration files for the terminal and neovim. They will 
 			- Rust
 			- Python3 (and pip3?)
 			- Lua (love?)
+			- Bash ???
 
 		- ASDF - web building
 			- html
@@ -59,7 +59,7 @@ This folder contains configuration files for the terminal and neovim. They will 
 
 		- apt - standard
 			- ncdu
-			- neovim
+			- neovim (+ config file and pluginInstaller)
 			- htop
 			- gsettings
 			- terminator (also add config files to /etc)
@@ -74,6 +74,9 @@ This folder contains configuration files for the terminal and neovim. They will 
 			- firefox
 			- additional file manager (at the moment it is nautilus in .bashrc)
 			- nvidea driver (if available)
+
+		- Unknown yet
+			- git (and its configuration files)
 
 ## References
 - Thanks to [Sidney Liebrand](https://github.com/SidOfc) for helping with the basic configuration setup
