@@ -15,12 +15,86 @@ def main():
     from lib import config_file_installer
     config_file_installer.install_config_files(source_path)
 
-    # sys.exit()
-    print("DEVELOPMENT MODE IS RUNNING")
-    programs_to_install = ["htop"]
+    sys.exit()
 
-    b = os.system("which ncdu")
-    print(b)
+def get_package_information(package, command):
+    package_data = os.popen(command).read()
+    splitted_data = list(filter(None, package_data.split('\n')))
+
+    # Split information per row
+    package_info_rows = []
+    for row in splitted_data:
+        if row[0] != " ":
+            package_info_rows.append(row)
+        else:
+            package_info_rows[-1] += row
+
+    # Split the information rows in keys and vaules
+    package_information = {}
+    for info_row in package_info_rows:
+        key = ""
+        value = ""
+        for i, part in enumerate(info_row.split(":")):
+            part = part.strip()
+            if i > 0:
+                value += part
+            else:
+                key = part
+
+        package_information[key] = value
+
+    return package_information
+
+def package_finder(package, package_managers):
+    # Determine the saving location of the package
+    print("Finding " + package + "...")
+    saving_location = os.popen("which "+package).read().split("\n")[0]
+
+    # If the package is installed, try to find the package manager
+    if len(saving_location) > 0:
+        try:
+            package_manager = package_managers[os.path.dirname(saving_location)]
+        # When there is an unknown package manager:
+        except KeyError:
+            print((
+                f"The '{package}' package is currently installed "
+                f"with an \x1b[31munknown package manager\x1b[39m at '{saving_location}'"
+            ))
+        else:
+
+            # Use the found package managers to obtain info about the package
+            try:
+                if package_manager == "snap":
+                    package_info = get_package_information(package, f"snap info {package}")
+                    package_version = package_info["installed"].split(" ")[0]
+
+                if package_manager == "apt":
+                    package_info = get_package_information(package, f"apt-cache show {package}")
+                    package_version = package_info["Version"]
+
+                print((
+                    f"'{package}' version '{package_version}' is currently installed "
+                    f"with the '{package_manager}' package manager"
+                ))
+            except:
+                print(f"Can not obtain package information for {package}...")
+
+    else:
+        print(f"Package '{package}' is not installed on this computer...")
+
+
+
+# print("DEVELOPMENT MODE IS RUNNING")
+
+# package_managers = {
+#     "/usr/bin": "apt",
+#     "/snap/bin": "snap"
+# }
+
+# packages_to_install = ["htop", "nvim", "ncdu", "maas"]
+# for package in packages_to_install:
+#     package_finder(package, package_managers)
+# sys.exit()
 
 # Warn the user that this programm wil alter important system files
 RUN_PROGRAM = input((

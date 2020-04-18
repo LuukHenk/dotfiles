@@ -38,15 +38,18 @@ This folder contains configuration files for the terminal and neovim. They will 
 - I-A003b: Fix yanking to clipboard
 
 ### Changelog
-- T-A001: Rebuild .bashrc
-- T-A002: Rebuild .inputrc
+- A001: Rebuild .bashrc
+- A002: Rebuild .inputrc
+
+- B001: Check where packages are currently installed on the system (and get info) using snap and apt
 
 ### To do
 - T-A003: Rebuild init.vim and add readme info about init.vim
-- T-B: Make a program installer:
-	1. First check the current installed program anywhere on the system
-	2. not sure yet: Show the user what version this tool tries to install on which location and let the user choose to install the tool version (??????and the user can choose to remove the other versions)
-	- Current treeset (asdf installation (standard and/or webbuilding), apt installation, other installations):
+
+- T-B001a: Add asdf package manager
+- T-B002: Check if there are newer versions of the packages availible than the one currently installed and determine if it is installed with the preferred package manager
+- T-B003: Let the user install packages (??and remove the other versions after installation??)
+- T-B004: Add packages:
 		- ASDF - standard
 			- Rust
 			- Python3 (and pip3?)
@@ -78,6 +81,7 @@ This folder contains configuration files for the terminal and neovim. They will 
 
 		- Unknown yet
 			- git (and its configuration files)
+
 - T-C: Ask for installation of ubuntu gui config files --> Do they still work on 20.04?
 
 ## References
