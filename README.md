@@ -31,7 +31,7 @@ This folder contains configuration files for the terminal and neovim. They will 
 * **init.vim**: Vim config
     * (incomplete)
 
-## Developent
+## Development
 ### Issues
 - I-A001a: .bashrc prompt overwrites current line when line is too long instead of using a newline
 - I-A003a: Fix incsearch plugin
@@ -50,6 +50,7 @@ This folder contains configuration files for the terminal and neovim. They will 
 - T-B002: Check if there are newer versions of the packages availible than the one currently installed and determine if it is installed with the preferred package manager
 - T-B003: Let the user install packages (??and remove the other versions after installation??)
 - T-B004: Add packages:
+
 		- ASDF - standard
 			- Rust
 			- Python3 (and pip3?)
