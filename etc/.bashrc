@@ -72,12 +72,7 @@ fi;
 
 #
 #
-if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
-	export TERM='gnome-256color';
-elif infocmp xterm-256color >/dev/null 2>&1; then
-	export TERM='xterm-256color';
-fi;
-#
+
 if tput setaf 1 &> /dev/null; then
 	tput sgr0; # reset colors
 	bold=$(tput bold);
@@ -158,17 +153,16 @@ prompt_git() {
 	#
 	echo -e "${1}${branchName}${2}${s}";
 }
-#
-# Set the terminal title and prompt.
 
-PS1="${red}${debian_chroot:+($debian_chroot)}"; # Are we root?
-PS1+="\[${yellow}\]\u"; # Username
-PS1+="\[${white}\]@"; # @
-PS1+="\[${purple}\]\h"; # Host
-PS1+="\[${white}\]: "; # :
-PS1+="\[${blue}\]\w"; # Working directory
-PS1+="\$(prompt_git \"\[${yellow}\] \")"; # Git repository details
-PS1+="\[${white}\]$ \[${reset}\]"; # $ and reset
+#
+PS1="\[$red\]${debian_chroot:+($debian_chroot)}"; # Are we root?
+PS1+="\[$yellow\]\u"; # Username
+PS1+="\[$white\]@"; # @
+PS1+="\[$purple\]\h"; # Host
+PS1+="\[$white\]: "; # :
+PS1+="\[$blue\]\w"; # Working directory
+PS1+="\$(prompt_git \"\[$yellow\] \")"; # Git repository details
+PS1+="\[$white\]$ \[$reset\]"; # $ and reset
 export PS1;
 # }}}
 #

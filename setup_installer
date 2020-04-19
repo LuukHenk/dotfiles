@@ -5,6 +5,8 @@
 import os
 import sys
 
+import yaml
+
 def main():
     " Main function for the installation"
 
@@ -17,37 +19,9 @@ def main():
 
     sys.exit()
 
-def get_package_information(package, command):
-    package_data = os.popen(command).read()
-    splitted_data = list(filter(None, package_data.split('\n')))
-
-    # Split information per row
-    package_info_rows = []
-    for row in splitted_data:
-        if row[0] != " ":
-            package_info_rows.append(row)
-        else:
-            package_info_rows[-1] += row
-
-    # Split the information rows in keys and vaules
-    package_information = {}
-    for info_row in package_info_rows:
-        key = ""
-        value = ""
-        for i, part in enumerate(info_row.split(":")):
-            part = part.strip()
-            if i > 0:
-                value += part
-            else:
-                key = part
-
-        package_information[key] = value
-
-    return package_information
-
-def package_finder(package, package_managers):
+def local_package_finder(package, package_managers):
     # Determine the saving location of the package
-    print("Finding " + package + "...")
+    print("\nFinding " + package + " on the computer...")
     saving_location = os.popen("which "+package).read().split("\n")[0]
 
     # If the package is installed, try to find the package manager
@@ -65,19 +39,23 @@ def package_finder(package, package_managers):
             # Use the found package managers to obtain info about the package
             try:
                 if package_manager == "snap":
-                    package_info = get_package_information(package, f"snap info {package}")
+
+                    package_info = yaml.safe_load(os.popen(f"snap info {package}").read())
                     package_version = package_info["installed"].split(" ")[0]
 
                 if package_manager == "apt":
-                    package_info = get_package_information(package, f"apt-cache show {package}")
+                    package_info = yaml.safe_load(os.popen(f"apt-cache show {package}").read())
                     package_version = package_info["Version"]
 
                 print((
-                    f"'{package}' version '{package_version}' is currently installed "
+                    f"'{package}' version {package_version} is currently installed "
                     f"with the '{package_manager}' package manager"
                 ))
+
+                return package_info
+
             except:
-                print(f"Can not obtain package information for {package}...")
+                print(f"Can't obtain package information for {package}...")
 
     else:
         print(f"Package '{package}' is not installed on this computer...")
@@ -93,12 +71,14 @@ def package_finder(package, package_managers):
 
 # packages_to_install = ["htop", "nvim", "ncdu", "maas"]
 # for package in packages_to_install:
-#     package_finder(package, package_managers)
+#     package_details = local_package_finder(package, package_managers)
+#     # online_package_finder(package)
 # sys.exit()
 
 # Warn the user that this programm wil alter important system files
 RUN_PROGRAM = input((
-    "\x1b[31mWarning: \x1b[39mThis tool will modify important system files/settings, continue? [y/N] "
+    "\x1b[31mWarning: \x1b[39m"
+    "This tool will modify important system files/settings, continue? [y/N] "
 )).lower()
 #
 # Run programm if the user accepts the alteration of files

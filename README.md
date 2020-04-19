@@ -33,9 +33,8 @@ This folder contains configuration files for the terminal and neovim. They will 
 
 ## Development
 ### Issues
-- I-A001a: .bashrc prompt overwrites current line when line is too long instead of using a newline
 - I-A003a: Fix incsearch plugin
-- I-A003b: Fix yanking to clipboard
+- I-B001a: python3, pip3 and pip3 yank must be installed before we can use it
 
 ### Changelog
 - A001: Rebuild .bashrc
@@ -43,45 +42,60 @@ This folder contains configuration files for the terminal and neovim. They will 
 
 - B001: Check where packages are currently installed on the system (and get info) using snap and apt
 
+#### Bugfixes
+	- I-A001a: .bashrc prompt overwrites current line when line is too long instead of using a newline
+	- I-A003b: Fix yanking to clipboard
+
 ### To do
 - T-A003: Rebuild init.vim and add readme info about init.vim
-
-- T-B001a: Add asdf package manager
+- T-B001a: Add asdf package manager to program installer test
 - T-B002: Check if there are newer versions of the packages availible than the one currently installed and determine if it is installed with the preferred package manager
 - T-B003: Let the user install packages (??and remove the other versions after installation??)
+- T-B004: Let the user uninstall packages
 - T-B004: Add packages:
+		- Config files (found in /etc) - standard
+			- bashrc - v
+			- inputrc - v
+			- init.vim
+			- git
+			- terminator
+			- nautilus
 
-		- ASDF - standard
-			- Rust
-			- Python3 (and pip3?)
-			- Lua (love?)
-			- Bash ???
 
-		- ASDF - web building
-			- html
-			- css
-			- js
-
-		- apt - standard
+		- apt (& snap) - standard
+			- snapd
+			- git
+			- asdf
+			- pip3
+			- xclip
 			- ncdu
-			- neovim (+ config file and pluginInstaller)
+			- neovim
 			- htop
 			- gsettings
-			- terminator (also add config files to /etc)
+			- terminator
 
-		- snap (always ask for the installation)
+		- ASDF - Programming languages - standard
+			- Rust
+			- Python3
+			- Bash
+
+		- apt & snap - only for home computer
 			- spotify
 			- dropbox
-
-		- Exceptions (idk how to install yet) (always ask for installation)
 			- steam
 			- discord
 			- firefox
-			- additional file manager (at the moment it is nautilus in .bashrc)
+			- nautilus (file manager) (set as default file manager)
 			- nvidea driver (if available)
 
-		- Unknown yet
-			- git (and its configuration files)
+		- Other - ?? yet
+			- Neovim plugins
+			- Default computer settings
+				- gsettings
+					- hotkeys
+				- default apps (can I do this with gsettings?)
+					- web: Firefox Web Browser
+					- Text editor:
 
 - T-C: Ask for installation of ubuntu gui config files --> Do they still work on 20.04?
 
