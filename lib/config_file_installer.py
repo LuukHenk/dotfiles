@@ -2,11 +2,19 @@
 
 """ Installation of the system configuration files """
 
+### Imports {{{
+#
 import os
 import sys
+#
+# }}}
 
+### Config file installer
+#
+# Get the file path
 FILEPATH = "lib/config_file_installer.py"
 
+# Installer function
 def install_config_files(source_path):
     " Function to install the system configuration files"
     print("\033[1m Config file installer\033[0m")
@@ -90,3 +98,5 @@ def install_config_files(source_path):
                         print(f"File '{dest}' overwritten...")
 
     print(f"{files_saved}/{total_files} configuration files saved")
+#
+# }}}

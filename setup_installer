@@ -2,23 +2,46 @@
 
 """ Installer of the dotfiles setup """
 
+### Imports {{{
+#
 import os
 import sys
-
 import yaml
+#
+# }}}
 
+### Main program {{{
+#
+# Main function
 def main():
     " Main function for the installation"
 
     # Get source path to obtain the configuration files from
     source_path_name = "/".join([os.path.dirname(os.path.realpath(__file__)), "/etc"])
     source_path = os.path.normpath(source_path_name)
+
     # Install configuration files
     from lib import config_file_installer
     config_file_installer.install_config_files(source_path)
 
-    sys.exit()
+# Warn the user that this programm wil alter important system files
+RUN_PROGRAM = input((
+    "\x1b[31mWarning: \x1b[39m"
+    "This tool will modify important system files/settings, continue? [y/N] "
+)).lower()
 
+# Run programm if the user accepts the alteration of files
+if RUN_PROGRAM in ("y", "yes"):
+    main()
+else:
+    print("Exitting program without altering any files/settings...")
+
+sys.exit()
+#
+# }}}
+
+### Development (B) {{{
+#
 def local_package_finder(package, package_managers):
     # Determine the saving location of the package
     print("\nFinding " + package + " on the computer...")
@@ -62,28 +85,17 @@ def local_package_finder(package, package_managers):
 
 
 
-# print("DEVELOPMENT MODE IS RUNNING")
+print("DEVELOPMENT MODE IS RUNNING")
 
-# package_managers = {
-#     "/usr/bin": "apt",
-#     "/snap/bin": "snap"
-# }
+package_managers = {
+    "/usr/bin": "apt",
+    "/snap/bin": "snap"
+}
 
-# packages_to_install = ["htop", "nvim", "ncdu", "maas"]
-# for package in packages_to_install:
-#     package_details = local_package_finder(package, package_managers)
-#     # online_package_finder(package)
-# sys.exit()
-
-# Warn the user that this programm wil alter important system files
-RUN_PROGRAM = input((
-    "\x1b[31mWarning: \x1b[39m"
-    "This tool will modify important system files/settings, continue? [y/N] "
-)).lower()
+packages_to_install = ["htop", "nvim", "ncdu", "maas"]
+for package in packages_to_install:
+    package_details = local_package_finder(package, package_managers)
+    # online_package_finder(package)
+sys.exit()
 #
-# Run programm if the user accepts the alteration of files
-if RUN_PROGRAM in ("y", "yes"):
-    main()
-else:
-    print("Exitting program without altering any files/settings...")
-    sys.exit()
+# }}}
