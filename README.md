@@ -65,12 +65,12 @@ This folder contains configuration files for the terminal and neovim. They will 
 - Added .gitignore
 
 ### To do
-- T-B001: Check where packages are currently installed on the system (and get info) using snap and apt
-- T-B001a: Add asdf package manager to program installer test
-- T-B002: Check if there are newer versions of the packages availible than the one currently installed and determine if it is installed with the preferred package manager
-- T-B003: Let the user install packages (??and remove the other versions after installation??)
-- T-B004: Let the user uninstall packages
-- T-B004: Add packages:
+* T-B001: Check where packages are currently installed on the system (and get info) using snap and apt
+* T-B001a: Add asdf package manager to program installer test
+* T-B002: Check if there are newer versions of the packages availible than the one currently installed and determine if it is installed with the preferred package manager
+* T-B003: Let the user install packages (??and remove the other versions after installation??)
+* T-B004: Let the user uninstall packages
+* T-B004: Add packages:
 	- Config files (found in /etc) - standard
 			- bashrc - v
 			- inputrc - v
