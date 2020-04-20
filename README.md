@@ -72,48 +72,48 @@ This folder contains configuration files for the terminal and neovim. They will 
 * T-B004: Let the user uninstall packages
 * T-B004: Add packages:
 	- Config files (found in /etc) - standard
-			- bashrc - v
-			- inputrc - v
-			- init.vim
-			- git
-			- terminator
-			- nautilus
+		- bashrc - v
+		- inputrc - v
+		- init.vim
+		- git
+		- terminator
+		- nautilus
 
 
 	- apt (& snap) - standard
-			- snapd
-			- git
-			- asdf
-			- pip3
-			- xclip
-			- ncdu
-			- neovim
-			- htop
-			- gsettings
-			- terminator
+		- snapd
+		- git
+		- asdf
+		- pip3
+		- xclip
+		- ncdu
+		- neovim
+		- htop
+		- gsettings
+		- terminator
 
 	- ASDF - Programming languages - standard
-			- Rust
-			- Python3
-			- Bash
+		- Rust
+		- Python3
+		- Bash
 
 	- apt & snap - only for home computer
-			- spotify
-			- dropbox
-			- steam
-			- discord
-			- firefox
-			- nautilus (file manager) (set as default file manager)
-			- nvidea driver (if available)
+		- spotify
+		- dropbox
+		- steam
+		- discord
+		- firefox
+		- nautilus (file manager) (set as default file manager)
+		- nvidea driver (if available)
 
 	- Other - ?? yet
-			- Neovim plugins
-			- Default computer settings
-				- gsettings
-					- hotkeys
-				- default apps (can I do this with gsettings?)
-					- web: Firefox Web Browser
-					- Text editor:
+		- Neovim plugins
+		- Default computer settings
+			- gsettings
+				- hotkeys
+			- default apps (can I do this with gsettings?)
+				- web: Firefox Web Browser
+				- Text editor:
 
 - T-C: Ask for installation of ubuntu gui config files --> Do they still work on 20.04?
 
