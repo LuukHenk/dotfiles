@@ -6,8 +6,6 @@
 #
 
 ### Aliases {{{
-
-#
 #
 # Bash statement shortcuts
 alias qq='exit'
@@ -31,12 +29,10 @@ alias .....='cd ../../../..'
 alias files='nautilus .'
 alias storage='ncdu'
 alias python=python3
-# }}}
 #
+# }}}
 
 ### Settings {{{
-
-#
 #
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob;
@@ -69,10 +65,7 @@ fi;
 # }}}
 
 ### Colors {{{
-
 #
-#
-
 if tput setaf 1 &> /dev/null; then
 	tput sgr0; # reset colors
 	bold=$(tput bold);
@@ -88,6 +81,7 @@ if tput setaf 1 &> /dev/null; then
 	violet=$(tput setaf 57);
 	white=$(tput setaf 15);
 	yellow=$(tput setaf 221);
+
 else
 	bold='';
 	reset="\e[0m";
@@ -102,19 +96,16 @@ else
 	white="\e[1;37m";
 	yellow="\e[1;33m";
 fi;
-# }}}
 #
+# }}}
 
 ### Terminal prompt {{{
-
-#
 #
 # Find git information
-
 prompt_git() {
 	local s='';
 	local branchName='';
-	#
+
 	# Check if the current directory is in a Git repository.
 	git rev-parse --is-inside-work-tree &>/dev/null || return;
 	#
@@ -126,7 +117,7 @@ prompt_git() {
 		git describe --all --exact-match HEAD 2> /dev/null || \
 		git rev-parse --short HEAD 2> /dev/null || \
 		echo '(unknown)')";
-		#
+
 	repoUrl="$(git config --get remote.origin.url)";
 	if grep -q 'chromium/src.git' <<< "${repoUrl}"; then
 		s+='*';
@@ -154,15 +145,11 @@ prompt_git() {
 	echo -e "${1}${branchName}${2}${s}";
 }
 
-#
+# Set prompt
 PS1="\[$red\]${debian_chroot:+($debian_chroot)}"; # Are we root?
-PS1+="\[$yellow\]\u"; # Username
-PS1+="\[$white\]@"; # @
-PS1+="\[$purple\]\h"; # Host
-PS1+="\[$white\]: "; # :
 PS1+="\[$blue\]\w"; # Working directory
-PS1+="\$(prompt_git \"\[$yellow\] \")"; # Git repository details
-PS1+="\[$white\]$ \[$reset\]"; # $ and reset
+PS1+="\$(prompt_git \"\[$white\] @\[$yellow\] \")"; # @ Git repository details
+PS1+="\[$white\] $ \[$reset\]"; # $ and reset
 export PS1;
-# }}}
 #
+# }}}

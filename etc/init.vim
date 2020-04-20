@@ -15,7 +15,7 @@ Plug 'tpope/vim-endwise'							" Automatically add end to certain structures
 Plug 'tpope/vim-repeat'               " Use '.' to repeat last used command
 Plug 'tpope/vim-surround'             " Easily change surrounding using 'cs<previous_surr><new_surr>'
 Plug 'w0rp/ale'												" Syntax linting
-Plug 'haya14busa/incsearch.vim'				" FIXME add config
+Plug 'haya14busa/incsearch.vim'				" Improved searching
 Plug 'junegunn/vim-easy-align'        " Align in visual mode using ga<position>
 Plug 'machakann/vim-highlightedyank'  " Highlight when yanked
 Plug 'google/vim-searchindex'         " Shows how many times a searched pattern occurs
@@ -174,19 +174,32 @@ let g:ale_lint_delay = 500 " Relint max once per [amount] milliseconds
 "
 " }}}
 
+""" Plugin; incsearch {{{
+"
+" Forward search with '/'
+map /  <Plug>(incsearch-forward)
+" Backward search with 'S-/'
+map ?  <Plug>(incsearch-backward)
+" Search without moving the cursor with 'g/'
+map g/ <Plug>(incsearch-stay)
 
+" :h g:incsearch#auto_nohlsearch
+set hlsearch
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
 
-
-
-
-
-
-
-
-
+"
+" }}}
 
 " TODO finish rebuilding init.vim
 
+""" ... {{{
+"
 " convenience function for setting filetype specific spacing
 "
 function! s:IndentSize(amount)
@@ -208,5 +221,5 @@ augroup Files
   au BufWritePre * %s/\s\+$//e    " remove trailing whitespace before saving buffer
   au FileType vim call s:IndentSize(2) " 2 space indents for markdown and python
 augroup END
-
-
+"
+" }}}
