@@ -36,13 +36,19 @@ if RUN_PROGRAM in ("y", "yes"):
 else:
     print("Exitting program without altering any files/settings...")
 
-sys.exit()
+# sys.exit()
 #
 # }}}
 
 ### Development (B) {{{
 #
-def local_package_finder(package, package_managers):
+def get_package_version(package, package_manager_locations):
+    """
+    Find the version of a package currently in use
+    Returns str; package_version
+    """
+    package_version = None
+
     # Determine the saving location of the package
     print("\nFinding " + package + " on the computer...")
     saving_location = os.popen("which "+package).read().split("\n")[0]
@@ -50,7 +56,7 @@ def local_package_finder(package, package_managers):
     # If the package is installed, try to find the package manager
     if len(saving_location) > 0:
         try:
-            package_manager = package_managers[os.path.dirname(saving_location)]
+            package_manager = package_manager_locations[os.path.dirname(saving_location)]
         # When there is an unknown package manager:
         except KeyError:
             print((
@@ -62,7 +68,6 @@ def local_package_finder(package, package_managers):
             # Use the found package managers to obtain info about the package
             try:
                 if package_manager == "snap":
-
                     package_info = yaml.safe_load(os.popen(f"snap info {package}").read())
                     package_version = package_info["installed"].split(" ")[0]
 
@@ -70,32 +75,61 @@ def local_package_finder(package, package_managers):
                     package_info = yaml.safe_load(os.popen(f"apt-cache show {package}").read())
                     package_version = package_info["Version"]
 
+                # Print package information
                 print((
                     f"'{package}' version {package_version} is currently installed "
                     f"with the '{package_manager}' package manager"
                 ))
 
-                return package_info
-
+            # Can't find package version
             except:
                 print(f"Can't obtain package information for {package}...")
 
+    # Can't find package
     else:
         print(f"Package '{package}' is not installed on this computer...")
 
+    return package_version
 
+def package_manager_package_finder(package, package_manager_locations):
+    package_versions = {}
+
+    for saving_location in package_manager_locations:
+        manager = package_manager_locations[saving_location]
+        package_versions[manager] = []
+
+        # Find the package with the package manager
+        if manager == "apt":
+            # Find packages with the 'package' name
+            packages_found = os.popen("apt-cache madison "+package).read().split("\n")
+            for pack in packages_found:
+                if pack.split(" | ")[0].strip() == package:
+                    package_versions[manager].append(pack.split(" | ")[1].strip())
+
+        if manager == "snap":
+            # Find packages with the 'package' name
+            packages_found = os.popen("snap find "+package).read().split("\n")[1:]
+
+            # Find the version of the package
+            for pack in packages_found:
+                package_info = list(filter(None, pack.split(" ")))
+                if len(package_info) > 0 and package_info[0] == package:
+                    package_versions[manager].append(package_info[1])
+
+            print(package_versions)
 
 print("DEVELOPMENT MODE IS RUNNING")
 
-package_managers = {
+package_manager_locations = {
     "/usr/bin": "apt",
     "/snap/bin": "snap"
 }
 
 packages_to_install = ["htop", "nvim", "ncdu", "maas"]
 for package in packages_to_install:
-    package_details = local_package_finder(package, package_managers)
-    # online_package_finder(package)
+    package_version = get_package_version(package, package_manager_locations)
+    package_manager_package_finder(package, package_manager_locations)
+
 sys.exit()
 #
 # }}}

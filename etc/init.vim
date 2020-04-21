@@ -196,16 +196,14 @@ map g# <Plug>(incsearch-nohl-g#)
 "
 " }}}
 
-" TODO finish rebuilding init.vim
-
-""" ... {{{
+""" Autocommands{{{
 "
 " convenience function for setting filetype specific spacing
-"
 function! s:IndentSize(amount)
   exe "setlocal expandtab ts=" . a:amount . " sts=" . a:amount . " sw=" . a:amount
 endfunction
-"
+
+" Autocommands
 augroup Files
   au!
   " auto reload file changes outside of vim, toggle custom status bar,

@@ -36,7 +36,7 @@ This folder contains configuration files for the terminal and neovim. They will 
 	* Plugins
 	* Some alternative settings
 	* Key mappings
-    * (incomplete)
+    * Some autocommand (focusloss, trailing whitespace removal and alternative tab indenting)
 
 ## Development
 
@@ -54,6 +54,7 @@ This folder contains configuration files for the terminal and neovim. They will 
 	- Added [Sidney Liebrand](https://github.com/SidOfc/dotfiles) his statusbar
 	- Organisation of Ale plugin
 	- Updated file spacing
+	- Updated autocommands
 	- Reorganisation of file
 
 - Reorganisation of all other files
