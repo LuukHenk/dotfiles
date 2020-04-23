@@ -16,81 +16,33 @@ import yaml
 def main():
     " Main function for the installation"
 
-    # Get source path to obtain the configuration files from
-    source_path_name = "/".join([os.path.dirname(os.path.realpath(__file__)), "/etc"])
-    source_path = os.path.normpath(source_path_name)
+    # Install config files?
+    install_config_files = input("\033[1mUpdate configuration files? [y/N] \033[0m").lower()
+    if install_config_files in ("y", "yes"):
 
-    # Install configuration files
-    from lib import config_file_installer
-    config_file_installer.install_config_files(source_path)
+        # Import config file installer
+        from lib.config_installer import ConfigInstaller
+        config_installer = ConfigInstaller()
 
-# Warn the user that this programm wil alter important system files
-RUN_PROGRAM = input((
-    "\x1b[31mWarning: \x1b[39m"
-    "This tool will modify important system files/settings, continue? [y/N] "
-)).lower()
+        # Get source path to obtain the configuration files from
+        config_path_name = "/".join([os.path.dirname(os.path.realpath(__file__)), "/etc"])
+        config_installer.config_source_path = os.path.normpath(config_path_name)
+        config_installer.installer()
 
-# Run programm if the user accepts the alteration of files
-if RUN_PROGRAM in ("y", "yes"):
-    main()
-else:
-    print("Exitting program without altering any files/settings...")
+    install_programs = input("\033[1mInstall/update installed programs? [y/N] \033[0m").lower()
+    if install_programs:
+        pass
+        # from lib.packages_installer import Installer
+        # installer = Installer()
+        # print(installer.package_info)
 
-# sys.exit()
+# Run program
+main()
 #
 # }}}
 
 ### Development (B) {{{
 #
-def get_package_version(package, package_manager_locations):
-    """
-    Find the version of a package currently in use
-    Returns str; package_version
-    """
-    package_version = None
-
-    # Determine the saving location of the package
-    print("\nFinding " + package + " on the computer...")
-    saving_location = os.popen("which "+package).read().split("\n")[0]
-
-    # If the package is installed, try to find the package manager
-    if len(saving_location) > 0:
-        try:
-            package_manager = package_manager_locations[os.path.dirname(saving_location)]
-        # When there is an unknown package manager:
-        except KeyError:
-            print((
-                f"The '{package}' package is currently installed "
-                f"with an \x1b[31munknown package manager\x1b[39m at '{saving_location}'"
-            ))
-        else:
-
-            # Use the found package managers to obtain info about the package
-            try:
-                if package_manager == "snap":
-                    package_info = yaml.safe_load(os.popen(f"snap info {package}").read())
-                    package_version = package_info["installed"].split(" ")[0]
-
-                if package_manager == "apt":
-                    package_info = yaml.safe_load(os.popen(f"apt-cache show {package}").read())
-                    package_version = package_info["Version"]
-
-                # Print package information
-                print((
-                    f"'{package}' version {package_version} is currently installed "
-                    f"with the '{package_manager}' package manager"
-                ))
-
-            # Can't find package version
-            except:
-                print(f"Can't obtain package information for {package}...")
-
-    # Can't find package
-    else:
-        print(f"Package '{package}' is not installed on this computer...")
-
-    return package_version
-
 def package_manager_package_finder(package, package_manager_locations):
     package_versions = {}
 
@@ -118,17 +70,18 @@ def package_manager_package_finder(package, package_manager_locations):
 
             print(package_versions)
 
-print("DEVELOPMENT MODE IS RUNNING")
 
-package_manager_locations = {
-    "/usr/bin": "apt",
-    "/snap/bin": "snap"
-}
+# def package_installer():
+#     package_manager_loc = {
+#         "/usr/bin": "apt",
+#         "/snap/bin": "snap"
+#     }
 
-packages_to_install = ["htop", "nvim", "ncdu", "maas"]
-for package in packages_to_install:
-    package_version = get_package_version(package, package_manager_locations)
-    package_manager_package_finder(package, package_manager_locations)
+#     packages_to_install = ["htop", "nvim", "ncdu", "maas"]
+
+#     for pack in packages_to_install:
+#         pack_version = get_local_package_version(pack, package_manager_loc)
+#         package_manager_package_finder(pack, package_manager_loc)
 
 sys.exit()
 #

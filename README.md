@@ -40,32 +40,10 @@ This folder contains configuration files for the terminal and neovim. They will 
 
 ## Development
 
-### Changelog - v0.1.2
-- Updated .bashrc
-	- Updated aliases
-	- Updated terminal coloring
-	- Updated prompt (i.a. git branch and status)
-	- Reorganisation of file
-
-- Updated init.vim
-	- Removed lightline- and fzf plugin
-	- Updated tab spacing (set to 4 spaces in all programs instead of vim and updated indent size function)
-	- Updated colorsceme
-	- Added [Sidney Liebrand](https://github.com/SidOfc/dotfiles) his statusbar
-	- Organisation of Ale plugin
-	- Updated file spacing
-	- Updated autocommands
-	- Reorganisation of file
-
-- Reorganisation of all other files
-	- .inputrc
-	- setup_installer
-	- lib/config_file_installer.py
-	- README.md
-
-- Added .gitignore
+### Changelog - v0.1.3
 
 ### To do
+* T-A001: Rewrite lib/config_file_installer to a class
 * T-B001: Check where packages are currently installed on the system (and get info) using snap and apt
 * T-B001a: Add asdf package manager to program installer test
 * T-B002: Check if there are newer versions of the packages availible than the one currently installed and determine if it is installed with the preferred package manager
@@ -119,8 +97,6 @@ This folder contains configuration files for the terminal and neovim. They will 
 - T-C: Ask for installation of ubuntu gui config files --> Do they still work on 20.04?
 
 #### Bugfixes
-	- I-A001a: .bashrc prompt overwrites current line when line is too long instead of using a newline
-	- I-A003b: Fix yanking to clipboard
 
 ### Issues
 	- I-B001a: python3, pip3 and pip3 yank must be installed before we can use it
