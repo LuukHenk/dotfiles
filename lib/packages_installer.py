@@ -11,8 +11,8 @@ import yaml
 class Installer:
     def __init__(self):
 
-        # Add or remove packages here (and the preferred managers (list), set none if there is no preference)
-        #TODO make dict with preferred manager as value
+        # Add or remove packages here (and the preferred managers (list),
+        # set none if there is no preference)
         self.packages = {
             # "asdf": None,
             # "snap": None,
@@ -36,31 +36,49 @@ class Installer:
         # Get information about all packages
         self.packages_info = {p: self.get_package_info(p) for p in self.packages}
 
+        print("\n")
         for pack, info in self.packages_info.items():
-            print(f"\n{pack}\n{info}")
-                # else:
-
-                #     # If the package is on the latest version
-                #     if pack_info["version"] == pack_info["latest"]:
-                #         print((
-                #             f"'{pack}' is up to date with the "
-                #             f"'{pack_info['manager']}' package manager..."
-                #         ))
-
-                #     # If the package is not on the latest version
-                #     else:
-                #         print((
-                #             f"\x1b[33mPackage '{pack}' is not up to date with the latest stable "
-                #             f"'{pack_info['manager']}' version. "
-                #             f"Current version: v{pack_info['version']}\x1b[39m"
-                #         ))
-
-            # # If the package is not installed yet
-            # else:
-                # print((
-                #     f"\x1b[31mPackage '{pack}' is not installed yet...\x1b[39m"
-                # ))
-
+            try:
+                if info["uptodate"]:
+                    print((
+                        f"Package '{pack}' is up to date with the latest stable"
+                        f" of the '{info['manager']}' package manager..."
+                    ))
+                elif info["installed"]:
+                    print((
+                        "\x1b[33m"
+                        f"Warning: Package '{pack}' is not up to date with the latest stable"
+                        f" '{info['manager']}' version. "
+                        f"Stable: v{info['latest'][info['manager']]} | Current: v{info['version']}"
+                        "\x1b[39m"
+                    ))
+                elif len(info["latest"]) > 0:
+                    latest_pprint = ""
+                    for manager, version in info["latest"].items():
+                        if len(latest_pprint) > 0:
+                            latest_pprint = " | ".join([latest_pprint, manager + " v" + version])
+                        else:
+                            latest_pprint += manager + " v" + version
+                    print((
+                        "\x1b[33m"
+                        f"Warning: Package '{pack}' is not installed yet."
+                        " Latest stable versions availible:"
+                        f" {latest_pprint}"
+                        "\x1b[39m"
+                    ))
+                else:
+                    print((
+                        f"\x1b[31mCan't find information about '{pack}'...\x1b[39m"
+                    ))
+            except KeyError as error:
+                print((
+                    "\x1b[31m"
+                    "Error: Failed to render packages information...\n"
+                    "The self.packages_info dictionary found in './lib/packages_installer'"
+                    " is missing information. "
+                    f"Keyerror: {error}"
+                    "\x1b[39m"
+                ))
 
     def get_package_info(self, package):
         """
@@ -75,7 +93,7 @@ class Installer:
             "installed": False,
             "version": None,
             "manager": None,
-            "latest": "",
+            "latest": {},
             "uptodate": False
         }
 
@@ -98,9 +116,8 @@ class Installer:
 
             # If there is a package manager found;
             else:
-                # Use the found package managers to obtain info about the package
                 try:
-
+                    # Use the found package managers to obtain info about the package
                     if package_manager == "snap":
                         snap_info = yaml.safe_load(os.popen(f"snap info {package}").read())
                         package_info["version"] = snap_info["installed"].split(" ")[0]
@@ -132,6 +149,10 @@ class Installer:
         return package_info
 
     def managers_latest_versions(self, package, managers=None):
+        """
+        Get the latest package version from all the given managers (list).
+        It will use the all the managers is left as None.
+        """
         latest_versions = {}
 
         managers = self.managers if not managers else managers
