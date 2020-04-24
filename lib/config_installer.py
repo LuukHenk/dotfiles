@@ -29,15 +29,10 @@ class ConfigInstaller:
             "init.vim": self.home + "/" + ".config/nvim/init.vim"
         }
 
-
-
-
     def installer(self):
         " Obtains configuration files in self.config_dest and saves them at their destination "
 
-        # print("\033[1m Config file installer\033[0m")
         files_saved = 0
-
         for config_file in self.config_dest:
             # Get the full path of the config source file
             source_file = os.path.normpath(self.config_source_path+"/"+config_file)

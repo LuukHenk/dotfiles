@@ -31,10 +31,8 @@ def main():
 
     install_programs = input("\033[1mInstall/update installed programs? [y/N] \033[0m").lower()
     if install_programs:
-        pass
-        # from lib.packages_installer import Installer
-        # installer = Installer()
-        # print(installer.package_info)
+        from lib.packages_installer import Installer
+        installer = Installer()
 
 # Run program
 main()

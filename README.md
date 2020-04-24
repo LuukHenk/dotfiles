@@ -53,17 +53,17 @@ This folder contains configuration files for the terminal and neovim. They will 
 	- Config files (found in /etc) - standard
 		- bashrc - v
 		- inputrc - v
-		- init.vim
+		- init.vim - v
 		- git
 		- terminator
 		- nautilus
 
 
 	- apt (& snap) - standard
-		- snapd
+		- snapd - need berfore python script
+		- asdf - need before python script
+		- pip3 - need before python script
 		- git
-		- asdf
-		- pip3
 		- xclip
 		- ncdu
 		- neovim
