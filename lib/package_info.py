@@ -8,7 +8,8 @@ import os
 import yaml
 #
 #}}}
-class Installer:
+
+class PackagesInfo:
     def __init__(self):
 
         # Add or remove packages here (and the preferred managers (list),
@@ -34,9 +35,13 @@ class Installer:
         ##########
 
         # Get information about all packages
+        print("Searching for packages information...")
         self.packages_info = {p: self.get_package_info(p) for p in self.packages}
 
-        print("\n")
+    def render_version_info(self):
+        " Let the user know if their packages are up to date "
+
+        print("----------------------------------------------------------------")
         for pack, info in self.packages_info.items():
             try:
                 if info["uptodate"]:
@@ -48,8 +53,9 @@ class Installer:
                     print((
                         "\x1b[33m"
                         f"Warning: Package '{pack}' is not up to date with the latest stable"
-                        f" '{info['manager']}' version. "
-                        f"Stable: v{info['latest'][info['manager']]} | Current: v{info['version']}"
+                        f" '{info['manager']}' version."
+                        f" Stable: v{info['latest'][info['manager']]}"
+                        f"| Current: v{info['version']}"
                         "\x1b[39m"
                     ))
                 elif len(info["latest"]) > 0:
@@ -62,7 +68,7 @@ class Installer:
                     print((
                         "\x1b[33m"
                         f"Warning: Package '{pack}' is not installed yet."
-                        " Latest stable versions availible:"
+                        " Latest stable versions available:"
                         f" {latest_pprint}"
                         "\x1b[39m"
                     ))
@@ -85,14 +91,14 @@ class Installer:
         Get information about a package
         Returns a dict with package information
         """
-        print(f"Searching for '{package}' package information...")
+        print(f"- {package}", end="\r")
 
         # Add or remove information needed here
         package_info = {
             "name": package,
             "installed": False,
-            "version": None,
             "manager": None,
+            "version": None,
             "latest": {},
             "uptodate": False
         }
@@ -100,8 +106,10 @@ class Installer:
         # Determine the saving location of the package
         # print("\nSearching for " + package + " ...")
         saving_location = os.popen("which "+package).read().split("\n")[0]
-        if len(saving_location) > 0:
 
+        # If the program is already installed, find the package manager and the version
+        if len(saving_location) > 0:
+            package_info["installed"] = True
             #try to find the package manager
             try:
                 package_manager = self.managers_bin[os.path.dirname(saving_location)]
@@ -117,24 +125,18 @@ class Installer:
             # If there is a package manager found;
             else:
                 try:
-                    # Use the found package managers to obtain info about the package
+                    # Use the found package managers to obtain the package version
                     if package_manager == "snap":
                         snap_info = yaml.safe_load(os.popen(f"snap info {package}").read())
                         package_info["version"] = snap_info["installed"].split(" ")[0]
 
                     if package_manager == "apt":
-                        apt_info = yaml.safe_load(os.popen(f"apt-cache show {package}").read())
-                        package_info["version"] = apt_info["Version"]
+                        apt_info = os.popen(f"apt-cache policy {package}").read().split("\n")[1]
+                        package_info["version"] = apt_info.split("Installed: ")[1]
 
                 # Can't find package version
                 except:
                     print(f"Can't obtain package information for {package}...")
-
-        # Check if the package is installed
-        package_info["installed"] = any([
-            bool(package_info["version"]),
-            bool(package_info["manager"])
-        ])
 
         # Check if there a preferred manager and find the latest version for this manager
         preferred_managers = self.packages[package]
@@ -161,11 +163,9 @@ class Installer:
             # Get latest apt version
             if manager == "apt":
                 # Perform command
-                packages_found = os.popen("apt-cache madison "+package).read().split("\n")
-                for pack in packages_found:
-                    # If the package is found
-                    if pack.split(" | ")[0].strip() == package:
-                        latest_versions[manager] = pack.split(" | ")[1].strip()
+                apt_info = os.popen(f"apt-cache policy {package}").read()
+                if len(apt_info) > 0:
+                    latest_versions[manager] = apt_info.split("\n")[2].split("Candidate: ")[1]
 
             # Get latest snap version
             if manager == "snap":

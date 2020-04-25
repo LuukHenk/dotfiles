@@ -40,16 +40,7 @@ This folder contains configuration files for the terminal and neovim. They will 
 
 ## Development
 
-### Changelog - v0.1.3
-
-### To do
-* T-A001: Rewrite lib/config_file_installer to a class
-* T-B001: Check where packages are currently installed on the system (and get info) using snap and apt
-* T-B001a: Add asdf package manager to program installer test
-* T-B002: Check if there are newer versions of the packages availible than the one currently installed and determine if it is installed with the preferred package manager
-* T-B003: Let the user install packages (??and remove the other versions after installation??)
-* T-B004: Let the user uninstall packages
-* T-B004: Add packages:
+Complete package plan:
 	- Config files (found in /etc) - standard
 		- bashrc - v
 		- inputrc - v
@@ -87,19 +78,32 @@ This folder contains configuration files for the terminal and neovim. They will 
 
 	- Other - ?? yet
 		- Neovim plugins
+		- Update package managers
 		- Default computer settings
 			- gsettings
 				- hotkeys
 			- default apps (can I do this with gsettings?)
 				- web: Firefox Web Browser
-				- Text editor:
+				- Text editor: ?
 
-- T-C: Ask for installation of ubuntu gui config files --> Do they still work on 20.04?
+### Changelog - v0.1.3
+* Rewrite lib/config_file_installer to a class for easier usage
+* Made a package version checker class (lib/package_info.py)
+	1. Add packages you want to be maintained to the init function of the class
+	2. Obtain packages information from package managers; currently apt and git.
+	3. Let the user know if the packages are updated
+	4. If the packages are not updated, show the newest version(s) available.
+
+### To do
+* T-B001: Add asdf package manager to program info
+* T-B002: update readme about lib/package_info
+* T-B003: Check all files for correct commenting
+- T-B003: Check readme
+
+- T-C: Make one general file for the package info and its config files to install/obtain
+- T-D: Add pre-installation file (python3, apt, snap and pip3 (with packages)
+* T-E: Let the user install/uninstall packages
 
 #### Bugfixes
 
 ### Issues
-	- I-B001a: python3, pip3 and pip3 yank must be installed before we can use it
-
-
-
