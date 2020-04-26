@@ -1,5 +1,5 @@
 # My dotfiles
-Version 0.1.2 <br />
+Version 0.1.3 <br />
 My computer configuration setup
 
 ## References
@@ -39,52 +39,51 @@ This folder contains configuration files for the terminal and neovim. They will 
     * Some autocommand (focusloss, trailing whitespace removal and alternative tab indenting)
 
 ## Development
-
 Complete package plan:
-	- Config files (found in /etc) - standard
-		- bashrc - v
-		- inputrc - v
-		- init.vim - v
-		- git
-		- terminator
-		- nautilus
+	- Pre-installing
+		- snap
+		- python3
+		- pip3 and pip3 yaml package
 
-
-	- apt (& snap) - standard
-		- snapd - need berfore python script
-		- asdf - need before python script
-		- pip3 - need before python script
-		- git
-		- xclip
-		- ncdu
-		- neovim
-		- htop
-		- gsettings
-		- terminator
-
-	- ASDF - Programming languages - standard
-		- Rust
-		- Python3
-		- Bash
-
-	- apt & snap - only for home computer
-		- spotify
-		- dropbox
-		- steam
-		- discord
-		- firefox
-		- nautilus (file manager) (set as default file manager)
-		- nvidea driver (if available)
-
-	- Other - ?? yet
+	- Basic configuration:
+		- Bashrc: (manager: None, config: .bashrc, config_location: ~/.bashrc)
+		- Inputrc: (manager: None, config: .inputrc, config_location: ~/.inputrc)
+		- Neovim: (manager: snap, config: init.vim, config_location: ~/.config/nvim/init.vim)
 		- Neovim plugins
-		- Update package managers
-		- Default computer settings
-			- gsettings
-				- hotkeys
-			- default apps (can I do this with gsettings?)
-				- web: Firefox Web Browser
-				- Text editor: ?
+		- xclip: (manager: apt)
+		- wget: (manager: apt)
+
+	- Standard configurarion (for work):
+		- Packages form basic configuration +
+		- Git: (manager: apt, config: .gitconfig, config_location: ~/.gitconfig)
+		- Terminator: (manager: apt, config: terminator_config, config_location: ~/.config/terminator/config)
+		- Pylint: (manager: apt)
+		- Ncdu: (manager: apt/snap)
+		- htop: (manager: apt/snap)
+		- asdf
+		- Rust (manager: asdf)
+		- Python3 (manager: asdf)
+		- Spotify: (manager: snap, config: ?)
+
+	- Full configuration (for home):
+		- Packages form basic configuration +
+		- Nautilus: (manager: apt, config: gsettings, config_location: None)
+		- Steam: (manager: apt)
+		- Discord: (manager: apt/snap)
+		- Firefox (manager: apt, config: ?)
+		- GSettings
+			- Nautilus config
+			- Dock settings (bottom, icon size, autohide)
+			- Clock settings
+			- Favorite apps
+				- Firefox Web Browser
+				- Spotify
+		- Dropbox: (manager: apt?, config: ?)
+		- Ubuntu-drivers devices
+		- Gnome extensions:
+			- gir1.2-gtop-2.0 gir1.2-networkmanager-1.0  gir1.2-clutter-1.0
+			- http://ubuntuhandbook.org/index.php/2019/03/display-cpu-memory-network-usage-in-ubuntu-18-04-panel/
+
 
 ### Changelog - v0.1.3
 * Rewrite lib/config_file_installer to a class for easier usage
@@ -95,15 +94,17 @@ Complete package plan:
 	4. If the packages are not updated, show the newest version(s) available.
 
 ### To do
-* T-B001: Add asdf package manager to program info
-* T-B002: update readme about lib/package_info
-* T-B003: Check all files for correct commenting
-- T-B003: Check readme
+* T-A001: update readme
 
-- T-C: Make one general file for the package info and its config files to install/obtain
-- T-D: Add pre-installation file (python3, apt, snap and pip3 (with packages)
-* T-E: Let the user install/uninstall packages
+* T-B: Make one general file for the package info and its config files to install/obtain
+* T-C: Add pre-installation file (python3, apt, snap and pip3 (with packages)
+
+* T-?:
+	* Add asdf package manager
+	- Use Fish shell
+	- Let the user install/uninstall packages
 
 #### Bugfixes
+	- Config installer did not recognise links
 
 ### Issues

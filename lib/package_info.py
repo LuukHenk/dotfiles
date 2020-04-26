@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.6
 
-""" Install desired packages """
+""" Obtain packages information """
 
 ### Imports {{{
 #
@@ -10,18 +10,22 @@ import yaml
 #}}}
 
 class PackagesInfo:
+    """
+    Obtain package information for the packages found in self.packages using the managers
+    their location, found in self.managers
+    """
+
     def __init__(self):
 
         # Add or remove packages here (and the preferred managers (list),
         # set none if there is no preference)
         self.packages = {
-            # "asdf": None,
-            # "snap": None,
-            "git": None,
+            "snap": ["apt"],
+            "git": ["apt"],
             "htop": None,
             "ncdu": None,
-            "nvim": None,
-            "terminator": None,
+            "nvim": ["snap"],
+            "terminator": ["apt"],
             "xclip": ["apt"]
         }
 
@@ -35,56 +39,8 @@ class PackagesInfo:
         ##########
 
         # Get information about all packages
-        print("Searching for packages information...")
+        print("Searching for package information...")
         self.packages_info = {p: self.get_package_info(p) for p in self.packages}
-
-    def render_version_info(self):
-        " Let the user know if their packages are up to date "
-
-        print("----------------------------------------------------------------")
-        for pack, info in self.packages_info.items():
-            try:
-                if info["uptodate"]:
-                    print((
-                        f"Package '{pack}' is up to date with the latest stable"
-                        f" of the '{info['manager']}' package manager..."
-                    ))
-                elif info["installed"]:
-                    print((
-                        "\x1b[33m"
-                        f"Warning: Package '{pack}' is not up to date with the latest stable"
-                        f" '{info['manager']}' version."
-                        f" Stable: v{info['latest'][info['manager']]}"
-                        f"| Current: v{info['version']}"
-                        "\x1b[39m"
-                    ))
-                elif len(info["latest"]) > 0:
-                    latest_pprint = ""
-                    for manager, version in info["latest"].items():
-                        if len(latest_pprint) > 0:
-                            latest_pprint = " | ".join([latest_pprint, manager + " v" + version])
-                        else:
-                            latest_pprint += manager + " v" + version
-                    print((
-                        "\x1b[33m"
-                        f"Warning: Package '{pack}' is not installed yet."
-                        " Latest stable versions available:"
-                        f" {latest_pprint}"
-                        "\x1b[39m"
-                    ))
-                else:
-                    print((
-                        f"\x1b[31mCan't find information about '{pack}'...\x1b[39m"
-                    ))
-            except KeyError as error:
-                print((
-                    "\x1b[31m"
-                    "Error: Failed to render packages information...\n"
-                    "The self.packages_info dictionary found in './lib/packages_installer'"
-                    " is missing information. "
-                    f"Keyerror: {error}"
-                    "\x1b[39m"
-                ))
 
     def get_package_info(self, package):
         """
@@ -104,7 +60,6 @@ class PackagesInfo:
         }
 
         # Determine the saving location of the package
-        # print("\nSearching for " + package + " ...")
         saving_location = os.popen("which "+package).read().split("\n")[0]
 
         # If the program is already installed, find the package manager and the version
@@ -143,7 +98,7 @@ class PackagesInfo:
         package_info["latest"] = self.managers_latest_versions(package, preferred_managers)
 
         # Check if the package is up to date
-        if package_info["installed"]:
+        if package_info["installed"] and len(package_info["latest"]) > 0:
             latest_from_manager = package_info["latest"][package_info["manager"]]
             if package_info["version"] == latest_from_manager:
                 package_info["uptodate"] = True
@@ -181,5 +136,66 @@ class PackagesInfo:
         return latest_versions
 
 
+    def render_version_info(self):
+        " Let the user know if their packages are up to date "
 
+        print("----------------------------------------------------------------\n")
 
+        for pack, info in self.packages_info.items():
+            try:
+                # Let the user know that the package is up to date
+                if info["uptodate"]:
+                    print((
+                        f"Package '{pack}' is up to date with the latest stable"
+                        f" of the '{info['manager']}' package manager..."
+                    ))
+
+                # Let the use know that the package is installed but not up to date
+                # and shows the latest stable version
+                elif info["installed"]:
+                    print((
+                        "\x1b[33m"
+                        f"Warning: Package '{pack}' is not up to date with the latest stable"
+                        f" '{info['manager']}' version."
+                        f" Stable: v{info['latest'][info['manager']]}"
+                        f"| Current: v{info['version']}"
+                        "\x1b[39m"
+                    ))
+
+                # Let the user know that the package is not installed
+                # and show the newest versions available
+                elif len(info["latest"]) > 0:
+                    latest_pprint = ""
+                    for manager, version in info["latest"].items():
+                        if len(latest_pprint) > 0:
+                            latest_pprint = " | ".join([latest_pprint, manager + " v" + version])
+                        else:
+                            latest_pprint += manager + " v" + version
+                    print((
+                        "\x1b[33m"
+                        f"Warning: Package '{pack}' is not installed yet."
+                        " Latest stable versions available:"
+                        f" {latest_pprint}"
+                        "\x1b[39m"
+                    ))
+
+                # Unable to obtain package version information
+                else:
+                    print((
+                        f"\x1b[31mCan't find information about '{pack}'...\x1b[39m"
+                    ))
+
+            # Information to obtain package information is missing
+            except KeyError as error:
+                print((
+                    "\x1b[31m"
+                    f"Error: Failed to render '{pack}' package information ...\n"
+                    "The self.packages_info dictionary found in './lib/packages_installer'"
+                    " is missing information. (Maybe using an incorrect package manager?)"
+                    f"\nKeyerror: {error}"
+                    "\x1b[39m"
+                ))
+
+        print("\n----------------------------------------------------------------\n")
+#
+# }}}

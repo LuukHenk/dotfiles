@@ -1,26 +1,31 @@
 #!/usr/bin/env python3.6
 
-""" Installation of the system configuration files """
+""" Installation of programs their configuration files """
 
-FILE_PATH = "lib/config_file_installer.py"
 
 ### Imports {{{
 #
 import os
-import sys
 #
 # }}}
 
 
 ### Config file installer {{{
 #
+FILE_PATH = "lib/config_file_installer.py"
+
 class ConfigInstaller:
+    """
+    Configuration file installer
+    Pre-setup can be found in init function
+    The installer function saves the config files to their destination
+    """
     def __init__(self):
+        # Set the path to the config source files (standard = ./etc)
+        self.config_source_path = "./etc"
+
         # Get the users home directory
         self.home = os.path.expanduser("~")
-
-        # Set the path to the config source files
-        self.config_source_path = "."
 
         # Set the config file and its destination
         self.config_dest = {
@@ -30,7 +35,10 @@ class ConfigInstaller:
         }
 
     def installer(self):
-        " Obtains configuration files in self.config_dest and saves them at their destination "
+        """
+        Obtains configuration files found in self.config_dest
+        and saves them at their destination
+        """
 
         files_saved = 0
         for config_file in self.config_dest:
@@ -49,7 +57,7 @@ class ConfigInstaller:
 
             # Get the destination path and check if it already exists
             dest = self.config_dest[config_file]
-            if os.path.isfile(dest):
+            if os.path.isfile(dest) or os.path.islink(dest):
                 overwrite_file = input((
                     f"File '{dest}' already exists, overwrite? [y/N] "
                 )).lower()

@@ -6,7 +6,6 @@
 #
 import os
 import sys
-import yaml
 #
 # }}}
 
@@ -25,63 +24,20 @@ def main():
         config_installer = ConfigInstaller()
 
         # Get source path to obtain the configuration files from
-        config_path_name = "/".join([os.path.dirname(os.path.realpath(__file__)), "/etc"])
+        config_path_name = "/".join([os.path.dirname(os.path.realpath(__file__)), "etc"])
         config_installer.config_source_path = os.path.normpath(config_path_name)
         config_installer.installer()
 
-    install_programs = input("\033[1mInstall/update installed programs? [y/N] \033[0m").lower()
-    if install_programs:
-        from lib.package_info import PackagesInfo
+    install_programs = input("\033[1mCheck if your programs are up to date? [y/N] \033[0m").lower()
+    if install_programs in ("y", "yes"):
+            from lib.package_info import PackagesInfo
+
+        # Obtain package information and render version information
         packages_info = PackagesInfo()
         packages_info.render_version_info()
 
 # Run program
 main()
-#
-# }}}
-
-### Development (B) {{{
-#
-def package_manager_package_finder(package, package_manager_locations):
-    package_versions = {}
-
-    for saving_location in package_manager_locations:
-        manager = package_manager_locations[saving_location]
-        package_versions[manager] = []
-
-        # Find the package with the package manager
-        if manager == "apt":
-            # Find packages with the 'package' name
-            packages_found = os.popen("apt-cache madison "+package).read().split("\n")
-            for pack in packages_found:
-                if pack.split(" | ")[0].strip() == package:
-                    package_versions[manager].append(pack.split(" | ")[1].strip())
-
-        if manager == "snap":
-            # Find packages with the 'package' name
-            packages_found = os.popen("snap find "+package).read().split("\n")[1:]
-
-            # Find the version of the package
-            for pack in packages_found:
-                package_info = list(filter(None, pack.split(" ")))
-                if len(package_info) > 0 and package_info[0] == package:
-                    package_versions[manager].append(package_info[1])
-
-            print(package_versions)
-
-
-# def package_installer():
-#     package_manager_loc = {
-#         "/usr/bin": "apt",
-#         "/snap/bin": "snap"
-#     }
-
-#     packages_to_install = ["htop", "nvim", "ncdu", "maas"]
-
-#     for pack in packages_to_install:
-#         pack_version = get_local_package_version(pack, package_manager_loc)
-#         package_manager_package_finder(pack, package_manager_loc)
-
 sys.exit()
 #
 # }}}
