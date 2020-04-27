@@ -40,7 +40,15 @@ Run the setup_installer to start the setup configuration
     * Some autocommand (focusloss, trailing whitespace removal and alternative tab indenting)
 
 ## Development
-Complete package plan:
+### Changelog - v0.1.3
+* Rewrite lib/config_file_installer.py to a class for easier usage
+* Made a package version checker class (lib/package_info.py)
+	1. Add packages you want to be maintained to the init function of the class
+	2. Obtain packages information from package managers; (currently: apt & git)
+	3. Let the user know if the packages are updated
+	4. If the packages are not updated, show the newest version(s) available.
+
+### Complete package plan for release
 
 	- Pre-installing
 		- snap
@@ -87,24 +95,18 @@ Complete package plan:
 			- http://ubuntuhandbook.org/index.php/2019/03/display-cpu-memory-network-usage-in-ubuntu-18-04-panel/
 
 
-### Changelog - v0.1.3
-* Rewrite lib/config_file_installer to a class for easier usage
-* Made a package version checker class (lib/package_info.py)
-	1. Add packages you want to be maintained to the init function of the class
-	2. Obtain packages information from package managers; currently apt and git.
-	3. Let the user know if the packages are updated
-	4. If the packages are not updated, show the newest version(s) available.
-
 ### To do
-* T-A: Make one general file for the package info and its config files to install/obtain
-* T-B: Add pre-installation file (python3, apt, snap and pip3 (with packages)
 
-* T-?:
-	* Add asdf package manager
-	* Use Fish shell
-	* Let the user install/uninstall packages
+	- T-A: Make one general file for the complete package plan which is easy manipulatable
+	- T-B: Add pre-installation file (python3, apt, snap and pip3 (with packages))
+
+	- T-?:
+		- Add asdf package manager
+		- Use Fish shell
+		- Let the user install/uninstall packages
 
 #### Bugfixes
+
 	- Config installer did not recognise links
 
 ### Issues
