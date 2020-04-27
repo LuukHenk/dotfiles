@@ -11,14 +11,18 @@ My computer configuration setup
 2. Make the setup installer executable: `$ chmod +x dotfiles/setup_installer`
 3. Run the setup installer and follow the installation script: `$ ./setup_installer`
 
-## The file setup
-### setup_installer
-Run this file to start the setup installation
+## The setup
+Run the setup_installer to start the setup configuration
+- Asks for detection of package versions
+- Asks for installation of configuration files
 
-### /lib
-**config_file_installer.py**: This file contains a function for the installation of configuration files in the /etc folder. The files in /etc will stay synchronized with the files in your home after the installation using the magical symlinking (so no need to run the config_file_installer.py again after altering files in the /etc folder)
+### Package versions
+(./lib/package_info.py) The versions of packages are compared with the latest stable version of the manager(s) . Programs and managers can be added to the __init__ function of the package info file.
 
+### Configuration file installer
+(./lib/config_installer.py) The configuration file installer installs configuration files found in the config source path (standard: ./etc/). More files can be added to the __init__ function of the file. The configuration files will stay synchronized after the installation using the magical symlinking (so no need to run the config_file_installer.py again after altering the source files)
 
+#### Standard configuration files (for now)
 ### /etc
 This folder contains configuration files for the terminal and neovim. They will automatically be updated when altered after the installation
 
@@ -94,10 +98,8 @@ Complete package plan:
 	4. If the packages are not updated, show the newest version(s) available.
 
 ### To do
-* T-A001: update readme
-
-* T-B: Make one general file for the package info and its config files to install/obtain
-* T-C: Add pre-installation file (python3, apt, snap and pip3 (with packages)
+* T-A: Make one general file for the package info and its config files to install/obtain
+* T-B: Add pre-installation file (python3, apt, snap and pip3 (with packages)
 
 * T-?:
 	* Add asdf package manager
@@ -108,3 +110,4 @@ Complete package plan:
 	- Config installer did not recognise links
 
 ### Issues
+	- No issues found yet
