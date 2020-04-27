@@ -13,19 +13,16 @@ My computer configuration setup
 
 ## The setup
 Run the setup_installer to start the setup configuration
-- Asks for detection of package versions
-- Asks for installation of configuration files
+1. Asks for detection of package versions
+2. Asks for installation of configuration files
 
 ### Package versions
 (./lib/package_info.py) The versions of packages are compared with the latest stable version of the manager(s) . Programs and managers can be added to the __init__ function of the package info file.
 
 ### Configuration file installer
-(./lib/config_installer.py) The configuration file installer installs configuration files found in the config source path (standard: ./etc/). More files can be added to the __init__ function of the file. The configuration files will stay synchronized after the installation using the magical symlinking (so no need to run the config_file_installer.py again after altering the source files)
+(./lib/config_installer.py) The configuration file installer installs configuration files found in the config source path (standard: ./etc). More files can be added to the __init__ function of the file. The configuration files will stay synchronized after the installation using the magical symlinking (so no need to run the config_file_installer.py again after altering the source files)
 
 #### Standard configuration files (for now)
-### /etc
-This folder contains configuration files for the terminal and neovim. They will automatically be updated when altered after the installation
-
 * **.bashrc**: The .bashrc contains some terminal configuration
     * Aliases for programs and easy navigation
     * Terminal settings for easy navigation
@@ -44,6 +41,7 @@ This folder contains configuration files for the terminal and neovim. They will 
 
 ## Development
 Complete package plan:
+
 	- Pre-installing
 		- snap
 		- python3
@@ -103,8 +101,8 @@ Complete package plan:
 
 * T-?:
 	* Add asdf package manager
-	- Use Fish shell
-	- Let the user install/uninstall packages
+	* Use Fish shell
+	* Let the user install/uninstall packages
 
 #### Bugfixes
 	- Config installer did not recognise links
