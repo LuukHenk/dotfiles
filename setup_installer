@@ -4,10 +4,22 @@
 
 ### Imports {{{
 #
+import json
 import os
+import subprocess
 import sys
 #
 # }}}
+
+# Set paths {{{
+#
+FILE_DIR = os.path.dirname(os.path.realpath(__file__)) # The path to this file
+HOME_DIR = os.path.expanduser("~") # The users home directiory
+# The path to the json package
+PACKAGES_PATH = os.path.realpath("/".join([FILE_DIR, "packages.json"]))
+PACKAGES_PREFERENCE = "basic" # Key for package set in packages_path
+#
+#}}}
 
 ### Main program {{{
 #
@@ -15,29 +27,175 @@ import sys
 def main():
     " Main function for the installation"
 
-    # Install config files?
-    install_config_files = input("\033[1mUpdate configuration files? [y/N] \033[0m").lower()
-    if install_config_files in ("y", "yes"):
+    # Set the path to the json packages file
+    packages, managers_bin_paths = get_packages(PACKAGES_PATH)
 
-        # Import config file installer
-        from lib.config_installer import ConfigInstaller
-        config_installer = ConfigInstaller()
+    # Split the information from the packages path
+    # in package_info_input {name: manager}
+    # and in config_install_input {source_path: destination_path}
+    package_data = {}
+    config_data = {}
+    nvim_plug_data = {}
+    for package in packages:
 
-        # Get source path to obtain the configuration files from
-        config_path_name = "/".join([os.path.dirname(os.path.realpath(__file__)), "etc"])
-        config_installer.config_source_path = os.path.normpath(config_path_name)
-        config_installer.installer()
+        # Add package name and manager(s) to package_info_input
+        # Uses all managers if package['package_managers'] is None
+        if package["package_name"]:
+            package_data[package["package_name"]] = package["package_manager"]
 
-    install_programs = input("\033[1mCheck if your programs are up to date? [y/N] \033[0m").lower()
-    if install_programs in ("y", "yes"):
-            from lib.package_info import PackagesInfo
+        # Add the configuration source- and destination path to config_install_input
+        # Both are needed to install the configuration files
+        if package["config_source_path"] and package["config_destination_path"]:
+            config_data[package["config_source_path"]] = package["config_destination_path"]
 
-        # Obtain package information and render version information
+        # If there is nvim pluginstall data, add it to the nvim_plug_data
+        if package["package_name"] == "nvim":
+            nvim_plug_data[package["plug_source"]] = package["plug_destination_path"]
+
+    # Ask user to check if the programs in package_info_input are up to date
+    obtain_versions = input("\033[1mCheck if your programs are up to date? [y/N] \033[0m").lower()
+    if obtain_versions in ("y", "yes"):
+
+        from lib.package_info import PackagesInfo
         packages_info = PackagesInfo()
-        packages_info.render_version_info()
+        packages_info.managers_bins = managers_bin_paths
+
+        versions_info = []
+        print("Checking for package versions...")
+        for package in package_data:
+            print(f"- {package}", end="\r")
+            versions_info.append(
+                packages_info.get_package_version_info(package, package_data[package])
+            )
+            print(f"                                                         ", end="\r")
+
+        print("----------------------------------------------------")
+        for pack in versions_info:
+            packages_info.render_version_info(pack)
+        print("----------------------------------------------------")
+
+    # Ask user to install configuration files found in config_install_input
+    install_config = input("\033[1mUpdate configuration files? [y/N] \033[0m").lower()
+    if install_config in ("y", "yes"):
+        from lib.config_installer import config_installer
+        config_installer(get_real_paths(config_data))
+
+    # Ask user to isntall nvim plugins
+    install_nvim_plugins = input("\033[1mInstall Neovim plugins? [y/N] \033[0m").lower()
+    if install_nvim_plugins in ("y", "yes"):
+        if len(nvim_plug_data) == 0:
+            print((
+                f"\x1b[31mError: \x1b[39mCan't find the 'nvim' package in"
+                " the packages configuration file"
+                f" ('{PACKAGES_PATH}') ..."
+            ))
+        else:
+            nvim_plug_full_paths = get_real_paths(nvim_plug_data)
+            dest = nvim_plug_full_paths[next(iter(nvim_plug_full_paths))]
+            if not os.path.isfile(dest):
+                from lib.config_installer import config_installer
+                config_installer(nvim_plug_full_paths)
+
+            if os.path.isfile(dest):
+                try:
+                    subprocess.run(
+                        ["nvim", "+PlugInstall", "+PlugUpdate", "+PlugUpgrade", "+qa"],
+                        check=True
+                    )
+                except subprocess.CalledProcessError as err:
+                    print((
+                        "\x1b[31mError: \x1b[39m"
+                        f" Failed to run the nvim plugin installer...\n{err}"
+                    ))
+            else:
+                print((
+                    "\x1b[31mError: \x1b[39m"
+                    f" The plugin nvim installer file ({'dest'}) can not be found ..."
+                ))
+
+    # Ask user to set gsettings
+    interface_settings = input("\033[1mEdit user interface? [y/N] \033[0m").lower()
+    if interface_settings in ("y", "yes"):
+        print("Function unavailable yet...")
+        #TODO set gsettings
+        #TODO set background
+    return
+
+def get_packages(path):
+    """
+    Open the package data file path using json
+    and import the loaded package_set
+    """
+    # Try to open the packages file
+    try:
+        with open(path, 'r') as json_file:
+            data = json.load(json_file)
+    except FileNotFoundError:
+        print(f"Packages file {path} does not exist")
+        sys.exit()
+    else:
+        print(f"Found packages configuration file: {path}")
+
+    # Try to find packges with the PACKAGES_PREFERENCE
+    packages = []
+    # Basic functionallity files
+    if PACKAGES_PREFERENCE == "basic":
+        packages = data["basic"]
+    # Standard installation
+    elif PACKAGES_PREFERENCE == "standard":
+        packages = data["basic"]
+        packages = data["standard"]
+    # Full installation (home computer)
+    elif PACKAGES_PREFERENCE == "full":
+        packages = data["basic"]
+        packages = data["standard"]
+        packages = data["full"]
+
+    if len(packages) == 0:
+        print((
+            "\x1b[31mError: \x1b[39m"
+            f"The PACKAGES_PREFERENCE '{PACKAGES_PREFERENCE}'"
+            " does not contain packages."
+            " For more information, look up the 'get_packages' function"
+            " in the setup_installer script ..."
+        ))
+        sys.exit()
+
+    managers_bin_paths = data["managers_bins"]
+
+    return (packages, managers_bin_paths)
+
+def get_real_paths(dict_paths):
+    " Find the full path of paths that start with a '.' or '~' "
+
+    def real_path(path, char, repl):
+        return path[0].replace(char, repl) + path[1:]
+
+    full_paths = {}
+    for source, dest in dict_paths.items():
+
+        # Obtain the complete path of the source files
+        if source[0] == ".":
+            new_source = real_path(source, ".", FILE_DIR)
+        elif source[0] == "~":
+            new_source = real_path(source, "~", HOME_DIR)
+        else:
+            new_source = source
+
+        # Obtain the complete path of the destination files
+        if dest[0] == ".":
+            new_dest = real_path(dest, ".", FILE_DIR)
+        elif dest[0] == "~":
+            new_dest = real_path(dest, "~", HOME_DIR)
+        else:
+            new_dest = dest
+
+        full_paths[new_source] = new_dest
+    return full_paths
 
 # Run program
 main()
 sys.exit()
 #
 # }}}
+
