@@ -8,95 +8,82 @@ My computer configuration setup
 
 ## Installing
 1. Clone the repository to your local computer: `$ git clone https://github.com/LuukHenk/dotfiles.git`
-2. Run the pre-installer as sudo to install snap, python3 and python-yaml: `$ sudo sh dotfiles/pre_installer.sh`, or install snap, python3 and python-yaml yourself.
+2. Run the pre-installer as sudo to install snap, python3 and python-yaml: `$ sudo sh dotfiles/pre_installer.sh`, or install snap, python3 and python-yaml by yourself.
 2. Make the setup installer executable: `$ chmod +x dotfiles/setup_installer`
 3. Run the setup installer and follow the installation script: `$ ./setup_installer`
 
-NOG LINKS NAAR DE JUISTE PLEK TOEVOEGEN
 ## The setup
-### Standard packages
-The packages.json file contains the information needed for the installation of packages and/or computer configuration.
-The packages.json has three installation sets (basic, standard, full) of which information can be found here.
-The packages.json file also keeps track of the package managers (apt, snap) and their saving destionation.
+### Pre-set configuration sets
+All configuration sets can be found in the packages.json file.
+**Basic configuration**
+- bashrc
 
+	Symlink configuration file './etc/bashrc' to '~/.bashrc'
+		- Aliases for programs and easy navigation in shell
+		- Easy navigation in shell
+		- Customised terminal coloring
+		- Customised terminal prompt containing git status if availible
 
+- inputrc
 
+	Symlink configuration file './etc/inputrc' to '~/.inputrc'
+		- Forward (and backward) per word in the shell using control-<arrowkeys>
+		- Improved shell tab autocompletion
 
+- xclip
 
-New managers / installation sets can easily be added to the packages.json file
+	Check for the 'xclip' version using the 'apt' package manager
 
-Run the setup_installer to start the setup configuration
-1. Asks for detection of package versions
-2. Asks for installation of configuration files
+- wget
 
-### Package versions
-(./lib/package_info.py) The versions of packages are compared with the latest stable version of the manager(s) . Programs and managers can be added to the __init__ function of the package info file.
+	Check for the 'wget' version using the 'apt' package manager
 
-### Configuration file installer
-(./lib/config_installer.py) The configuration file installer installs configuration files found in the config source path (standard: ./etc). More files can be added to the __init__ function of the file. The configuration files will stay synchronized after the installation using the magical symlinking (so no need to run the config_file_installer.py again after altering the source files)
+ - Neovim (Plugin manager file is owned by [Junegunn](github.com/Junegunn/vim-plug))
 
-#### Standard configuration files (for now)
-* **.bashrc**: The .bashrc contains some terminal configuration
+	Check for the 'nvim' version using the 'snap' package manager
 
-* **.inputrc**: The .inputrc contains some keymappings and shell configuration
-    * Forward (and backward) per word using control-<arrowkeys>
-    * Improved tab autocompletion
-
-* **init.vim**: Vim config
-	* Plugins
-	* Some alternative settings
-	* Key mappings
-    * Some autocommand (focusloss, trailing whitespace removal and alternative tab indenting)
-
-### Installation sets
-	- Basic configuration:
-		- Bashrc
-			The dotfiles/etc/.bashrc configuration file contains some shell configuration:
-			* Aliases for programs and easy navigation
-			* Terminal settings for easy navigation
-			* Customised terminal coloring
-			* Customised terminal prompt containing git status if availible
-
-		- Inputrc: (manager: None, config: .inputrc, config_location: ~/.inputrc)
-		- Neovim: (manager: snap, config: init.vim, config_location: ~/.config/nvim/init.vim)
+	Symlink configuration file './etc/init.vim' to '~/.config/nvim/init.vim'
 		- Neovim plugins
-		- xclip: (manager: apt)
-		- wget: (manager: apt)
+		- Some alternative neovim settings
+		- Neovim key mappings
+		- Some neovim autocommand (focusloss, trailing whitespace removal and alternative tab indenting)
 
-	- Standard configurarion (for work):
-		- Packages form basic configuration +
-		- Git: (manager: apt, config: .gitconfig, config_location: ~/.gitconfig)
-		- Terminator: (manager: apt, config: terminator_config, config_location: ~/.config/terminator/config)
-		- Pylint: (manager: apt)
-		- Ncdu: (manager: apt/snap)
-		- htop: (manager: apt/snap)
-		- asdf
-		- Rust (manager: asdf)
-		- Python3 (manager: asdf)
-		- Spotify: (manager: snap, config: ?)
+	Symlink the nvim plugin manager file './etc/plug.vim' to '~/.config/nvim/autoload/plug.vim' and install, update and upgrade the plugins.
 
-	- Full configuration (for home):
-		- Packages form basic configuration +
-		- Nautilus: (manager: apt, config: gsettings, config_location: None)
-		- Steam: (manager: apt)
-		- Discord: (manager: apt/snap)
-		- Firefox (manager: apt, config: ?)
-		- GSettings
-			- Nautilus config
-			- Dock settings (bottom, icon size, autohide)
-			- Clock settings
-			- Favorite apps
-				- Firefox Web Browser
-				- Spotify
-		- Dropbox: (manager: apt?, config: ?)
-		- Ubuntu-drivers devices
-		- Gnome extensions:
-			- gir1.2-gtop-2.0 gir1.2-networkmanager-1.0  gir1.2-clutter-1.0
-			- http://ubuntuhandbook.org/index.php/2019/03/display-cpu-memory-network-usage-in-ubuntu-18-04-panel/
+**Standard configuration**
+(not available yet)
 
+**Full configuration**
+(not available yet)
+
+### Pre-set package managers
+STILLLLTOOOODOOOO
+
+### Adding new configuration packages/sets/managers
+STILLLLTOOOODOOOO
 
 ## Development
 ### Changelog - v0.1.4
+1. Added pre-installation file (pre_installation.sh)
+2. Added package manager (packages.json) which contains all the information needed to install packages / config files
+	- Added the basic pre-set configuration set
+3. Rebuild of README.md
+
+### To do
+	- T: Rewrite all commentary
+	- T-A: Add standard and full configuration set
+	- T-?:
+		- Add asdf package manager
+		- Add user input arguments for the PACKAGES_PREFERENCE
+		- Let the user install/uninstall packages
+		- Use Fish shell
+
+### Bugfixes
+	- No bugfixes yet
+
+### Issues
+	- No issues found yet
+
 
 ### Complete package plan for release
 
@@ -144,18 +131,3 @@ Run the setup_installer to start the setup configuration
 			- gir1.2-gtop-2.0 gir1.2-networkmanager-1.0  gir1.2-clutter-1.0
 			- http://ubuntuhandbook.org/index.php/2019/03/display-cpu-memory-network-usage-in-ubuntu-18-04-panel/
 
-
-### To do
-	- T-A: Rewrite all commentary
-	- T-B: Add all packages preferences
-	- T-?:
-		- Add asdf package manager
-		- Add user input arguments for the PACKAGES_PREFERENCE
-		- Let the user install/uninstall packages
-		- Use Fish shell
-
-### Bugfixes
-	- No bugfixes yet
-
-### Issues
-	- No issues found yet
