@@ -13,36 +13,43 @@ My computer configuration setup
 3. Run the setup installer and follow the installation script: `$ ./setup_installer`
 
 ## The setup
-### Pre-set configuration sets
-All configuration sets can be found in the packages.json file.
-**Basic configuration**
-- bashrc
 
+### Pre-set package managers
+The pre-set package managers and their package destination (bin folder) can be found in the packages.json file in the 'packages_bin' dictionary.
+
+### Pre-set configuration sets
+All configuration sets can be found in the packages.json file below the mangers_bins dictionary
+
+**Basic configuration set ("basic")**
+- bashrc:
 	Symlink configuration file './etc/bashrc' to '~/.bashrc'
-		- Aliases for programs and easy navigation in shell
+
+        Contains:
+		- Aliases for programs
 		- Easy navigation in shell
 		- Customised terminal coloring
-		- Customised terminal prompt containing git status if availible
+		- Customised terminal prompt, containing git status if availible
 
-- inputrc
-
+- inputrc:
 	Symlink configuration file './etc/inputrc' to '~/.inputrc'
-		- Forward (and backward) per word in the shell using control-<arrowkeys>
+
+        Contains:
+		- Forward (and backward) line per word in the shell using control-<arrowkeys>
 		- Improved shell tab autocompletion
 
-- xclip
-
+- xclip:
 	Check for the 'xclip' version using the 'apt' package manager
 
 - wget
-
 	Check for the 'wget' version using the 'apt' package manager
 
- - Neovim (Plugin manager file is owned by [Junegunn](github.com/Junegunn/vim-plug))
+ - Neovim (Plugin manager file is owned by [Junegunn](Junegunn/vim-plug))
 
 	Check for the 'nvim' version using the 'snap' package manager
 
 	Symlink configuration file './etc/init.vim' to '~/.config/nvim/init.vim'
+
+        Contains:
 		- Neovim plugins
 		- Some alternative neovim settings
 		- Neovim key mappings
@@ -51,16 +58,14 @@ All configuration sets can be found in the packages.json file.
 	Symlink the nvim plugin manager file './etc/plug.vim' to '~/.config/nvim/autoload/plug.vim' and install, update and upgrade the plugins.
 
 **Standard configuration**
-(not available yet)
+Will be added later....
 
 **Full configuration**
-(not available yet)
+Will be added later....
 
-### Pre-set package managers
-STILLLLTOOOODOOOO
 
 ### Adding new configuration packages/sets/managers
-STILLLLTOOOODOOOO
+Will be added later....
 
 ## Development
 ### Changelog - v0.1.4
@@ -70,8 +75,10 @@ STILLLLTOOOODOOOO
 3. Rebuild of README.md
 
 ### To do
-	- T: Rewrite all commentary
 	- T-A: Add standard and full configuration set
+	- T-B: Update README:
+		- update pre-set package managers information
+
 	- T-?:
 		- Add asdf package manager
 		- Add user input arguments for the PACKAGES_PREFERENCE
@@ -82,15 +89,14 @@ STILLLLTOOOODOOOO
 	- No bugfixes yet
 
 ### Issues
-	- No issues found yet
-
+	- Too many branches in setup_installer main function
 
 ### Complete package plan for release
 
 	- Pre-installing
 		- snap
 		- python3
-		- pip3 and pip3 yaml package
+		- python3-yaml package
 
 	- Basic configuration:
 		- Bashrc: (manager: None, config: .bashrc, config_location: ~/.bashrc)
@@ -99,6 +105,8 @@ STILLLLTOOOODOOOO
 		- Neovim plugins
 		- xclip: (manager: apt)
 		- wget: (manager: apt)
+		- python3-pip
+		- pip3 pylint
 
 	- Standard configurarion (for work):
 		- Packages form basic configuration +
@@ -130,4 +138,3 @@ STILLLLTOOOODOOOO
 		- Gnome extensions:
 			- gir1.2-gtop-2.0 gir1.2-networkmanager-1.0  gir1.2-clutter-1.0
 			- http://ubuntuhandbook.org/index.php/2019/03/display-cpu-memory-network-usage-in-ubuntu-18-04-panel/
-

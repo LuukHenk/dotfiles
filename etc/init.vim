@@ -19,6 +19,7 @@ Plug 'haya14busa/incsearch.vim'				" Improved searching
 Plug 'junegunn/vim-easy-align'        " Align in visual mode using ga<position>
 Plug 'machakann/vim-highlightedyank'  " Highlight when yanked
 Plug 'google/vim-searchindex'         " Shows how many times a searched pattern occurs
+Plug 'octol/vim-cpp-enhanced-highlight' " CPP highlighting
 call plug#end()
 "
 " }}}
