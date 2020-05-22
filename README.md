@@ -89,7 +89,7 @@ Will be added later....
 	- No bugfixes yet
 
 ### Issues
-	- Too many branches in setup_installer main function
+	-001 Too many branches in setup_installer main function
 
 ### Complete package plan for release
 
@@ -110,6 +110,7 @@ Will be added later....
 
 	- Standard configurarion (for work):
 		- Packages form basic configuration +
+		- Firefox (manager: apt, config: ?)
 		- Git: (manager: apt, config: .gitconfig, config_location: ~/.gitconfig)
 		- Terminator: (manager: apt, config: terminator_config, config_location: ~/.config/terminator/config)
 		- Pylint: (manager: apt)
@@ -119,20 +120,20 @@ Will be added later....
 		- Rust (manager: asdf)
 		- Python3 (manager: asdf)
 		- Spotify: (manager: snap, config: ?)
-
-	- Full configuration (for home):
-		- Packages form basic configuration +
 		- Nautilus: (manager: apt, config: gsettings, config_location: None)
-		- Steam: (manager: apt)
-		- Discord: (manager: apt/snap)
-		- Firefox (manager: apt, config: ?)
 		- GSettings
 			- Nautilus config
 			- Dock settings (bottom, icon size, autohide)
 			- Clock settings
+			- Use casp key as escape
 			- Favorite apps
 				- Firefox Web Browser
 				- Spotify
+
+	- Full configuration (for home):
+		- Packages form basic configuration +
+		- Steam: (manager: apt)
+		- Discord: (manager: apt/snap)
 		- Dropbox: (manager: apt?, config: ?)
 		- Ubuntu-drivers devices
 		- Gnome extensions:
