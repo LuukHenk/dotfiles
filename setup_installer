@@ -151,13 +151,22 @@ def main():
         os.system("gsettings set org.gnome.desktop.interface clock-show-weekday true")
         # Show battery percentage
         os.system("gsettings set org.gnome.desktop.interface show-battery-percentage true")
+        # Remove ibus emoji hotkey, as it interferes with the terminator hotkeys
+        os.system("gsettings set org.freedesktop.ibus.panel.emoji hotkey \"['']\"")
+        os.system("gsettings set org.gnome.desktop.input-sources xkb-options \"['caps:escape']\"")
+        os.system("gsettings set org.gnome.desktop.wm.keybindings close \"['<Control><Alt>w']\"")
 
-        #ADD calender settings
-        # Add emoij ctrl-shift-e removal
-        # add many more tweak settings !!!!! :)
-
-
-
+        # Keybinds
+            # Close all with <super><alt>w
+            # Minimise with <super><down>
+        # Appearance as dark theme
+        # Open window in full screen
+        # Remove desktop icons
+        # Set dock favorites
+        # Autmomatically turn off bluetooth
+        # Automatically delete file history / trash and temp files after 30 days
+        # Nautilus theme?
+        # Background?
 
 
     #
