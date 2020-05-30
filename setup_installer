@@ -21,7 +21,7 @@ HOME_DIR = os.path.expanduser("~") # The users home directiory
 #
 # The path to the json package
 PACKAGES_PATH = os.path.realpath("/".join([FILE_DIR, "packages.json"]))
-PACKAGES_SET = "basic" # Key for package set in packages_path
+PACKAGES_SET = "standard" # Key for package set in packages_path
 #
 #}}}
 
@@ -137,6 +137,7 @@ def main():
     #
     interface_settings = input("\033[1mEdit user interface? [y/N] \033[0m").lower()
     if interface_settings in ("y", "yes"):
+
         print("Function not available yet...")
     #
     # }
@@ -169,11 +170,11 @@ def get_packages(path):
         packages = data["basic"]
     elif PACKAGES_SET == "standard": # Standard packages/config
         packages = data["basic"]
-        packages = data["standard"]
+        packages += data["standard"]
     elif PACKAGES_SET == "full":     # All packages/config
         packages = data["basic"]
-        packages = data["standard"]
-        packages = data["full"]
+        packages += data["standard"]
+        packages += data["full"]
 
     if len(packages) == 0:
         print((

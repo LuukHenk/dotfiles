@@ -1,5 +1,5 @@
 # My dotfiles
-Version 0.1.4 <br />
+Version 0.1.5 <br />
 My computer configuration setup
 
 ## References
@@ -68,13 +68,12 @@ Will be added later....
 Will be added later....
 
 ## Development
-### Changelog - v0.1.4
-1. Added pre-installation file (pre_installation.sh)
-2. Added package manager (packages.json) which contains all the information needed to install packages / config files
-	- Added the basic pre-set configuration set
-3. Rebuild of README.md
+### Changelog - v0.1.5
 
 ### To do
+	- T1: add user settings
+	- T2: update terminator config file
+
 	- T-A: Add standard and full configuration set
 	- T-B: Update README:
 		- update pre-set package managers information
