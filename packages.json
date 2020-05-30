@@ -56,6 +56,7 @@
 			"config_source_path": "./etc/terminator",
 			"config_destination_path": "~/.config/terminator/config"
 		}
+
 	],
 	"full": [
 		{

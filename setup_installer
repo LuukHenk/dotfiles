@@ -137,8 +137,29 @@ def main():
     #
     interface_settings = input("\033[1mEdit user interface? [y/N] \033[0m").lower()
     if interface_settings in ("y", "yes"):
+        # Dock position
+        os.system("gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM")
+        # Dock icon size
+        os.system("gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 16")
+        # Dock autohide
+        os.system("gsettings set org.gnome.shell.extensions.dash-to-dock autohide true")
+        os.system("gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false")
+        os.system("gsettings set org.gnome.shell.extensions.dash-to-dock intellihide true")
+        # Clock show date/seconds/weekday
+        os.system("gsettings set org.gnome.desktop.interface clock-show-date true")
+        os.system("gsettings set org.gnome.desktop.interface clock-show-seconds true")
+        os.system("gsettings set org.gnome.desktop.interface clock-show-weekday true")
+        # Show battery percentage
+        os.system("gsettings set org.gnome.desktop.interface show-battery-percentage true")
 
-        print("Function not available yet...")
+        #ADD calender settings
+        # Add emoij ctrl-shift-e removal
+        # add many more tweak settings !!!!! :)
+
+
+
+
+
     #
     # }
 #
