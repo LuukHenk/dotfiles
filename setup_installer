@@ -137,6 +137,9 @@ def main():
     #
     interface_settings = input("\033[1mEdit user interface? [y/N] \033[0m").lower()
     if interface_settings in ("y", "yes"):
+        #FIXME test if this works in the script
+
+        ### Dock ###
         # Dock position
         os.system("gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM")
         # Dock icon size
@@ -145,30 +148,56 @@ def main():
         os.system("gsettings set org.gnome.shell.extensions.dash-to-dock autohide true")
         os.system("gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false")
         os.system("gsettings set org.gnome.shell.extensions.dash-to-dock intellihide true")
+        #Set favorites
+        favo_apps = "\"['firefox.desktop', 'spotify_spotify.desktop']\""
+        os.system("gsettings set org.gnome.shell favorite-apps " + favo_apps)
+
+        ### Activities bar ###
         # Clock show date/seconds/weekday
         os.system("gsettings set org.gnome.desktop.interface clock-show-date true")
         os.system("gsettings set org.gnome.desktop.interface clock-show-seconds true")
         os.system("gsettings set org.gnome.desktop.interface clock-show-weekday true")
         # Show battery percentage
         os.system("gsettings set org.gnome.desktop.interface show-battery-percentage true")
+
+        ### Desktop ###
+        # Hide desktop icons
+        os.system("gsettings set org.gnome.shell.extensions.desktop-icons show-trash false")
+        os.system("gsettings set org.gnome.shell.extensions.desktop-icons show-home false")
+
+        ### Keybindings ###
         # Remove ibus emoji hotkey, as it interferes with the terminator hotkeys
         os.system("gsettings set org.freedesktop.ibus.panel.emoji hotkey \"['']\"")
+        # Use the casp key as escape
         os.system("gsettings set org.gnome.desktop.input-sources xkb-options \"['caps:escape']\"")
         os.system("gsettings set org.gnome.desktop.wm.keybindings close \"['<Control><Alt>w']\"")
+        os.system("gsettings set org.gnome.desktop.wm.keybindings unmaximize \"['<Alt>F5']\"")
+        os.system("gsettings set org.gnome.desktop.wm.keybindings unmaximize \"['<Super>Down']\"")
 
-        # Keybinds
-            # Close all with <super><alt>w
-            # Minimise with <super><down>
-        # Appearance as dark theme
-        # Open window in full screen
-        # Remove desktop icons
-        # Set dock favorites
-        # Autmomatically turn off bluetooth
-        # Automatically delete file history / trash and temp files after 30 days
+        ### Colors ###
+        # Enable nightlight
+        deamon_color = "gsettings set org.gnome.settings-daemon.plugins.color "
+        os.system(deamon_color + "night-light-schedule-automatic true")
+        os.system(deamon_color + "night-light-enabled true")
+        os.system(deamon_color + "night-light-temperature 3000")
+        # Set theme
+        os.system("gsettings set org.gnome.desktop.interface gtk-theme \"'Yaru-dark'\"")
+        os.system("gsettings set org.gnome.desktop.interface icon-theme \"'Yaru'\"")
+
+        ### Privacy settings ###
+        # File history
+        os.system("gsettings set org.gnome.desktop.privacy remember-recent-files true")
+        os.system("gsettings set org.gnome.desktop.privacy recent-files-max-age 30")
+        # Temp files
+        os.system("gsettings set org.gnome.desktop.privacy remove-old-temp-files true")
+        os.system("gsettings set org.gnome.desktop.privacy remove-old-trash-files true")
+        os.system("gsettings set org.gnome.desktop.privacy old-files-age 30")
+        # Disable camera
+        os.system("gsettings set org.gnome.desktop.privacy disable-camera true")
+
         # Nautilus theme?
         # Background?
-
-
+        # Open programs maximised?
     #
     # }
 #
