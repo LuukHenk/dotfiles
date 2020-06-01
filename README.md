@@ -71,7 +71,9 @@ Will be added later....
 ### Changelog - v0.1.5
 
 ### To do
-	- T1: add user settings
+	- T1:
+		- Test all gsettings
+		- Move all gsettings to another file
 	- T2: update terminator config file
 
 	- T-A: Add standard and full configuration set

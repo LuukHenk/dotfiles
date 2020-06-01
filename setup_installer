@@ -133,11 +133,10 @@ def main():
     #
     # }
 
-    # Ask the user to set the desktop settings {
+    # Ask the user to edit gsettings / desktop settings {
     #
-    interface_settings = input("\033[1mEdit user interface? [y/N] \033[0m").lower()
+    interface_settings = input("\033[1mEdit gsettings/desktop settings? [y/N] \033[0m").lower()
     if interface_settings in ("y", "yes"):
-        #FIXME test if this works in the script
 
         ### Dock ###
         # Dock position
