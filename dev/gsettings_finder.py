@@ -7,4 +7,3 @@ for key in keys:
     if "<Super>h" in out:
         print("\n" + key)
         print(out)
-

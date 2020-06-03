@@ -41,7 +41,10 @@ def config_installer(config_data):
                     os.symlink(source_path, dest_path)
                 # Give error if file could not be overwritten
                 except OSError:
-                    print(f"\x1b[31mError: \x1b[39mFile '{dest_path}' can not be overwritten...")
+                    print((
+                        "\x1b[31mError: \x1b[39m"
+                        f"File '{dest_path}' can not be overwritten..."
+                    ))
                 else:
                     files_saved += 1
                     print(f"File '{dest_path}' overwritten...")

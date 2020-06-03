@@ -35,6 +35,12 @@
 			"config_destination_path": null
 		},
 		{
+			"package_name": "pylint",
+			"package_manager": null,
+			"config_source_path": null,
+			"config_destination_path": null
+		},
+		{
 			"package_name": "nvim",
 			"package_manager": "snap",
 			"config_source_path": "./etc/init.vim",
