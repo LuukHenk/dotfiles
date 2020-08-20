@@ -1,3 +1,10 @@
+" Gsettings "
+
+import os
+FILE_DIR = os.path.dirname(os.path.realpath(__file__)) # The path to this file
+BG_IMG = "\"" + "file:////" + FILE_DIR + "/backgrounds/background.png\""
+print(BG_IMG)
+
 DATA = {
     ### Dock settings
     "org.gnome.shell.extensions.dash-to-dock": {
@@ -29,6 +36,10 @@ DATA = {
     "org.gnome.shell.extensions.desktop-icons": {
         "show-trash": "false",
         "show-home": "false"
+    },
+    ### Desktop background
+    "org.gnome.desktop.background": {
+        "picture-uri": BG_IMG
     },
     ### Ibus emoij keybindings
     "org.freedesktop.ibus.panel.emoji": {
@@ -66,4 +77,3 @@ DATA = {
         "disable-camera": "true"
     }
 }
-

@@ -58,20 +58,30 @@ def main():
     #
     # }
 
-    #TODO comment this
+    # Ask the user to check if the versions of the packages are up to date with
+    # the package managers {
+    #
     obtain_versions = input("\033[1mCheck if your programs are up to date? [y/N] \033[0m").lower()
     if obtain_versions in ("y", "yes"):
         version_obtainer(package_data, managers_bin_paths)
+    #
+    # }
 
-    #TODO comment this
+    # Ask the user to install the packages their configuration files {
+    #
     install_config = input("\033[1mUpdate configuration files? [y/N] \033[0m").lower()
     if install_config in ("y", "yes"):
         config_installer(get_real_paths(config_data))
+    #
+    # }
 
-    #TODO comment this
+    # Ask the user to install the neovim plugins {
+    #
     install_nvim_plugins = input("\033[1mInstall Neovim plugins? [y/N] \033[0m").lower()
     if install_nvim_plugins in ("y", "yes"):
         nvim_plug_installer(nvim_plug_data)
+    #
+    # }
 
     # Ask the user to edit gsettings / desktop settings {
     #
@@ -112,7 +122,7 @@ def version_obtainer(package_data, managers_bin_paths):
 # }}}
 
 def nvim_plug_installer(nvim_plug_data):
-
+    " Install the plugin installation file and the plugins found in ./etc/plug.vim"
     # Check if there is plugin data
     if len(nvim_plug_data) != 0:
 

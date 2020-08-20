@@ -69,13 +69,10 @@ Will be added later....
 
 ## Development
 ### Changelog - v0.1.5
+- Cleanup of intallation programm
+- Added gsettings configuration file and loader
 
 ### To do
-	- T1:
-		- Test all gsettings
-		- Move all gsettings to another file
-	- T2: update terminator config file
-
 	- T-A: Add standard and full configuration set
 	- T-B: Update README:
 		- update pre-set package managers information
@@ -90,7 +87,7 @@ Will be added later....
 	- No bugfixes yet
 
 ### Issues
-	-001 Too many branches in setup_installer main function
+	- No issues yet
 
 ### Complete package plan for release
 

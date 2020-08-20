@@ -51,12 +51,6 @@
 	],
 	"standard": [
 		{
-			"package_name": null,
-			"package_manager": null,
-			"config_source_path": null,
-			"config_destination_path": null
-		},
-		{
 			"package_name": "terminator",
 			"package_manager": "apt",
 			"config_source_path": "./etc/terminator",
@@ -65,43 +59,5 @@
 
 	],
 	"full": [
-		{
-			"package_name": null,
-			"package_manager": null,
-			"config_source_path": null,
-			"config_destination_path": null
-		},
-		{
-			"package_name": null,
-			"package_manager": null,
-			"config_source_path": "./etc/bashrc",
-			"config_destination_path": "~/.bashrc"
-		},
-		{
-			"package_name": null,
-			"package_manager": null,
-			"config_source_path": "./etc/inputrc",
-			"config_destination_path": "~/.inputrc"
-		},
-		{
-			"package_name": "xclip",
-			"package_manager": "apt",
-			"config_source_path": null,
-			"config_destination_path": null
-		},
-		{
-			"package_name": "wget",
-			"package_manager": null,
-			"config_source_path": null,
-			"config_destination_path": null
-		},
-		{
-			"package_name": "nvim",
-			"package_manager": "snap",
-			"config_source_path": "./etc/init.vim",
-			"config_destination_path": "~/.config/nvim/init.vim",
-			"plug_source": "./etc/plug.vim",
-			"plug_destination_path": "~/.config/nvim/autoload/plug.vim"
-		}
 	]
 }

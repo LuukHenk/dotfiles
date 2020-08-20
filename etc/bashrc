@@ -16,9 +16,9 @@ alias Rm='rm -r'
 alias Rmf='rm -f -r'
 #
 # Easy navigation
-alias home='cd ~/Dropbox/home'
-alias sid='cd ~/Dropbox/home/sid'
-alias github='cd ~/Dropbox/home/github'
+alias home='cd ~/Dropbox/A-home'
+alias bio='cd ~/Dropbox/A-home/Bioinformatics/'
+
 #
 alias ..='cd ..'
 alias ...='cd ../..'
