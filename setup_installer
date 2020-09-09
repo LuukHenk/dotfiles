@@ -11,6 +11,7 @@ import sys
 
 from lib.package_info import PackagesInfo
 from lib.config_installer import config_installer
+import etc.gsettings as gsettings
 #
 # }}}
 
@@ -21,7 +22,7 @@ HOME_DIR = os.path.expanduser("~") # The users home directiory
 #
 # The path to the json package
 PACKAGES_PATH = os.path.realpath("/".join([FILE_DIR, "packages.json"]))
-PACKAGES_SET = "basic" # Key for package set in packages_path
+PACKAGES_SET = "standard" # Key for package set in packages_path
 #
 #}}}
 
@@ -57,91 +58,105 @@ def main():
     #
     # }
 
-    # Ask user to check if the programs found in package_data are up to date {
+    # Ask the user to check if the versions of the packages are up to date with
+    # the package managers {
     #
     obtain_versions = input("\033[1mCheck if your programs are up to date? [y/N] \033[0m").lower()
     if obtain_versions in ("y", "yes"):
-
-        # Import the packages info file to obtain the package version data
-        packages_info = PackagesInfo()
-        packages_info.managers_bins = managers_bin_paths # Set the package managers
-        print(managers_bin_paths)
-        # Check the version info for each package in package_data
-        versions_info = []
-        print("Checking for package versions...")
-        for package in package_data:
-            print(f"- {package}", end="\r")
-            packages_info.get_package_info(package, package_data[package])
-            print("                                                         ", end="\r")
-
-        # Print package_version info
-        print("----------------------------------------------------")
-        packages_info.render_version_info()
-        print("----------------------------------------------------")
+        version_obtainer(package_data, managers_bin_paths)
     #
     # }
 
-    # Ask user to install configuration files {
+    # Ask the user to install the packages their configuration files {
     #
     install_config = input("\033[1mUpdate configuration files? [y/N] \033[0m").lower()
     if install_config in ("y", "yes"):
-
-        # Run the config installer with the config data
         config_installer(get_real_paths(config_data))
     #
     # }
 
-    # Ask user to install neovim plugins {
+    # Ask the user to install the neovim plugins {
     #
     install_nvim_plugins = input("\033[1mInstall Neovim plugins? [y/N] \033[0m").lower()
     if install_nvim_plugins in ("y", "yes"):
-
-        # Check if there is plugin data
-        if len(nvim_plug_data) != 0:
-
-            # Check if the plugin installation file is on it's destination
-            nvim_plug_full_paths = get_real_paths(nvim_plug_data)
-            dest = nvim_plug_full_paths[next(iter(nvim_plug_full_paths))]
-            # If not, ask the user to add it
-            if not os.path.isfile(dest):
-                config_installer(nvim_plug_full_paths)
-
-            # If the plugin installtion file exists, install the neovim plugins
-            if os.path.isfile(dest):
-                try:
-                    subprocess.run(
-                        ["nvim", "+PlugInstall", "+PlugUpdate", "+PlugUpgrade", "+qa"],
-                        check=True
-                    )
-                except subprocess.CalledProcessError as err:
-                    print((
-                        "\x1b[31mError: \x1b[39m"
-                        f" Failed to run the nvim plugin installer...\n{err}"
-                    ))
-            else:
-                print((
-                    "\x1b[31mError: \x1b[39m"
-                    f" The plugin nvim installer file ({'dest'}) can not be found ..."
-                ))
-
-        else:
-            print((
-                f"\x1b[31mError: \x1b[39mCan't find the 'nvim' package in"
-                " the packages configuration file"
-                f" ('{PACKAGES_PATH}') ..."
-            ))
+        nvim_plug_installer(nvim_plug_data)
     #
     # }
 
-    # Ask the user to set the desktop settings {
+    # Ask the user to edit gsettings / desktop settings {
     #
-    interface_settings = input("\033[1mEdit user interface? [y/N] \033[0m").lower()
+    interface_settings = input("\033[1mEdit gsettings/desktop settings? [y/N] \033[0m").lower()
     if interface_settings in ("y", "yes"):
-        print("Function not available yet...")
+        for schema in gsettings.DATA:
+            for key, val in gsettings.DATA[schema].items():
+                gset_command = " ".join(["gsettings set", schema, key, val])
+                print(gset_command)
+                os.system(gset_command)
     #
     # }
 #
 #}}}
+
+### Check the latest package versions {{{
+#
+def version_obtainer(package_data, managers_bin_paths):
+    """
+    Ask user to check if the programs found in package_data are up to date with the given manager(s)
+    """
+
+    # Import the packages info file to obtain the package version data
+    packages_info = PackagesInfo()
+    packages_info.managers_bins = managers_bin_paths # Set the package managers
+    # Check the version info for each package in package_data
+    print("Checking for package versions...")
+    for package in package_data:
+        print(f"- {package}", end="\r")
+        packages_info.get_package_info(package, package_data[package])
+        print("                                                         ", end="\r")
+
+    # Print package_version info
+    print("----------------------------------------------------")
+    packages_info.render_version_info()
+    print("----------------------------------------------------")
+#
+# }}}
+
+def nvim_plug_installer(nvim_plug_data):
+    " Install the plugin installation file and the plugins found in ./etc/plug.vim"
+    # Check if there is plugin data
+    if len(nvim_plug_data) != 0:
+
+        # Check if the plugin installation file is on it's destination
+        nvim_plug_full_paths = get_real_paths(nvim_plug_data)
+        dest = nvim_plug_full_paths[next(iter(nvim_plug_full_paths))]
+        # If not, ask the user to add it
+        if not os.path.isfile(dest):
+            config_installer(nvim_plug_full_paths)
+
+        # If the plugin installtion file exists, install the neovim plugins
+        if os.path.isfile(dest):
+            try:
+                subprocess.run(
+                    ["nvim", "+PlugInstall", "+PlugUpdate", "+PlugUpgrade", "+qa"],
+                    check=True
+                )
+            except subprocess.CalledProcessError as err:
+                print((
+                    "\x1b[31mError: \x1b[39m"
+                    f" Failed to run the nvim plugin installer...\n{err}"
+                ))
+        else:
+            print((
+                "\x1b[31mError: \x1b[39m"
+                f" The plugin nvim installer file ({'dest'}) can not be found ..."
+            ))
+
+    else:
+        print((
+            f"\x1b[31mError: \x1b[39mCan't find the 'nvim' package in"
+            " the packages configuration file"
+            f" ('{PACKAGES_PATH}') ..."
+        ))
 
 ### Find the correct package sets/managers in the packages.json file {{{
 #
@@ -169,11 +184,11 @@ def get_packages(path):
         packages = data["basic"]
     elif PACKAGES_SET == "standard": # Standard packages/config
         packages = data["basic"]
-        packages = data["standard"]
+        packages += data["standard"]
     elif PACKAGES_SET == "full":     # All packages/config
         packages = data["basic"]
-        packages = data["standard"]
-        packages = data["full"]
+        packages += data["standard"]
+        packages += data["full"]
 
     if len(packages) == 0:
         print((

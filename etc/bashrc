@@ -16,9 +16,9 @@ alias Rm='rm -r'
 alias Rmf='rm -f -r'
 #
 # Easy navigation
-alias home='cd ~/Dropbox/home'
-alias sid='cd ~/Dropbox/home/sid'
-alias github='cd ~/Dropbox/home/github'
+alias home='cd ~/Dropbox/A-home'
+alias bio='cd ~/Dropbox/A-home/Bioinformatics/period_1'
+
 #
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -29,6 +29,7 @@ alias .....='cd ../../../..'
 alias files='nautilus .'
 alias storage='ncdu'
 alias python=python3
+alias teams='cd ~ && ./Documents/teams/usr/bin/teams'
 #
 # }}}
 

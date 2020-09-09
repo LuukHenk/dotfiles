@@ -15,7 +15,7 @@
   [[default]]
     color_scheme = gray_on_black
     cursor_color = "#FFFFFF"
-    font = Ubuntu Mono 30
+    font = Ubuntu Mono 18
     foreground_color = "#ffffff"
     show_titlebar = False
     scrollbar_position = hidden
