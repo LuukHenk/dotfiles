@@ -78,13 +78,14 @@ Will be added later....
 		- update pre-set package managers information
 
 	- T-?:
+		- Show if you are working remotely in the terminal
 		- Add asdf package manager
 		- Add user input arguments for the PACKAGES_PREFERENCE
 		- Let the user install/uninstall packages
 		- Use Fish shell
 
 ### Bugfixes
-	- No bugfixes yet
+	- Inputrc does not load automatically
 
 ### Issues
 	- No issues yet
@@ -129,11 +130,7 @@ Will be added later....
 				- Spotify
 
 	- Full configuration (for home):
-		- Packages form basic configuration +
-		- Steam: (manager: apt)
-		- Discord: (manager: apt/snap)
+		- Packages form standard configuration +
 		- Dropbox: (manager: apt?, config: ?)
 		- Ubuntu-drivers devices
-		- Gnome extensions:
-			- gir1.2-gtop-2.0 gir1.2-networkmanager-1.0  gir1.2-clutter-1.0
-			- http://ubuntuhandbook.org/index.php/2019/03/display-cpu-memory-network-usage-in-ubuntu-18-04-panel/
+		- indicator-multiload

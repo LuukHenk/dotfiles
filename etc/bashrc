@@ -17,7 +17,7 @@ alias Rmf='rm -f -r'
 #
 # Easy navigation
 alias home='cd ~/Dropbox/A-home'
-alias bio='cd ~/Dropbox/A-home/Bioinformatics/period_1'
+alias bio='cd ~/Dropbox/A-home/Bioinformatics'
 
 #
 alias ..='cd ..'
