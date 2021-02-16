@@ -17,7 +17,9 @@ alias Rmf='rm -f -r'
 #
 # Easy navigation
 alias home='cd ~/Dropbox/A-home'
+alias github='cd ~/Dropbox/B-Programming_and_learning/github'
 alias bio='cd ~/Dropbox/A-home/Bioinformatics'
+alias major='cd ~/Dropbox/A-home/Bioinformatics/C1-Major'
 
 #
 alias ..='cd ..'
@@ -29,7 +31,6 @@ alias .....='cd ../../../..'
 alias files='nautilus .'
 alias storage='ncdu'
 alias python=python3
-alias teams='cd ~ && ./Documents/teams/usr/bin/teams'
 #
 # }}}
 
@@ -147,6 +148,7 @@ prompt_git() {
 }
 
 # Set prompt
+PROMPT_DIRTRIM=2
 PS1="\[$red\]${debian_chroot:+($debian_chroot)}"; # Are we root?
 PS1+="\[$blue\]\w"; # Working directory
 PS1+="\$(prompt_git \"\[$white\] @\[$yellow\] \")"; # @ Git repository details
