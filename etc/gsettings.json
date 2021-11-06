@@ -19,14 +19,14 @@
         "show-home": "false"
     },
     "org.freedesktop.ibus.panel.emoji": {
-        "hotkey": "\"['']\""
+        "hotkey": "['']"
     },
     "org.gnome.desktop.input-sources" : {
-        "xkb-options": "\"['caps:escape']\""
+        "xkb-options": "['caps:escape']"
     },
     "org.gnome.desktop.wm.keybindings": {
-        "close": "\"['<Control><Alt>w']\"",
-        "unmaximize": "\"['<Alt>F5']\"",
+        "close": "['<Control><Alt>w']",
+        "unmaximize": "['<Alt>F5']",
         "minimize": "\"['<Super>Down']\""
     },
     "org.gnome.settings-daemon.plugins.color": {

@@ -28,7 +28,10 @@ DOTFILES = {
     REPO/"init.vim":     Path.home()/".config/nvim/init.vim",
 }
 
-NVIM_PLUG = {"repo_path": REPO/"plug.vim", "deploy_path": Path.home()/".config/nvim/autoload/plug.vim"}
+NVIM_PLUG = {
+    "repo_path": REPO/"plug.vim",
+    "deploy_path": Path.home()/".config/nvim/autoload/plug.vim"
+}
 
 GSETTING_CONFIG_PATH = REPO/"gsettings.json"
 
@@ -41,9 +44,10 @@ def check_packages(packages):
         packages (list): list of package names
     """
     for package in packages:
-        if popen("which "+package).read():
+        try:
+            subprocess.run(["which", package], check=True, capture_output=True)
             print(f"{Fore.GREEN}Package {package} is installed")
-        else:
+        except subprocess.CalledProcessError:
             print(f"{Fore.RED}Package {package} is not installed")
     print(Style.RESET_ALL)
 
@@ -79,9 +83,8 @@ def neovim_plugin_installer(plug):
     """
 
     try:
-        if not popen("which nvim").read():
-            raise OSError()
-    except OSError:
+        subprocess.run(["which", "nvim"], check=True, capture_output=True)
+    except subprocess.CalledProcessError:
         print("".join([
             f"{Fore.RED}Error{Style.RESET_ALL}: Neovim not found, ",
             "plugin installation skipped"
@@ -125,7 +128,14 @@ def gsetting_config_installer(gsetting_config_path):
 
     for schema in gconfig:
         for key, value in gconfig[schema].items():
-            system(f"gsettings set {schema} {key} {value}")
+            setting = ["gsettings", "set", schema, key, value]
+            try:
+                subprocess.run(setting, check=True)
+            except subprocess.CalledProcessError:
+                print("".join([
+                    f"Invalid config setting skipped: '{' '.join(setting)}'",
+                    ""
+                ]))
 
 def main():
     """
