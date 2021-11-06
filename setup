@@ -3,7 +3,8 @@
 """ Installer of the dotfiles setup """
 from pathlib import Path
 import subprocess
-from os import popen
+import json
+from os import popen, system
 from colorama import Fore, Style
 
 APT_PACKAGES = [
@@ -18,6 +19,7 @@ APT_PACKAGES = [
 ]
 
 REPO = Path().absolute()/"etc"
+
 DOTFILES = {
     # Repo_path          Deploy_path
     REPO/"bashrc":       Path.home()/".bashrc",
@@ -28,6 +30,7 @@ DOTFILES = {
 
 NVIM_PLUG = {"repo_path": REPO/"plug.vim", "deploy_path": Path.home()/".config/nvim/autoload/plug.vim"}
 
+GSETTING_CONFIG_PATH = REPO/"gsettings.json"
 
 
 def check_packages(packages):
@@ -101,6 +104,29 @@ def neovim_plugin_installer(plug):
         ]))
         return
 
+def gsetting_config_installer(gsetting_config_path):
+    """
+    Installs the configuration for the gsettings, which should be located
+    in the gsetting_config_path json file.
+
+    arguments:
+        gsetting_config_path: Path to the JSON gsetting configuration file
+    """
+
+    try:
+        gconfig = json.load(open(gsetting_config_path, "r"))
+    except FileNotFoundError:
+        print("".join([
+            f"{Fore.RED}Error{Style.RESET_ALL}: ",
+            "gsettings config file not found. ",
+            "Skippig gsettings configuration installation."
+        ]))
+        return
+
+    for schema in gconfig:
+        for key, value in gconfig[schema].items():
+            system(f"gsettings set {schema} {key} {value}")
+
 def main():
     """
     Main function of the script
@@ -120,6 +146,10 @@ def main():
     answer = input("-- Install Neovim plugins? [y/N]")
     if answer.lower() in ["y", "yes"]:
         neovim_plugin_installer(NVIM_PLUG)
+
+    answer = input("-- Install gsettings configuration? [y/N]")
+    if answer.lower() in ["y", "yes"]:
+        gsetting_config_installer(GSETTING_CONFIG_PATH)
 
 if __name__ == "__main__":
     main()
