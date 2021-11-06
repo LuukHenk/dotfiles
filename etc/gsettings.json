@@ -1,0 +1,45 @@
+{
+    "org.gnome.shell.extensions.dash-to-dock": {
+        "dock-position": "LEFT",
+        "dash-max-icon-size": "16",
+        "autohide": "true",
+        "dock-fixed": "false",
+        "intellihide": "true"
+    },
+    "org.gnome.desktop.interface": {
+        "clock-show-date": "true",
+        "clock-show-seconds": "true",
+        "clock-show-weekday": "true",
+        "show-battery-percentage": "true",
+        "gtk-theme": "\"'Yaru-dark'\"",
+        "icon-theme": "\"'Yaru'\""
+    },
+    "org.gnome.shell.extensions.desktop-icons": {
+        "show-trash": "false",
+        "show-home": "false"
+    },
+    "org.freedesktop.ibus.panel.emoji": {
+        "hotkey": "\"['']\""
+    },
+    "org.gnome.desktop.input-sources" : {
+        "xkb-options": "\"['caps:escape']\""
+    },
+    "org.gnome.desktop.wm.keybindings": {
+        "close": "\"['<Control><Alt>w']\"",
+        "unmaximize": "\"['<Alt>F5']\"",
+        "minimize": "\"['<Super>Down']\""
+    },
+    "org.gnome.settings-daemon.plugins.color": {
+        "night-light-schedule-automatic": "true",
+        "night-light-enabled": "true",
+        "night-light-temperature": "3000"
+    },
+    "org.gnome.desktop.privacy": {
+        "remember-recent-files": "true",
+        "recent-files-max-age": "30",
+        "remove-old-temp-files": "true",
+        "remove-old-trash-files": "true",
+        "old-files-age": "30",
+        "disable-camera": "true"
+    }
+}

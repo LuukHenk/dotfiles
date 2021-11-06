@@ -1,5 +1,5 @@
 # My dotfiles
-Version 0.1.5 <br />
+Version 0.2.0 DEV <br />
 My computer configuration setup
 
 ## References

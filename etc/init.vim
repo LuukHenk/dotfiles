@@ -36,7 +36,7 @@ set cursorline " Highlight the cursor line
 set nobackup " Don't make backup files
 set termguicolors " Use the colors of the terminal gui
 set noswapfile " Don't use swap files
-set clipboard+=unnamedplus " Copy to clipboard by default
+set clipboard+=unnamedplus
 "
 " }}}
 

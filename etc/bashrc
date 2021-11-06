@@ -15,23 +15,10 @@ alias rmf='rm -f'
 alias Rm='rm -r'
 alias Rmf='rm -f -r'
 #
-# Easy navigation
-alias home='cd ~/Dropbox/A-home'
-alias github='cd ~/Dropbox/B-Programming_and_learning/github'
-alias bio='cd ~/Dropbox/A-home/Bioinformatics'
-alias major='cd ~/Dropbox/A-home/Bioinformatics/C1-Major'
-
-#
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
-#
-# Program aliases
-alias files='nautilus .'
-alias storage='ncdu'
-alias python=python3
-#
 # }}}
 
 ### Settings {{{
