@@ -8,21 +8,22 @@ My computer configuration setup
 
 ## Setup
 ### Prerequisits
-Python3.8 or higher is needed.
-Python3.8 should contain the subprocess, json, pathlib and colorama packages.
+* Python3.8 or higher is needed.
+* Python3.8 should contain the subprocess, json, pathlib and colorama packages.
 
 ### Installation
-1. Clone the repository to your local computer: `$ git clone https://github.com/LuukHenk/dotfiles.git`
-2. Make the setup installer executable: `$ chmod +x dotfiles/setup`
-3. Run the setup installer and follow the installation script: `$ ./setup`
-
+```
+$ git clone https://github.com/LuukHenk/dotfiles.git
+$ chmod +x dotfiles/setup
+$ ./setup
+```
 
 ## The setup script
 The setup script performs the following tasks:
-* Package checker - Asks to check if the packages in `self.packages` are present
-* Dotfile symlinker - Asks to symlink the dotfiles found in `self.dotfiles` to their deploy location
-* Neovim plugin installer - Asks for installation and updating of the Neovim plugins (Using the Plug script: https://github.com/junegunn/vim-plug)
-* Gsettings config installer - Installs the gsettings configuration found in `etc/gsettings.json`.
+* Check packages - Asks to check if the packages in `self.packages` are present
+* Symlink dotfiles - Asks to symlink the dotfiles found in `self.dotfiles` to their deploy location
+* Install Neovim plugins - Asks for installation and updating of the Neovim plugins (Using the Plug script: https://github.com/junegunn/vim-plug)
+* Install Gsettings - Asks for installation of the gsettings configuration found in `etc/gsettings.json`.
 
 ## Defaults dotfile settings
 ### Bashrc
@@ -34,7 +35,7 @@ The setup script performs the following tasks:
 - Forward (and backward) line per word in the shell using control-<arrowkeys>
 - Improved shell tab autocompletion
 
-### Neovim init file
+### Neovim (init)
 - Neovim plugins
 - Some alternative neovim settings
 - Neovim key mappings
