@@ -9,11 +9,6 @@ My personalised configuration setup script performs the following tasks:
 * Install Gsettings - Asks for installation of the gsettings configuration found in `etc/gsettings.json`.
 
 ## Installation
-### Prerequisits
-* Python3.8 or higher is needed.
-* ((Python3.8 should contain the subprocess, json, pathlib and colorama packages.)) - These should be defaults
-
-### Installation
 ```
 $ git clone https://github.com/LuukHenk/dotfiles.git
 $ chmod +x dotfiles/setup
