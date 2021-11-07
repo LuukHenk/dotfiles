@@ -12,7 +12,7 @@ My personalised configuration setup script performs the following tasks:
 ```
 $ git clone https://github.com/LuukHenk/dotfiles.git
 $ chmod +x dotfiles/setup
-$ ./setup
+$ ./dotfiles/setup
 ```
 
 ## References
