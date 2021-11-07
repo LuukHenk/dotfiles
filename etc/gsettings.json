@@ -27,7 +27,7 @@
     "org.gnome.desktop.wm.keybindings": {
         "close": "['<Control><Alt>w']",
         "unmaximize": "['<Alt>F5']",
-        "minimize": "\"['<Super>Down']\""
+        "minimize": "['<Super>Down']"
     },
     "org.gnome.settings-daemon.plugins.color": {
         "night-light-schedule-automatic": "true",
