@@ -16,6 +16,7 @@ alias Rm='rm -r'
 alias Rmf='rm -f -r'
 alias files='nautilus .'
 alias home='cd ~/Dropbox/Home'
+alias python='python3'
 #
 alias ..='cd ..'
 alias ...='cd ../..'
