@@ -41,7 +41,9 @@ class Dotfiles:
             "pip3",
             "htop",
             "pylint",
-            "git"
+            "git",
+	    "ncdu",
+            "gnome-tweaks"
         ]
         self.dotfiles = {
             # Repo_path          Deploy_path
@@ -107,6 +109,7 @@ class Dotfiles:
 
             if answer.lower() in ["y", "yes"]:
                 deploy_path.unlink(missing_ok=True)
+                deploy_path.parent.mkdir(parents=True, exist_ok=True)
                 deploy_path.symlink_to(repo_path)
                 print(f"Created symlink from {repo_path} to {deploy_path}")
 
@@ -136,6 +139,7 @@ class Dotfiles:
 
         # Deploy pluginstaller
         self.nvim_plug_path["deploy_path"].unlink(missing_ok=True)
+        self.nvim_plug_path["deploy_path"].parent.mkdir(parents=True, exist_ok=True)
         self.nvim_plug_path["deploy_path"].symlink_to(
             self.nvim_plug_path["repo_path"]
         )
