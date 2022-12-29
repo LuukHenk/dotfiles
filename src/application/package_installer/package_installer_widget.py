@@ -10,7 +10,7 @@ class PackageInstallerWidget(QWidget):
         super().__init__()
         self.__checkboxes: List[QCheckBox] = []
         package_installer_layout = QVBoxLayout()
-        package_installer_layout.addWidget(QLabel("Install packages"))
+        package_installer_layout.addWidget(QLabel("<b>Install packages<\\b>"))
         package_installer_layout.addWidget(self.__create_checkbox_widget(packages))
         self.setLayout(package_installer_layout)
 
