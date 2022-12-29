@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
-from typing import Union, List, Optional
-from json import loads
+from typing import List, Optional, Union
 from pathlib import Path
 
 from src.gsettings import GSETTINGS_CONFIG_FORMAT, set_gsettings
-from src.utils.message_displayer import fail_message
 from src.packages_validator import display_installed_packages
 from src.dotfiles_symlinking import DotfileSymlinking
 from src.neovim_plugin_handler import install_neovim_plugins
+from src.utils.json_file_loader import load_json_file
+
 
 
 class Dotfiles:
@@ -44,15 +44,9 @@ class Dotfiles:
         if gsettings_config:
             set_gsettings(gsettings_config)
 
-    def __load_json_file(self, filename: Union[str, Path]) -> any:
-        """Loads a json file from the default repo path"""
-        try:
-            with open(self.__repository_path/filename, "r") as json_file:
-                json_data = json_file.read()
-            return loads(json_data)
-        except FileNotFoundError as err:
-            fail_message(err)
-            return
+    def __load_json_file(self, filename: Union[str, Path]) -> Optional[any]:
+        return load_json_file(self.__repository_path/filename)
+        
 
 if __name__ == "__main__":
     DOTFILES = Dotfiles()
