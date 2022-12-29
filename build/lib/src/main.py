@@ -1,13 +1,6 @@
 #!/usr/bin/env python3
 
-"""
-Title:          Dotfiles
-Description:    Personalised configuration setup for Linux Ubuntu
-Author:         Luuk Perdaems
-Emails:         Luukperdaems@hotmail.com
-Websites:       https://github.com/LuukHenk
-"""
-
+from .user_validation import validate
 import subprocess
 import json
 from pathlib import Path
@@ -74,8 +67,7 @@ class Dotfiles:
             packages (list): list of package names
         """
 
-        answer = input(f"-- Check if apt packages are installed? [y/N]")
-        if answer.lower() not in ["y", "yes"]:
+        if not validate("Check if apt packages are installed?"):
             return
 
         for package in self.packages:

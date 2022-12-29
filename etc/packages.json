@@ -1,0 +1,12 @@
+[
+	"nvim",
+	"terminator",
+	"wget",
+	"python3",
+	"pip3",
+	"htop",
+	"pylint",
+	"git",
+	"ncdu",
+	"gnome-tweaks"
+]

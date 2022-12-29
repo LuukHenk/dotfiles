@@ -1,0 +1,21 @@
+[
+    {
+        "repository_path": "bashrc",
+        "deploy_path": ".bashrc"
+    },
+    {
+        "repository_path": "inputrc",
+        "deploy_path": ".inputrc"
+    },
+    {
+        "repository_path": "terminator",
+        "deploy_path": ".config/terminator/config"
+    },
+    {
+        "repository_path": "init.vim",
+        "deploy_path": ".config/nvim/init.vim"
+    }
+]
+
+
+
