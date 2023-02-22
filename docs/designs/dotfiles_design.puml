@@ -12,7 +12,7 @@ package package_installer {
     }
 
     abstract PackageManagerMapper {
-        + map(package_name: str) -> List[PackageInfo]
+        + map(package_name: str) -> PackageInfo
     }
     class AptPackageManagerMapper
     class SnapPackageManagerMapper
@@ -29,6 +29,7 @@ package package_installer {
         + name: str
         + found: str
         + installed: str
+        + installed_version: str
     }
 }
 

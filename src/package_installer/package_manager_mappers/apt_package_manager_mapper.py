@@ -4,5 +4,5 @@ from package_installer.package_manager_mappers.package_manager_mapper import Pac
 from package_installer.package_info import PackageInfo
 
 class AptPackageManagerMapper(PackageManagerMapper):
-    def map(self, package_name: str) -> List[PackageInfo]:
+    def map(self, package_name: str) -> PackageInfo:
         return super().map()

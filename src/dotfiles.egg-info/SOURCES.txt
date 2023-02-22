@@ -10,11 +10,13 @@ src/dotfiles.egg-info/top_level.txt
 src/etc/__init__.py
 src/etc/packages_to_install.py
 src/package_installer/__init__.py
-src/package_installer/apt_package_manager_mapper.py
 src/package_installer/manager_enum.py
 src/package_installer/package.py
 src/package_installer/package_handler.py
+src/package_installer/package_info.py
 src/package_installer/package_installer.py
-src/package_installer/package_manager_mapper.py
-src/package_installer/snap_package_manager_mapper.py
-src/package_installer/version.py
+src/package_installer/version_enum.py
+src/package_installer/package_manager_mappers/__init__.py
+src/package_installer/package_manager_mappers/apt_package_manager_mapper.py
+src/package_installer/package_manager_mappers/package_manager_mapper.py
+src/package_installer/package_manager_mappers/snap_package_manager_mapper.py
