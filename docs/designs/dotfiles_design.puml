@@ -12,7 +12,7 @@ package package_installer {
     }
 
     abstract PackageManagerMapper {
-        + map(package_name: str) -> List[Package]
+        + map(package_name: str) -> List[PackageInfo]
     }
     class AptPackageManagerMapper
     class SnapPackageManagerMapper
@@ -23,6 +23,12 @@ package package_installer {
     }
     class PackageInstaller {
         - packages_to_install: List[Package]
+    }
+
+    struct PackageInfo {
+        + name: str
+        + found: str
+        + installed: str
     }
 }
 
@@ -62,7 +68,8 @@ PackageInstaller <-- PackageHandler
 PackageInstaller <- PackagesToInstall
 
 PackageHandler <- Package
-PackageManagerMapper <- Package
+PackageHandler <- PackageInfo
+PackageManagerMapper <- PackageInfo
 
 PackageInstaller <-- Package
 PackagesToInstall <- Package
