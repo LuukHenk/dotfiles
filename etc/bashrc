@@ -146,3 +146,4 @@ PS1+="\[$white\] $ \[$reset\]"; # $ and reset
 export PS1;
 #
 # }}}
+. "$HOME/.cargo/env"
