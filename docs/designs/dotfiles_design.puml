@@ -1,0 +1,76 @@
+@startuml dotfiles design
+
+package package_installer {
+
+    struct Package {
+        + name: str
+        + manager: Manager
+        + version: str
+        - installation_command: str
+    }
+    enum Manager {
+        manager: str
+    }
+
+    abstract PackageManagerMapper {
+        + map(package_name: str) -> List[Package]
+    }
+    class AptPackageManagerMapper
+    class SnapPackageManagerMapper
+
+    class PackageHandler {
+        + check_if_package_exists(package_name: str, version: Optional[str]=None, manager: Optional[Manager]=None) -> bool
+        + install_package(package_name: str, version: Optional[str]=None, manager: Optional[Manager]=None)
+    }
+    class PackageInstaller {
+        - packages_to_install: List[PackageToInstall]
+    }
+    struct PackageToInstall {
+        + possible_package_names: List[str]
+        + accepted_versions: List[str]
+        + accepted_managers: List[Manager]
+    }
+    note bottom: The lists are ordered, with the most prefered options first
+}
+
+class Main {
+    + installers: List[Installer]
+}
+
+abstract Installer {
+    + install() -> bool
+}
+
+class DotfilesInstaller {
+    This will be extended later
+}
+class GsettingsInstaller {
+    This will be extended later
+}
+class NeovimInstaller {
+    This will be extended later
+}
+
+package etc {
+    struct PackagesToInstall {
+        + packages: List[PackageToInstall]
+    }
+}
+
+Main <-- Installer
+Installer --|> PackageInstaller
+Installer -|> DotfilesInstaller
+Installer -|> NeovimInstaller
+Installer -|> GsettingsInstaller
+PackageManagerMapper --|> AptPackageManagerMapper
+PackageManagerMapper --|> SnapPackageManagerMapper
+PackageHandler <-- PackageManagerMapper
+PackageInstaller <-- PackageHandler
+PackageInstaller <- PackagesToInstall
+
+PackageHandler <- Package
+PackageManagerMapper <- Package
+
+PackageInstaller <-- PackageToInstall
+PackagesToInstall <- PackageToInstall
+@enduml
