@@ -1,5 +1,5 @@
 
-from typing import Tuple, List, Dict, Final, Optional
+from typing import Tuple, List, Dict, Final
 from subprocess import run
 from package_installer.package_manager_mappers.package_manager_mapper import PackageManagerMapper
 from package_installer.package_info import PackageInfo
@@ -19,20 +19,19 @@ class SnapPackageManagerMapper(PackageManagerMapper):
         
     def map(self, package_name: str) -> PackageInfo:
         package_info = PackageInfo(name=package_name)
+        
         command = self.INFO_COMMAND + [package_name]
-        result = run(command, capture_output=True, encoding="utf-8")
-        if result.returncode != 0:
+        info_result = run(command, capture_output=True, encoding="utf-8")
+        
+        if info_result.returncode != 0:
             return package_info
         package_info.found = True
 
-        if not self.__check_if_installed(result.stdout):
+        if not self.__check_if_installed(info_result.stdout):
             return package_info
-        
         package_info.installed = True
-        installed_version = self.__find_installed_version(result.stdout)
-        if not installed_version:
-            print(f"Unable to find installed version of {package_info.name}")
-        package_info.installed_version = installed_version
+        package_info.installed_version = self.__find_installed_version(info_result.stdout)
+        
         return package_info
         
     def __check_if_installed(self, snap_info_stdout=str) -> bool:

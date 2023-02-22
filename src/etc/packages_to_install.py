@@ -6,18 +6,18 @@ from package_installer.version_enum import Version
 
 packages: List[Package] = [
     Package(
-        name="spotify",
-        manager=Manager.SNAP,
+        name="python3",
+        manager=Manager.APT,
         version=Version.LATEST_STABLE
     ),
     Package(
-        name="pogo",
-        manager=Manager.SNAP,
+        name="htop",
+        manager=Manager.APT,
         version=Version.LATEST_STABLE
     ),
     Package(
         name="this is not a valid name",
-        manager=Manager.SNAP,
+        manager=Manager.APT,
         version=Version.LATEST_STABLE
     ),
 ]
