@@ -5,6 +5,11 @@ Personalised configuration setup for Linux Ubuntu
 ...
 
 ## Installation
+
+### Requirements
+
+- Python >3.9
+- Pip
 ...
 
 ## References
