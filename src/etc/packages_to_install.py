@@ -6,7 +6,7 @@ from package_installer.version import Version
 
 packages: List[Package] = [
     Package(
-        name="spotify",
+        name="spotifyf",
         manager=Manager.SNAP,
         version=Version.STABLE
     )

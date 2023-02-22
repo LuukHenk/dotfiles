@@ -1,6 +1,6 @@
 
 from typing import List
-from package_installer.package_manager_mapper import PackageManagerMapper
+from package_installer.package_manager_mappers.package_manager_mapper import PackageManagerMapper
 from package_installer.package import Package
 
 class AptPackageManagerMapper(PackageManagerMapper):
