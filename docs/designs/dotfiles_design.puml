@@ -6,7 +6,6 @@ package package_installer {
         + name: str
         + manager: Manager
         + version: str
-        - installation_command: str
     }
     enum Manager {
         manager: str
@@ -23,14 +22,8 @@ package package_installer {
         + install_package(package_name: str, version: Optional[str]=None, manager: Optional[Manager]=None) -> bool
     }
     class PackageInstaller {
-        - packages_to_install: List[PackageToInstall]
+        - packages_to_install: List[Package]
     }
-    struct PackageToInstall {
-        + possible_package_names: List[str]
-        + accepted_versions: List[str]
-        + accepted_managers: List[Manager]
-    }
-    note bottom: The lists are ordered, with the most prefered options first
 }
 
 class Main {
@@ -53,7 +46,7 @@ class NeovimInstaller {
 
 package etc {
     struct PackagesToInstall {
-        + packages: List[PackageToInstall]
+        + packages: List[Package]
     }
 }
 
@@ -71,6 +64,6 @@ PackageInstaller <- PackagesToInstall
 PackageHandler <- Package
 PackageManagerMapper <- Package
 
-PackageInstaller <-- PackageToInstall
-PackagesToInstall <- PackageToInstall
+PackageInstaller <-- Package
+PackagesToInstall <- Package
 @enduml

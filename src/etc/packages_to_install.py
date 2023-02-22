@@ -1,13 +1,13 @@
 from typing import List
 
-from package_installer.package_to_install import PackageToInstall
+from package_installer.package import Package
 from package_installer.manager_enum import Manager
+from package_installer.version import Version
 
-
-packages: List[PackageToInstall] = [
-    PackageToInstall(
-        possible_package_names=["python"],
-        accepted_managers=[Manager.APT],
-        accepted_versions=["3.10.6"]
+packages: List[Package] = [
+    Package(
+        name="spotify",
+        manager=Manager.SNAP,
+        version=Version.STABLE
     )
 ]

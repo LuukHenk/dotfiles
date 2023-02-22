@@ -7,4 +7,3 @@ class Package:
     name:str
     manager: Manager
     version: str
-    installation_command: str
