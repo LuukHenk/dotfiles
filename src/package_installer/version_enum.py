@@ -1,7 +1,8 @@
 from enum import Enum
 
 class Version(str, Enum):
-    STABLE = "Latest"
-    CANDIDATE = "Candidate"
-    BETA = "Beta"
-    EDGE = "Edge"
+    LATEST_STABLE = "Stable"
+    LATEST_CANDIDATE = "Candidate"
+    LATEST_BETA = "Beta"
+    LATEST_EDGE = "Edge"
+    OTHER = "Other"

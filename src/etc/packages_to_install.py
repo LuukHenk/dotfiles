@@ -8,16 +8,16 @@ packages: List[Package] = [
     Package(
         name="spotify",
         manager=Manager.SNAP,
-        version=Version.STABLE
+        version=Version.LATEST_STABLE
     ),
     Package(
         name="pogo",
         manager=Manager.SNAP,
-        version=Version.STABLE
+        version=Version.LATEST_STABLE
     ),
     Package(
         name="this is not a valid name",
         manager=Manager.SNAP,
-        version=Version.STABLE
+        version=Version.LATEST_STABLE
     ),
 ]

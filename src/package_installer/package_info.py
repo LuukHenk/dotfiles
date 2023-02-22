@@ -9,4 +9,4 @@ class PackageInfo:
     name: str
     found: bool = False
     installed: bool = False
-    installed_version: Optional[Tuple[Version, str]] = None
+    installed_version: Optional[Tuple[str, Version]] = None

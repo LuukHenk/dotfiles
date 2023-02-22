@@ -8,7 +8,7 @@ Personalised configuration setup for Linux Ubuntu
 
 ### Requirements
 
-- Python >3.9
+- Python >3.10
 - Pip
 ...
 

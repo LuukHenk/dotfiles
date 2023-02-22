@@ -10,10 +10,10 @@ class SnapPackageManagerMapper(PackageManagerMapper):
     INSTALLED_INDICATOR: Final[str] = "\ninstalled:"
     LATEST_INDICATOR: Final[str] = "latest/"
     TRACKING_INDICATOR: Final[str] = "tracking:"
-    STABLE_INDICATOR: Final[str] = "stable"
-    CANDIDATE_INDICATOR: Final[str] = "candidate"
-    BETA_INDICATOR: Final[str] = "beta"
-    EDGE_INDICATOR: Final[str] = "edge"
+    STABLE_INDICATOR: Final[str] = "latest/stable"
+    CANDIDATE_INDICATOR: Final[str] = "latest/candidate"
+    BETA_INDICATOR: Final[str] = "latest/beta"
+    EDGE_INDICATOR: Final[str] = "latest/edge"
     
     
         
@@ -21,7 +21,7 @@ class SnapPackageManagerMapper(PackageManagerMapper):
         package_info = PackageInfo(name=package_name)
         command = self.INFO_COMMAND + [package_name]
         result = run(command, capture_output=True, encoding="utf-8")
-        if result.returncode == 1:
+        if result.returncode != 0:
             return package_info
         package_info.found = True
 
@@ -38,37 +38,40 @@ class SnapPackageManagerMapper(PackageManagerMapper):
     def __check_if_installed(self, snap_info_stdout=str) -> bool:
         return self.INSTALLED_INDICATOR in snap_info_stdout
     
-    def __find_installed_version(self,snap_info_stdout=str) -> Optional[Tuple[Version, str]]:
+    def __find_installed_version(self,snap_info_stdout=str) -> Tuple[str, Version]:
         available_versions = self.__find_available_versions(snap_info_stdout)
         installed_version = snap_info_stdout.split(self.INSTALLED_INDICATOR)[1].split("\n")[0]
         installed_version = self.__format_version(installed_version)
-        for version_type, version in available_versions.items():
+        for version, version_type in available_versions.items():
             if version == installed_version:
-                return version_type, version
-        return None
+                return version, version_type
+        return installed_version, Version.OTHER
         
-    def __find_available_versions(self, snap_info_stdout=str) -> Dict[Version, str]:
-        channels: Dict[Version, str] = {
-            Version.STABLE: "",
-            Version.CANDIDATE: "",
-            Version.BETA: "",
-            Version.EDGE: ""
-        }
+    def __find_available_versions(self, snap_info_stdout=str) -> Dict[str, Version]:
+        channels: Dict[str, Version] = {}
         for line in snap_info_stdout.splitlines():
             if self.TRACKING_INDICATOR in line or not self.LATEST_INDICATOR in line:
                 continue
             version_type, version = line.strip().split(":")
             version = self.__format_version(version)
-            if self.STABLE_INDICATOR in version_type:
-                channels[Version.STABLE] = version
-            elif self.CANDIDATE_INDICATOR in version_type:
-                channels[Version.CANDIDATE] = version
-            elif self.BETA_INDICATOR in version_type:
-                channels[Version.BETA] = version
-            elif self.EDGE_INDICATOR in version_type:
-                channels[Version.EDGE] = version
+            if version in channels:
+                continue
+            channels[version] = self.__match_version_type(version_type)
         return channels
     
+    def __match_version_type(self, version_type: str) -> Version:
+        match version_type:
+            case self.STABLE_INDICATOR:
+                return Version.LATEST_STABLE
+            case self.CANDIDATE_INDICATOR:
+                return Version.LATEST_CANDIDATE
+            case self.BETA_INDICATOR:
+                return Version.LATEST_BETA
+            case self.EDGE_INDICATOR:
+                return Version.LATEST_EDGE
+        return Version.OTHER
+                
+            
     @staticmethod
     def __format_version(unformatted_version: str) -> str:
         unformatted_version = unformatted_version.strip()
