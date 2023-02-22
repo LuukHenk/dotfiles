@@ -1,0 +1,16 @@
+sudo apt install python3-pip
+pip install -e .
+python3 src/main.py
+
+
+
+Apt installations:
+- cargo
+- rustc
+
+Snap installaties:
+- spotify
+- dropbox
+- steam
+- signal-desktop
+- VLC
