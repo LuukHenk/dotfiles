@@ -18,8 +18,8 @@ package package_installer {
     class SnapPackageManagerMapper
 
     class PackageHandler {
-        + check_if_package_exists(package_name: str, version: Optional[str]=None, manager: Optional[Manager]=None) -> bool
-        + install_package(package_name: str, version: Optional[str]=None, manager: Optional[Manager]=None) -> bool
+        + check_if_package_exists(package: Package) -> bool
+        + install_package(package: Package) -> bool
     }
     class PackageInstaller {
         - packages_to_install: List[Package]

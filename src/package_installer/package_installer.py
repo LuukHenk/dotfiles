@@ -13,8 +13,7 @@ class PackageInstaller(Installer):
     
     def install(self) -> bool:
         for package in self.__packages_to_install:
-            self.__package_handler.check_if_package_exists()
-            print(package.possible_package_names)
+            self.__package_handler.check_if_package_exists(package)
 
 
 
