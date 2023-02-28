@@ -1,6 +1,5 @@
-
 from enum import Enum
 
-class Manager(str, Enum):
+class ManagerEnum(str, Enum):
     APT = "apt"
     SNAP = "snap"

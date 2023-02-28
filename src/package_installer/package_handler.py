@@ -1,46 +1,22 @@
 
-from typing import Optional
+from typing import List
+from package_installer.data_models.package_info import PackageInfo
+from package_installer.data_models.package_search_query import PackageSearchQuery
 
-from package_installer.manager_enum import Manager
-from package_installer.package_manager_mappers.package_manager_mapper import PackageManagerMapper
-from package_installer.package_manager_mappers.apt_package_manager_mapper import AptPackageManagerMapper
-from package_installer.package_manager_mappers.snap_package_manager_mapper import SnapPackageManagerMapper
-from package_installer.package import Package
-
+from package_installer.package_managers_handlers.package_manager_handler import PackageManagerHandler
+from package_installer.package_managers_handlers.apt_package_manager_handler import AptPackageManagerHandler
 
 class PackageHandler:
-
-    def __init__(self) -> None:
-        self.__apt_package_manager_mapper = AptPackageManagerMapper()
-        self.__snap_package_manager_mapper = SnapPackageManagerMapper()
-    
-    def check_if_package_exists(self, package: Package) -> bool:
-        """Checks if the given package exists
-
-        Args:
-            package: Package: the package to search for
+    def __init__(self):
+        self.__package_managers: List[PackageManagerHandler] = [
+            AptPackageManagerHandler()    
+        ]
+        
+    def get_package_info(self, package: PackageSearchQuery) -> List[PackageInfo]:
+        package_info = []
+        for manager in self.__package_managers:
+            for package_name in package.search_query:
+                package_info += manager.find_package(package_name)
             
-        Returns:
-            bool: True if the package was found
-        """
-        mapper = self.__select_mapper(package.manager)
-        
-        print()
-        print(package)
-        print(mapper.map(package.name))
-        
-        
-    def install_package(package: Package) -> bool:
-        """Tries to install a given package
-        Args:
-            package: Package: the package to install
-            
-        Returns:
-            bool: True if the package was successfully installed
-        """
+        return package_info
     
-    def __select_mapper(self, manager: Manager) -> PackageManagerMapper:
-        if manager == Manager.APT:
-            return self.__apt_package_manager_mapper
-        elif manager == Manager.SNAP:
-            return self.__snap_package_manager_mapper
