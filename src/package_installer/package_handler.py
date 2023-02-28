@@ -24,7 +24,11 @@ class PackageHandler:
             bool: True if the package was found
         """
         mapper = self.__select_mapper(package.manager)
+        
+        print()
+        print(package)
         print(mapper.map(package.name))
+        
         
     def install_package(package: Package) -> bool:
         """Tries to install a given package
