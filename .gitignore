@@ -1,2 +1,5 @@
 .nvimlog
 build/
+.vscode
+.pylintrc
+__pycache__
