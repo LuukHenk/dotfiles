@@ -33,26 +33,33 @@ class AptPackageManagerHandler(PackageManagerHandler):
         if installed_version_str is not None and not latest_package_installed:
             packages.append(PackageInfo(
                 name=package_name,
-                version=(latest_version_str, Version.OTHER),
-                installed=latest_package_installed,
+                version=(installed_version_str, Version.OTHER),
+                installed=True,
                 manager=ManagerEnum.APT,
             ))
 
         return packages
         
     def __find_latest_package_version(self, package_name: str) -> Optional[str]:
-        package_info = self._run_command(self.INFO_COMMAND + [package_name])
-        if package_info.returncode != 0 or not self.VERSION_INDICATOR in package_info.stdout:
+        command = self.INFO_COMMAND + [package_name]
+        latest_version = self.__find_version(command, self.VERSION_INDICATOR)
+        if not latest_version:
             return None
-        
-        return package_info.stdout.split(self.VERSION_INDICATOR)[1].split("\n")[0]
+        return latest_version.split("\n")[0]
     
-    def __find_installed_version(self, package_name: str) -> Optional[PackageInfo]:
-        installation_info = self._run_command(self.INSTALLED_COMMAND + [package_name])
-        if not installation_info.returncode == 0 or not package_name in installation_info.stdout:
+    def __find_installed_version(self, package_name: str) -> Optional[str]:
+        command = self.INSTALLED_COMMAND + [package_name]
+        installed_version = self.__find_version(command, package_name)
+        if not installed_version:
             return None
-        return installation_info.stdout.split(package_name)[1].strip().split()[0]
+        return installed_version.strip().split()[0]
 
+    def __find_version(self, command: List[str], version_indicator: str) -> Optional[str]:
+        package_info = self._run_command(command)
+        if package_info.returncode != 0 or not version_indicator in package_info.stdout:
+            return None
+        return package_info.stdout.split(version_indicator)[1]
+    
     @staticmethod
     def __check_if_latest_package_is_installed(latest_version: Optional[str], installed_version: Optional[str]) -> bool:
         package_installed = False

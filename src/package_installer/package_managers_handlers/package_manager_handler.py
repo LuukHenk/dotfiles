@@ -13,4 +13,4 @@ class PackageManagerHandler(ABC):
         
     @staticmethod
     def _run_command(command: List[str]) -> CompletedProcess:
-        return run(command, capture_output=True, encoding="utf-8")
+        return run(command, capture_output=True, check=False, encoding="utf-8")
