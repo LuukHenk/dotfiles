@@ -1,5 +1,6 @@
 
-from typing import List, Final, Optional, Dict
+from subprocess import CompletedProcess
+from typing import List, Final, Optional, Dict, Tuple
 
 from package_installer.subprocess_interface import run_
 from package_installer.data_models.version_enum import Version
@@ -20,19 +21,22 @@ class SnapPackageManagerHandler(PackageManagerHandler):
     EDGE_INDICATOR: Final[str] = "latest/edge"
     
     INFO_COMMAND: Final[List[str]] = ["snap", "info"]
-    
+    def __init__(self) -> None:
+        self.__active_package_name: str = ""
+        
     def find_package(self, package_name: str) -> List[PackageInfo]:
-        latest_versions: Dict[str, Version]  = self.__find_latest_package_versions(package_name)
-        installed_version: Optional[str] = self.__find_installed_version(package_name)
-        return self.__generate_package_info(package_name, latest_versions, installed_version)
+        self.__active_package_name = package_name
+        package_info_run_result: CompletedProcess = run_(self.INFO_COMMAND + [package_name])
+        if package_info_run_result.returncode != 0:
+            return []
+        
+        latest_versions: Dict[str, Version]  = self.__find_latest_package_versions(package_info_run_result.stdout)
+        installed_version: Optional[str] = self.__find_installed_version(package_info_run_result.stdout)
+        return self.__generate_package_info(latest_versions, installed_version)
 
-    def __find_latest_package_versions(self, package_name: str) -> Dict[str, Version]:
-        package_info = run_(self.INFO_COMMAND + [package_name])
-        if package_info.returncode != 0:
-            return {}
-
+    def __find_latest_package_versions(self, package_info: str) -> Dict[str, Version]:
         latest_versions = {}
-        for line in package_info.stdout.splitlines():
+        for line in package_info.splitlines():
             if self.TRACKING_INDICATOR in line or not self.LATEST_INDICATOR in line:
                 continue
             version_type, version = line.strip().split(":")
@@ -54,11 +58,10 @@ class SnapPackageManagerHandler(PackageManagerHandler):
                 return Version.LATEST_EDGE
         return Version.OTHER
     
-    def __find_installed_version(self, package_name: str) -> Optional[str]:
-        package_info = run_(self.INFO_COMMAND + [package_name])
-        if package_info.returncode != 0 or not self.INSTALLED_INDICATOR in package_info.stdout:
+    def __find_installed_version(self, package_info: str) -> Optional[str]:
+        if self.INSTALLED_INDICATOR not in package_info:
             return None
-        installed_version = package_info.stdout.split(self.INSTALLED_INDICATOR)[1].split("\n")[0]
+        installed_version = package_info.split(self.INSTALLED_INDICATOR)[1].split("\n")[0]
         installed_version = self.__format_version(installed_version)
         return installed_version
 
@@ -70,32 +73,38 @@ class SnapPackageManagerHandler(PackageManagerHandler):
             return unformatted_version
         return unformatted_version.split(spacing)[0]
 
-    @staticmethod
+
     def __generate_package_info(
-        package_name: str, latest_versions: Dict[str, Version], installed_version: Optional[str]
+        self, latest_versions: Dict[str, Version], installed_version: Optional[str]
     ) -> List[PackageInfo]:
         
         packages = []
-        installed_found = False
-        for version in latest_versions:
-            installed = False
-            if installed_version is not None:
-                installed = version == installed_version
+        
+        if installed_version is None:
+            for version_key in latest_versions:
+                version=(version_key, latest_versions[version_key])
+                packages.append(self.__create_package_info_object(version, installed=False))
+        else:
+            installed_found = False
+            
+            for version_key in latest_versions:
+                installed = version_key == installed_version
+                version=(version_key, latest_versions[version_key])
+                packages.append(self.__create_package_info_object(version, installed))
+
                 if installed:
                     installed_found = True
-            packages.append(PackageInfo(
-                name=package_name,
-                version=(version, latest_versions[version]),
-                installed=installed,
-                manager=ManagerEnum.SNAP,
-            ))
 
-        if not installed_found and installed_version is not None:
-            packages.append(PackageInfo(
-                name=package_name,
-                version=(installed_version, Version.OTHER),
-                installed=True,
-                manager=ManagerEnum.SNAP,
-            ))     
-        
+            if not installed_found:
+                version=(installed_version, Version.OTHER)
+                packages.append(self.__create_package_info_object(version, installed=True))
+
         return packages
+
+    def __create_package_info_object(self, version: Tuple[str, Version], installed: bool) -> PackageInfo:
+        return PackageInfo(
+            name=self.__active_package_name,
+            version=version,
+            installed=installed,
+            manager=ManagerEnum.SNAP
+        )

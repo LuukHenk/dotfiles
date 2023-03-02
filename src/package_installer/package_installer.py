@@ -10,8 +10,8 @@ class PackageInstaller(Installer):
         super().__init__()
         self.__packages_to_install: List[PackageSearchQuery] = [
             PackageSearchQuery(
-                name="Spotify",
-                search_query=["spotify", "sdkjflk"]
+                name="Neovim",
+                search_query=["neovim", "nvim"]
             )
         ]
         self.__package_handler: PackageHandler = PackageHandler()
