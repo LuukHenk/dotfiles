@@ -12,34 +12,35 @@ class AptPackageManagerHandler(PackageManagerHandler):
     VERSION_INDICATOR: Final[str] = "\nVersion: "
     
     def find_package(self, package_name: str) -> List[PackageInfo]:
-        
-        latest_version_str = self.__find_latest_package_version(package_name)
-        installed_version_str = self.__find_installed_version(package_name)
-        
-        packages: List[PackageInfo] = []
-        latest_package_installed = self.__check_if_latest_package_is_installed(
-            latest_version=latest_version_str,
-            installed_version=installed_version_str    
+        latest_version = self.__find_latest_package_version(package_name)
+        installed_version = self.__find_installed_version(package_name)
+        installed = self.__check_if_latest_package_is_installed(
+            latest_version=latest_version,
+            installed_version=installed_version  
         )
-        
-        if latest_version_str is not None:
+        return self.__generate_package_info(package_name, latest_version, installed)
+
+
+    def __generate_package_info(self, package_name:str, latest_version: Optional[str], installed: bool):
+        packages: List[PackageInfo] = []
+        if latest_version is not None:
             packages.append(PackageInfo(
                 name=package_name,
-                version=(latest_version_str, Version.LATEST_STABLE),
-                installed=latest_package_installed,
+                version=(latest_version, Version.LATEST_STABLE),
+                installed=installed,
                 manager=ManagerEnum.APT,
             ))
             
-        if installed_version_str is not None and not latest_package_installed:
+        if latest_version is not None and not installed:
             packages.append(PackageInfo(
                 name=package_name,
-                version=(installed_version_str, Version.OTHER),
+                version=(latest_version, Version.OTHER),
                 installed=True,
                 manager=ManagerEnum.APT,
             ))
 
         return packages
-        
+    
     def __find_latest_package_version(self, package_name: str) -> Optional[str]:
         command = self.INFO_COMMAND + [package_name]
         latest_version = self.__find_version(command, self.VERSION_INDICATOR)
