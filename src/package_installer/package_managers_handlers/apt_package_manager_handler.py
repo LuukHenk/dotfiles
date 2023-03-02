@@ -36,7 +36,8 @@ class AptPackageManagerHandler(PackageManagerHandler):
             return None
         return installed_version.strip().split()[0]
 
-    def __find_version(self, command: List[str], version_indicator: str) -> Optional[str]:
+    @staticmethod
+    def __find_version(command: List[str], version_indicator: str) -> Optional[str]:
         package_info = run_(command)
         if package_info.returncode != 0 or not version_indicator in package_info.stdout:
             return None
