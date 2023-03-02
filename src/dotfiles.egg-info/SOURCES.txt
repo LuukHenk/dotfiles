@@ -10,6 +10,7 @@ src/dotfiles.egg-info/top_level.txt
 src/package_installer/__init__.py
 src/package_installer/package_handler.py
 src/package_installer/package_installer.py
+src/package_installer/subprocess_interface.py
 src/package_installer/data_models/__init__.py
 src/package_installer/data_models/manager_enum.py
 src/package_installer/data_models/package_info.py
@@ -22,3 +23,4 @@ src/package_installer/package_manager_mappers/snap_package_manager_mapper.py
 src/package_installer/package_managers_handlers/__init__.py
 src/package_installer/package_managers_handlers/apt_package_manager_handler.py
 src/package_installer/package_managers_handlers/package_manager_handler.py
+src/package_installer/package_managers_handlers/snap_package_manager_handler.py

@@ -10,14 +10,15 @@ class PackageInstaller(Installer):
         super().__init__()
         self.__packages_to_install: List[PackageSearchQuery] = [
             PackageSearchQuery(
-                name="Python3",
-                search_query=["python3", "htop"]
+                name="Spotify",
+                search_query=["spotify", "sdkjflk"]
             )
         ]
         self.__package_handler: PackageHandler = PackageHandler()
         
         for package in self.__packages_to_install:
-            print(self.__package_handler.get_package_info(package))
+            for package_info in self.__package_handler.get_package_info(package):
+                print(package_info)
     
     def install(self) -> bool:
         pass

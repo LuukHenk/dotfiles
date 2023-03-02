@@ -5,11 +5,13 @@ from package_installer.data_models.package_search_query import PackageSearchQuer
 
 from package_installer.package_managers_handlers.package_manager_handler import PackageManagerHandler
 from package_installer.package_managers_handlers.apt_package_manager_handler import AptPackageManagerHandler
+from package_installer.package_managers_handlers.snap_package_manager_handler import SnapPackageManagerHandler
 
 class PackageHandler:
-    def __init__(self):
+    def __init__(self) -> None:
         self.__package_managers: List[PackageManagerHandler] = [
-            AptPackageManagerHandler()    
+            AptPackageManagerHandler(),
+            SnapPackageManagerHandler()
         ]
         
     def get_package_info(self, package: PackageSearchQuery) -> List[PackageInfo]:
