@@ -15,11 +15,7 @@ class AptPackageManagerHandler(PackageManagerHandler):
     def find_package(self, package_name: str) -> List[PackageInfo]:
         latest_version = self.__find_latest_package_version(package_name)
         installed_version = self.__find_installed_version(package_name)
-        installed = self.__check_if_latest_package_is_installed(
-            latest_version=latest_version,
-            installed_version=installed_version  
-        )
-        return self.__generate_package_info(package_name, latest_version, installed)
+        return self.__generate_package_info(package_name, latest_version, installed_version)
 
     
     def __find_latest_package_version(self, package_name: str) -> Optional[str]:
@@ -50,23 +46,41 @@ class AptPackageManagerHandler(PackageManagerHandler):
             package_installed = latest_version == installed_version
         return package_installed
 
-    @staticmethod
-    def __generate_package_info(package_name:str, latest_version: Optional[str], installed: bool):
+    def __generate_package_info(
+        self,
+        package_name:str, 
+        latest_version: Optional[str], 
+        installed_version: Optional[str]
+    ) -> List[PackageInfo]:
+
+        latest_installed = self.__check_if_latest_package_is_installed(
+            latest_version=latest_version,
+            installed_version=installed_version  
+        )
         packages: List[PackageInfo] = []
+
         if latest_version is not None:
+            if latest_installed:
+                packages.append(PackageInfo(
+                    name=package_name,
+                    version=(latest_version, Version.LATEST_STABLE),
+                    installed=True,
+                    manager=ManagerEnum.APT,
+                ))
+            else:
+                packages.append(PackageInfo(
+                    name=package_name,
+                    version=(latest_version, Version.LATEST_STABLE),
+                    installed=False,
+                    manager=ManagerEnum.APT,
+                ))
+                    
+        if installed_version is not None and not latest_installed:
             packages.append(PackageInfo(
                 name=package_name,
-                version=(latest_version, Version.LATEST_STABLE),
-                installed=installed,
-                manager=ManagerEnum.APT,
-            ))
-            
-        if latest_version is not None and not installed:
-            packages.append(PackageInfo(
-                name=package_name,
-                version=(latest_version, Version.OTHER),
+                version=(installed_version, Version.OTHER),
                 installed=True,
                 manager=ManagerEnum.APT,
             ))
-
+        
         return packages

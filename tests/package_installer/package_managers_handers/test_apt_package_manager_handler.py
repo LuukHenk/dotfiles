@@ -68,7 +68,7 @@ Desired=Unknown/Install/Remove/Purge/Hold
 +++-==============-==============-============-=========================================================================
 ii  python3        {} amd64        interactive high-level object-oriented language (default python3 version)
     """
-    RUN_PATCH = ABC_CLASS_PATCH_TEMPLATE.format("run")
+    RUN_PATCH = MANAGER_CLASS_PATCH_TEMPLATE.format("run_")
     PACKAGE_INFO_PATCH = MANAGER_CLASS_PATCH_TEMPLATE.format("PackageInfo")
 
     @patch(RUN_PATCH)
