@@ -8,14 +8,14 @@ from subprocess import CompletedProcess
 from package_installer.data_models.manager_enum import ManagerEnum
 from package_installer.data_models.package_info import PackageInfo
 from package_installer.data_models.version_enum import Version
-from package_installer.package_managers_handlers.snap_package_manager_handler import (
-    SnapPackageManagerHandler,
+from package_installer.package_finder.package_managers.snap_package_manager import (
+    SnapPackageManager,
 )
 
 
-MANAGER_CLASS_PATCH_TEMPLATE = "package_installer.package_managers_handlers.snap_package_manager_handler.{}"
+MANAGER_CLASS_PATCH_TEMPLATE = "package_installer.package_finder.package_managers.snap_package_manager.{}"
 
-class TestAptPackageManagerHandler(TestCase):
+class TestAptPackageManager(TestCase):
 
     RUN_PATCH = MANAGER_CLASS_PATCH_TEMPLATE.format("run_")
     PACKAGE_INFO_PATCH = MANAGER_CLASS_PATCH_TEMPLATE.format("PackageInfo")
@@ -27,7 +27,7 @@ class TestAptPackageManagerHandler(TestCase):
         completed_process_mock.returncode = 1
         run_patch.return_value = completed_process_mock
         package_name = "package_name"
-        package_manager_handler = SnapPackageManagerHandler()
+        package_manager_handler = SnapPackageManager()
         
         # Act
         package_info = package_manager_handler.find_package(package_name)
@@ -320,7 +320,7 @@ class TestAptPackageManagerHandler(TestCase):
         run_mock.stdout = snap_info_text
         run_mock.returncode = 0
         package_name = PACKAGE_NAME
-        package_manager_handler = SnapPackageManagerHandler()        
+        package_manager_handler = SnapPackageManager()        
         # Act
         with (
             patch(self.RUN_PATCH) as run_patch,
@@ -331,7 +331,7 @@ class TestAptPackageManagerHandler(TestCase):
             package_info = package_manager_handler.find_package(package_name)
 
         # Assert
-        return package_info, package_info_patch
+        return package_info, package_info_patch # type: ignore
 
 PACKAGE_INFO_MOCK = create_autospec(PackageInfo)
 PACKAGE_NAME = "spotify"
