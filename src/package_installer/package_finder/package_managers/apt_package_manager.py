@@ -3,11 +3,11 @@ from typing import List, Final, Optional
 
 from package_installer.subprocess_interface import run_
 from package_installer.data_models.version_enum import Version
-from package_installer.data_models.package_info import PackageInfo
 from package_installer.data_models.manager_enum import ManagerEnum
-from package_installer.package_managers_handlers.package_manager_handler import PackageManagerHandler
+from package_installer.package_finder.data_models.package_info import PackageInfo
+from package_installer.package_finder.package_managers.package_manager import PackageManager
 
-class AptPackageManagerHandler(PackageManagerHandler):
+class AptPackageManager(PackageManager):
     INFO_COMMAND: Final[List[str]] = ["apt", "info"]
     INSTALLED_COMMAND: Final[List[str]] = ["dpkg-query", "-l"]
     VERSION_INDICATOR: Final[str] = "\nVersion: "
