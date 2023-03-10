@@ -10,7 +10,7 @@ from package_installer.package_managers_handlers.package_manager_handler import 
 
 class SnapPackageManagerHandler(PackageManagerHandler):
     
-    INSTALLED_INDICATOR: Final[str] = "\ninstalled:"
+    INSTALLED_INDICATOR: Final[str] = "installed:"
     
     LATEST_INDICATOR: Final[str] = "latest/"
     TRACKING_INDICATOR: Final[str] = "tracking:"
@@ -61,7 +61,7 @@ class SnapPackageManagerHandler(PackageManagerHandler):
     def __find_installed_version(self, package_info: str) -> Optional[str]:
         if self.INSTALLED_INDICATOR not in package_info:
             return None
-        installed_version = package_info.split(self.INSTALLED_INDICATOR)[1].split("\n")[0]
+        installed_version = package_info.split(self.INSTALLED_INDICATOR)[1]
         installed_version = self.__format_version(installed_version)
         return installed_version
 
@@ -85,7 +85,7 @@ class SnapPackageManagerHandler(PackageManagerHandler):
                 version=(version_key, latest_versions[version_key])
                 packages.append(self.__create_package_info_object(version, installed=False))
         else:
-            installed_found = False
+            installed_found_in_latest_versions = False
             
             for version_key in latest_versions:
                 installed = version_key == installed_version
@@ -93,9 +93,9 @@ class SnapPackageManagerHandler(PackageManagerHandler):
                 packages.append(self.__create_package_info_object(version, installed))
 
                 if installed:
-                    installed_found = True
+                    installed_found_in_latest_versions = True
 
-            if not installed_found:
+            if not installed_found_in_latest_versions:
                 version=(installed_version, Version.OTHER)
                 packages.append(self.__create_package_info_object(version, installed=True))
 

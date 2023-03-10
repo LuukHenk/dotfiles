@@ -13,7 +13,6 @@ from package_installer.package_managers_handlers.apt_package_manager_handler imp
 )
 
 
-ABC_CLASS_PATCH_TEMPLATE = "package_installer.package_managers_handlers.package_manager_handler.{}"
 MANAGER_CLASS_PATCH_TEMPLATE = "package_installer.package_managers_handlers.apt_package_manager_handler.{}"
 
 class TestAptPackageManagerHandler(TestCase):

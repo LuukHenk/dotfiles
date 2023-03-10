@@ -12,6 +12,10 @@ class PackageInstaller(Installer):
             PackageSearchQuery(
                 name="Neovim",
                 search_query=["neovim", "nvim"]
+            ),
+            PackageSearchQuery(
+                name="Spotify",
+                search_query=["spotify"]
             )
         ]
         self.__package_handler: PackageHandler = PackageHandler()
