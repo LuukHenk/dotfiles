@@ -1,11 +1,5 @@
-from typing import List, Final
 
-from installer import Installer
-from package_installer.package_installer import PackageInstaller
 
-INSTALLATION_SCRIPTS: Final[List[Installer]] = [
-    PackageInstaller()
-]
+from installation_wizard_widget.installation_wizard_widget import InstallationWizardWidget
 
-for installer in INSTALLATION_SCRIPTS:
-    installer.install()
+InstallationWizardWidget()

@@ -5,17 +5,14 @@ from unittest import TestCase, main
 from unittest.mock import ANY, Mock, patch, create_autospec
 
 from subprocess import CompletedProcess
-from package_installer.data_models.manager_enum import ManagerEnum
-from package_installer.data_models.package_info import PackageInfo
-from package_installer.data_models.version_enum import Version
-from package_installer.package_finder.package_managers.snap_package_manager import (
-    SnapPackageManager,
-)
+from data_models.manager import Manager
+from data_models.package_info import PackageInfo
+from data_models.version import Version
+from package_finder.package_managers.snap_package_manager_finder import SnapPackageManagerFinder
 
+MANAGER_CLASS_PATCH_TEMPLATE = "package_finder.package_managers.snap_package_manager_finder.{}"
 
-MANAGER_CLASS_PATCH_TEMPLATE = "package_installer.package_finder.package_managers.snap_package_manager.{}"
-
-class TestAptPackageManager(TestCase):
+class TestAptPackageManagerFinder(TestCase):
 
     RUN_PATCH = MANAGER_CLASS_PATCH_TEMPLATE.format("run_")
     PACKAGE_INFO_PATCH = MANAGER_CLASS_PATCH_TEMPLATE.format("PackageInfo")
@@ -27,7 +24,7 @@ class TestAptPackageManager(TestCase):
         completed_process_mock.returncode = 1
         run_patch.return_value = completed_process_mock
         package_name = "package_name"
-        package_manager_handler = SnapPackageManager()
+        package_manager_handler = SnapPackageManagerFinder()
         
         # Act
         package_info = package_manager_handler.find_package(package_name)
@@ -67,7 +64,7 @@ class TestAptPackageManager(TestCase):
             name=PACKAGE_NAME,
             version=(DEFAULT_VERSION, Version.LATEST_STABLE),
             installed=ANY,
-            manager=ManagerEnum.SNAP
+            manager=Manager.SNAP
         )
         
     def test_find_latest_package_versions_with_tracking_and_latest_indicator(self) -> None:
@@ -86,7 +83,7 @@ class TestAptPackageManager(TestCase):
             name=PACKAGE_NAME,
             version=(DEFAULT_VERSION, Version.LATEST_STABLE),
             installed=ANY,
-            manager=ManagerEnum.SNAP
+            manager=Manager.SNAP
         )
     
     def test_find_latest_package_versions_with_duplicate_versions(self) -> None:
@@ -104,7 +101,7 @@ class TestAptPackageManager(TestCase):
             name=PACKAGE_NAME,
             version=(DEFAULT_VERSION, Version.LATEST_STABLE),
             installed=ANY,
-            manager=ManagerEnum.SNAP
+            manager=Manager.SNAP
         )
 
     def test_find_latest_package_versions_with_caret_in_version_name(self) -> None:
@@ -130,7 +127,7 @@ class TestAptPackageManager(TestCase):
             name=PACKAGE_NAME,
             version=(DEFAULT_VERSION, Version.LATEST_CANDIDATE),
             installed=ANY,
-            manager=ManagerEnum.SNAP
+            manager=Manager.SNAP
         )     
 
     def test_match_beta_version(self) -> None:
@@ -146,7 +143,7 @@ class TestAptPackageManager(TestCase):
             name=PACKAGE_NAME,
             version=(DEFAULT_VERSION, Version.LATEST_BETA),
             installed=ANY,
-            manager=ManagerEnum.SNAP
+            manager=Manager.SNAP
         )     
 
     def test_match_edge_version(self) -> None:
@@ -162,7 +159,7 @@ class TestAptPackageManager(TestCase):
             name=PACKAGE_NAME,
             version=(DEFAULT_VERSION, Version.LATEST_EDGE),
             installed=ANY,
-            manager=ManagerEnum.SNAP
+            manager=Manager.SNAP
         )     
 
     def test_match_other_version(self) -> None:
@@ -179,7 +176,7 @@ class TestAptPackageManager(TestCase):
             name=PACKAGE_NAME,
             version=(DEFAULT_VERSION, Version.OTHER),
             installed=ANY,
-            manager=ManagerEnum.SNAP
+            manager=Manager.SNAP
         )     
     
     def test_version_formatting_when_there_is_no_spacing(self) -> None:
@@ -198,7 +195,7 @@ class TestAptPackageManager(TestCase):
             name=PACKAGE_NAME,
             version=(version_text, Version.LATEST_STABLE),
             installed=ANY,
-            manager=ManagerEnum.SNAP
+            manager=Manager.SNAP
         )  
 
     def test_version_formatting_with_single_spacing(self) -> None:
@@ -218,7 +215,7 @@ class TestAptPackageManager(TestCase):
             name=PACKAGE_NAME,
             version=(version_text, Version.LATEST_STABLE),
             installed=ANY,
-            manager=ManagerEnum.SNAP
+            manager=Manager.SNAP
         )  
         
     def test_version_formatting_with_many_spacings(self) -> None:
@@ -238,7 +235,7 @@ class TestAptPackageManager(TestCase):
             name=PACKAGE_NAME,
             version=(version_text, Version.LATEST_STABLE),
             installed=ANY,
-            manager=ManagerEnum.SNAP
+            manager=Manager.SNAP
         )  
 
     def test_find_installed_version_when_non_is_installed(self) -> None:
@@ -254,7 +251,7 @@ class TestAptPackageManager(TestCase):
             name=PACKAGE_NAME,
             version=ANY,
             installed=False,
-            manager=ManagerEnum.SNAP
+            manager=Manager.SNAP
         )    
 
     def test_find_installed_version_when_there_is_an_installed_indicator(self) -> None:
@@ -273,7 +270,7 @@ class TestAptPackageManager(TestCase):
             name=PACKAGE_NAME,
             version=ANY,
             installed=True,
-            manager=ManagerEnum.SNAP
+            manager=Manager.SNAP
         )    
 
     def test_generat_package_info_when_installed_not_in_latest_versions(self) -> None:
@@ -292,7 +289,7 @@ class TestAptPackageManager(TestCase):
             name=PACKAGE_NAME,
             version=(DEFAULT_VERSION, Version.OTHER),
             installed=True,
-            manager=ManagerEnum.SNAP
+            manager=Manager.SNAP
         ) 
         
     def test_generat_package_info_when_installed_in_latest_versions(self) -> None:
@@ -311,7 +308,7 @@ class TestAptPackageManager(TestCase):
             name=PACKAGE_NAME,
             version=(DEFAULT_VERSION, Version.LATEST_BETA),
             installed=True,
-            manager=ManagerEnum.SNAP
+            manager=Manager.SNAP
         ) 
     def __find_package(self, snap_info_text: str) -> Tuple[List[PackageInfo], Mock]:
         """Returns: the found package info, and the package info patch"""
@@ -320,7 +317,7 @@ class TestAptPackageManager(TestCase):
         run_mock.stdout = snap_info_text
         run_mock.returncode = 0
         package_name = PACKAGE_NAME
-        package_manager_handler = SnapPackageManager()        
+        package_manager_handler = SnapPackageManagerFinder()        
         # Act
         with (
             patch(self.RUN_PATCH) as run_patch,

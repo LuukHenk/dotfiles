@@ -1,77 +1,118 @@
 @startuml dotfiles design
 
-package package_installer {
+package main {
+    class Run{}
+}
 
-    struct Package {
-        + name: str
-        + manager: Manager
-        + version: str
-    }
-    enum Manager {
-        manager: str
+' -------------------------------------------------------
+
+package "Installation wizard widget" as installation_widget {
+
+    class InstallationWizardWidgetProcessor {}
+
+    class InstallationWizardWidget {}
+
+    class GroupPanelWidget {}
+
+    class ActiveGroupWidget {}
+
+    class ControlsWidget {}
+}
+
+InstallationWizardWidget --> InstallationWizardWidgetProcessor
+InstallationWizardWidget --> GroupPanelWidget
+InstallationWizardWidget --> ActiveGroupWidget
+InstallationWizardWidget --> ControlsWidget
+
+' -------------------------------------------------------
+
+package "Package finder" as package_finder {
+
+    class PackageFinder {
+        + get_package_info()
     }
 
-    abstract PackageManagerMapper {
-        + map(package_name: str) -> PackageInfo
+    class PackageSearchRequestParser {
+        + get_package_search_requests() -> List[PackageSearchRequest] 
     }
-    class AptPackageManagerMapper
-    class SnapPackageManagerMapper
+    package "Package managers" as package_managers_finder {
+        abstract class PackageManagerFinder {
+            + find_package(package_name: str)
+        }
 
-    class PackageHandler {
-        + check_if_package_exists(package: Package) -> bool
-        + install_package(package: Package) -> bool
+        class AptPackageManagerFinder {}
+        class SnapPackageManagerFinder {}
     }
+
+}
+
+PackageSearchRequestParser <- PackageFinder 
+PackageFinder --> package_managers_finder
+AptPackageManagerFinder --|> PackageManagerFinder
+SnapPackageManagerFinder --|> PackageManagerFinder
+
+' -------------------------------------------------------
+
+package "Package installer" as package_installer {
     class PackageInstaller {
-        - packages_to_install: List[Package]
+        + install_package(package: InstallationObject)
+        + uninstall_package(package: InstallationObject)
     }
+}
 
-    struct PackageInfo {
+
+' -------------------------------------------------------
+
+package data_models {
+
+    class PackageSearchRequest {
         + name: str
-        + found: str
-        + installed: str
-        + installed_version: str
+        + search_query: List[str]
+        + package_group: str
+    }
+
+    class PackageInfo {
+        + name: str
+        + version: Tuple[str, Version]
+        + installed: bool
+        + manager: Manager
+    }
+
+    class InstallationObject {
+        + package_info: PackageInfo
+        + configuration: ...
+    }
+
+    enum Manager {
+        APT
+        SNAP
+    }
+
+    enum Version {
+        LATEST_STABLE
+        LATEST_CANDIDATE
+        LATEST_BETA
+        LATEST_EDGE
+        OTHER
+    }
+
+    enum ConfigurationPath {
+        PACKAGE_CONFIGURATION_PATH
     }
 }
 
-class Main {
-    + installers: List[Installer]
+' -------------------------------------------------------
+
+package "etc/" as configuration {
+    struct packages {}
 }
 
-abstract Installer {
-    + install() -> bool
-}
+packages --> PackageSearchRequestParser
+' -------------------------------------------------------
 
-class DotfilesInstaller {
-    This will be extended later
-}
-class GsettingsInstaller {
-    This will be extended later
-}
-class NeovimInstaller {
-    This will be extended later
-}
+Run --> InstallationWizardWidget
+InstallationWizardWidgetProcessor -down-> PackageInstaller
+InstallationWizardWidgetProcessor --> PackageFinder
 
-package etc {
-    struct PackagesToInstall {
-        + packages: List[Package]
-    }
-}
 
-Main <-- Installer
-Installer --|> PackageInstaller
-Installer -|> DotfilesInstaller
-Installer -|> NeovimInstaller
-Installer -|> GsettingsInstaller
-PackageManagerMapper --|> AptPackageManagerMapper
-PackageManagerMapper --|> SnapPackageManagerMapper
-PackageHandler <-- PackageManagerMapper
-PackageInstaller <-- PackageHandler
-PackageInstaller <- PackagesToInstall
-
-PackageHandler <- Package
-PackageHandler <- PackageInfo
-PackageManagerMapper <- PackageInfo
-
-PackageInstaller <-- Package
-PackagesToInstall <- Package
 @enduml

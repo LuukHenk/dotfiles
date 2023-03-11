@@ -1,3 +1,6 @@
-installer
+data_models
+installation_wizard_widget
+package_finder
 package_installer
 run
+utils

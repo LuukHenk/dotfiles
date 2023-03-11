@@ -1,13 +1,13 @@
 
 from typing import List, Final, Optional
 
-from package_installer.subprocess_interface import run_
-from package_installer.data_models.version_enum import Version
-from package_installer.data_models.manager_enum import ManagerEnum
-from package_installer.package_finder.data_models.package_info import PackageInfo
-from package_installer.package_finder.package_managers.package_manager import PackageManager
+from utils.subprocess_interface import run_
+from data_models.version import Version
+from data_models.manager import Manager
+from data_models.package_info import PackageInfo
+from package_finder.package_managers.package_manager_finder import PackageManagerFinder
 
-class AptPackageManager(PackageManager):
+class AptPackageManagerFinder(PackageManagerFinder):
     INFO_COMMAND: Final[List[str]] = ["apt", "info"]
     INSTALLED_COMMAND: Final[List[str]] = ["dpkg-query", "-l"]
     VERSION_INDICATOR: Final[str] = "\nVersion: "
@@ -65,14 +65,14 @@ class AptPackageManager(PackageManager):
                     name=package_name,
                     version=(latest_version, Version.LATEST_STABLE),
                     installed=True,
-                    manager=ManagerEnum.APT,
+                    manager=Manager.APT,
                 ))
             else:
                 packages.append(PackageInfo(
                     name=package_name,
                     version=(latest_version, Version.LATEST_STABLE),
                     installed=False,
-                    manager=ManagerEnum.APT,
+                    manager=Manager.APT,
                 ))
                     
         if installed_version is not None and not latest_installed:
@@ -80,7 +80,7 @@ class AptPackageManager(PackageManager):
                 name=package_name,
                 version=(installed_version, Version.OTHER),
                 installed=True,
-                manager=ManagerEnum.APT,
+                manager=Manager.APT,
             ))
         
         return packages

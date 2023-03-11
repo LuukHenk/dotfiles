@@ -2,13 +2,13 @@
 from subprocess import CompletedProcess
 from typing import List, Final, Optional, Dict, Tuple
 
-from package_installer.subprocess_interface import run_
-from package_installer.data_models.version_enum import Version
-from package_installer.data_models.manager_enum import ManagerEnum
-from package_installer.package_finder.data_models.package_info import PackageInfo
-from package_installer.package_finder.package_managers.package_manager import PackageManager
+from utils.subprocess_interface import run_
+from data_models.version import Version
+from data_models.manager import Manager
+from data_models.package_info import PackageInfo
+from package_finder.package_managers.package_manager_finder import PackageManagerFinder
 
-class SnapPackageManager(PackageManager):
+class SnapPackageManagerFinder(PackageManagerFinder):
     
     INSTALLED_INDICATOR: Final[str] = "installed:"
     
@@ -106,5 +106,5 @@ class SnapPackageManager(PackageManager):
             name=self.__active_package_name,
             version=version,
             installed=installed,
-            manager=ManagerEnum.SNAP
+            manager=Manager.SNAP
         )

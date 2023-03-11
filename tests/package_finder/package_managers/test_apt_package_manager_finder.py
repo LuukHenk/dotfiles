@@ -5,17 +5,15 @@ from unittest import TestCase, main
 from unittest.mock import Mock, patch, create_autospec
 
 from subprocess import CompletedProcess
-from package_installer.data_models.manager_enum import ManagerEnum
-from package_installer.data_models.package_info import PackageInfo
-from package_installer.data_models.version_enum import Version
-from package_installer.package_finder.package_managers.apt_package_manager import (
-    AptPackageManager,
-)
+from data_models.manager import Manager
+from data_models.package_info import PackageInfo
+from data_models.version import Version
+from package_finder.package_managers.apt_package_manager_finder import AptPackageManagerFinder
 
 
-MANAGER_CLASS_PATCH_TEMPLATE = "package_installer.package_finder.package_managers.apt_package_manager.{}"
+MANAGER_CLASS_PATCH_TEMPLATE = "package_finder.package_managers.apt_package_manager_finder.{}"
 
-class TestAptPackageManager(TestCase):
+class TestAptPackageManagerFinder(TestCase):
     """NOTE: The tester expect that the handler first searches the latest version and secondly searches the installed version"""
 
     EXAMPLE_INFO_STDOUT_NO_VERSION_INDICATOR = """
@@ -77,7 +75,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         completed_process_mock.returncode = 1
         run_patch.return_value = completed_process_mock
         package_name = "package_name"
-        package_manager_handler = AptPackageManager()
+        package_manager_handler = AptPackageManagerFinder()
         
         # Act
         package_info = package_manager_handler.find_package(package_name)
@@ -97,7 +95,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         installed_version_run_mock.returncode = 1
         run_patch.side_effect = [latest_version_run_mock, installed_version_run_mock]
         package_name = "python3"
-        package_manager_handler = AptPackageManager()
+        package_manager_handler = AptPackageManagerFinder()
         
         # Act
         package_info = package_manager_handler.find_package(package_name)
@@ -123,7 +121,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         installer_version_run_mock.returncode = 1
         run_patch.side_effect = [latest_version_run_mock, installer_version_run_mock]
         package_name = "python3"
-        package_manager_handler = AptPackageManager()
+        package_manager_handler = AptPackageManagerFinder()
         
         # Act
         package_info = package_manager_handler.find_package(package_name)
@@ -133,7 +131,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
             name=package_name,
             version=(latest_version, Version.LATEST_STABLE),
             installed=False,
-            manager=ManagerEnum.APT,
+            manager=Manager.APT,
         )
         self.assertEqual(package_info, [package_info_mock])
         package_info_call = run_patch.call_args_list[0].args[0]
@@ -149,7 +147,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         latest_version_run_mock.returncode = 1
         run_patch.side_effect = [latest_version_run_mock, installed_version_run_mock]
         package_name = "python3"
-        package_manager_handler = AptPackageManager()
+        package_manager_handler = AptPackageManagerFinder()
         # Act
         package_info = package_manager_handler.find_package(package_name)
             # Assert
@@ -171,7 +169,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         latest_version_run_mock.returncode = 1
         run_patch.side_effect = [latest_version_run_mock, installed_version_run_mock]
         package_name = "python3"
-        package_manager_handler = AptPackageManager()
+        package_manager_handler = AptPackageManagerFinder()
         # Act
         package_info = package_manager_handler.find_package(package_name)
         # Assert
@@ -179,7 +177,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
             name=package_name,
             version=(installed_version, Version.OTHER),
             installed=True,
-            manager=ManagerEnum.APT,
+            manager=Manager.APT,
         )        
         self.assertEqual(package_info, [package_info_mock])
         package_info_call = run_patch.call_args_list[1].args[0]
@@ -200,7 +198,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         latest_version_run_mock.stdout = self.EXAMPLE_INFO_STDOUT_LATEST_VERSION.format(latest_version)
         run_patch.side_effect = [latest_version_run_mock, installed_version_run_mock]
         package_name = "python3"
-        package_manager_handler = AptPackageManager()
+        package_manager_handler = AptPackageManagerFinder()
         # Act
         package_info = package_manager_handler.find_package(package_name)
         # Assert
@@ -208,7 +206,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
             name=package_name,
             version=(latest_version, Version.LATEST_STABLE),
             installed=True,
-            manager=ManagerEnum.APT,
+            manager=Manager.APT,
         )        
         self.assertEqual(package_info, [package_info_mock])
 
@@ -228,7 +226,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         latest_version_run_mock.stdout = self.EXAMPLE_INFO_STDOUT_LATEST_VERSION.format(latest_version)
         run_patch.side_effect = [latest_version_run_mock, installed_version_run_mock]
         package_name = "python3"
-        package_manager_handler = AptPackageManager()
+        package_manager_handler = AptPackageManagerFinder()
         # Act
         package_info = package_manager_handler.find_package(package_name)
         # Assert
@@ -237,14 +235,14 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
             name=package_name,
             version=(latest_version, Version.LATEST_STABLE),
             installed=False,
-            manager=ManagerEnum.APT,
+            manager=Manager.APT,
         )        
         installed_version_call = package_info_patch.call_args_list[1]
         installed_version_call.assert_called_once_with(
             name=package_name,
             version=(installed_version, Version.OTHER),
             installed=True,
-            manager=ManagerEnum.APT,
+            manager=Manager.APT,
         )     
         self.assertEqual(package_info, [package_info_mock, package_info_mock])
   
