@@ -19,8 +19,8 @@ class InstallationWizardWidget(QWidget):
 
     def __create_layout(self) -> None:
         layout = QGridLayout(self)
-        layout.addWidget(self.__group_widget, 0, 0, Qt.AlignLeft)  # type:ignore
-        layout.addWidget(self.__active_group_widget, 0, 1, Qt.AlignCenter)  # type:ignore
+        layout.addWidget(self.__group_widget, 0, 0, Qt.AlignTop)  # type:ignore
+        layout.addWidget(self.__active_group_widget, 0, 1, Qt.AlignTop)  # type:ignore
 
     def __construct_active_group_widget(self) -> ActiveGroupWidget:
         active_group_widget = ActiveGroupWidget()

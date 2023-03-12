@@ -6,7 +6,6 @@ from PySide6.QtWidgets import (
     QApplication,
     QVBoxLayout,
     QLabel,
-    QSplitter,
     QCheckBox,
     QStackedWidget,
 )
@@ -18,7 +17,7 @@ from data_models.version import Version
 
 class ActiveGroupWidget(QStackedWidget):
 
-    PACKAGE_TEXT_TEMPLATE: Final[str] = "{install_text} {package_name} v{version} ({other})"
+    PACKAGE_TEXT_TEMPLATE: Final[str] = "{install_text}  v{version} ({other})"
     INSTALL_TEXT: Final[str] = "Install"
     UNINSTALL_TEXT: Final[str] = "Uninstall"
 
@@ -30,7 +29,6 @@ class ActiveGroupWidget(QStackedWidget):
         group = QWidget()
         group_layout = QVBoxLayout(group)
         group_layout.addWidget(QLabel(group_name))
-        group_layout.addWidget(QSplitter())
         for package in packages:
             group_layout.addWidget(self.__create_package_checkbox(package))
         self.__groups[group_name] = group
@@ -46,6 +44,7 @@ class ActiveGroupWidget(QStackedWidget):
             version=package_info.version[0],
             other=f"{package_info.manager.title()} - {package_info.version[1].value}",
         )
+        print(package_text)
         return QCheckBox(package_text)
 
 
