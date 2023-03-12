@@ -1,5 +1,5 @@
 
-from typing import List
+from typing import Dict, List
 
 from data_models.package_info import PackageInfo
 
@@ -15,12 +15,14 @@ class PackageFinder:
             SnapPackageManagerFinder()
         ]
         
-    def get_package_info(self) -> List[PackageInfo]:
-        package_info = []
-        for manager in self.__package_managers:
-            for search_requests in get_package_search_requests():
+    def get_package_info(self) -> Dict[str, List[PackageInfo]]:
+        package_info = {}
+        for search_requests in get_package_search_requests():
+            package_group = []
+            for manager in self.__package_managers:
                 for package_name in search_requests.search_query:
-                    package_info += manager.find_package(package_name)
+                    package_group += manager.find_package(package_name)
+            package_info[search_requests.package_group] = package_group
             
         return package_info
     

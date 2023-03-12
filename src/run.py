@@ -1,5 +1,4 @@
 
+from main_window import run_main_window
 
-from installation_wizard_widget.installation_wizard_widget import InstallationWizardWidget
-
-InstallationWizardWidget()
+run_main_window()

@@ -23,6 +23,9 @@ InstallationWizardWidget --> InstallationWizardWidgetProcessor
 InstallationWizardWidget --> GroupPanelWidget
 InstallationWizardWidget --> ActiveGroupWidget
 InstallationWizardWidget --> ControlsWidget
+GroupPanelWidget ..> InstallationWizardWidgetProcessor
+ActiveGroupWidget ..> InstallationWizardWidgetProcessor
+ControlsWidget ..> InstallationWizardWidgetProcessor
 
 ' -------------------------------------------------------
 

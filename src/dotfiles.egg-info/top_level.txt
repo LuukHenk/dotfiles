@@ -1,5 +1,6 @@
 data_models
 installation_wizard_widget
+main_window
 package_finder
 package_installer
 run

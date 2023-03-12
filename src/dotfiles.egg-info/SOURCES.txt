@@ -1,6 +1,7 @@
 README.md
 setup.cfg
 setup.py
+src/main_window.py
 src/run.py
 src/data_models/__init__.py
 src/data_models/configuration_path.py
