@@ -1,0 +1,21 @@
+{
+    "Spotify": {
+        "package_group": "Spotify",
+        "search_query": [
+            "spotify"
+        ]
+    },
+    "Python": {
+        "package_group": "Python",
+        "search_query": [
+            "python3"
+        ]
+    },
+    "Neovim": {
+        "package_group": "Neovim",
+        "search_query": [
+            "neovim",
+            "nvim"
+        ]
+    }
+}

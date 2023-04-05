@@ -44,7 +44,6 @@ class ActiveGroupWidget(QStackedWidget):
             version=package_info.version[0],
             other=f"{package_info.manager.title()} - {package_info.version[1].value}",
         )
-        print(package_text)
         return QCheckBox(package_text)
 
 
