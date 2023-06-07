@@ -1,6 +1,6 @@
 from sys import exit as sys_exit, argv
 
-from typing import Dict, Final, List
+from typing import Dict, List
 from PySide6.QtWidgets import (
     QWidget,
     QApplication,
@@ -14,13 +14,9 @@ from PySide6.QtCore import Signal
 from data_models.manager import Manager
 from data_models.package_info import PackageInfo
 from data_models.version import Version
-
+from installation_wizard_widget.package_info_text_generator import generate_package_info_text
 
 class ActiveGroupWidget(QStackedWidget):
-
-    PACKAGE_TEXT_TEMPLATE: Final[str] = "{install_text}  {package_name} version {version} ({other})"
-    INSTALL_TEXT: Final[str] = "Install"
-    UNINSTALL_TEXT: Final[str] = "Uninstall"
 
     InstallationRequest = Signal(PackageInfo)
 
@@ -41,13 +37,7 @@ class ActiveGroupWidget(QStackedWidget):
         self.setCurrentWidget(self.__groups[group_name])
 
     def __create_package_checkbox(self, package_info: PackageInfo) -> QCheckBox:
-        package_text = self.PACKAGE_TEXT_TEMPLATE.format(
-            install_text=self.UNINSTALL_TEXT if package_info.installed else self.INSTALL_TEXT,
-            package_name=package_info.name,
-            version=package_info.version[0],
-            other=f"{package_info.manager.title()} - {package_info.version[1].value}",
-        )
-        checkbox = QCheckBox(package_text)
+        checkbox = QCheckBox(generate_package_info_text(package_info))
         checkbox.clicked.connect(lambda: self.__on_package_checkbox_clicked(package_info))
         return checkbox
 

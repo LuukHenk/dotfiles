@@ -1,13 +1,13 @@
 
 
-from PySide6.QtWidgets import QWidget, QGridLayout
+from PySide6.QtWidgets import QWidget, QGridLayout, QMessageBox
 from PySide6.QtCore import Qt
 
 from installation_wizard_widget.active_group_widget import ActiveGroupWidget
 from installation_wizard_widget.group_panel_widget import GroupPanelWidget
 from installation_wizard_widget.controls_widget import  ControlsWidget
 from installation_wizard_widget.installation_wizard_widget_processor import InstallationWizardWidgetProcessor
-
+from installation_wizard_widget.confirmation_widget import ConfirmationWidget
 
 
 class InstallationWizardWidget(QWidget):
@@ -22,7 +22,7 @@ class InstallationWizardWidget(QWidget):
         self.__groups_widget.groupClicked.connect(self.__on_active_group_changed)
 
         self.__controls_widget = ControlsWidget()
-        self.__controls_widget.InstallClicked.connect(self.__processor.install_packages)
+        self.__controls_widget.InstallClicked.connect(self.__show_confirmation_widget)
 
         self.__create_layout()
 
@@ -43,4 +43,12 @@ class InstallationWizardWidget(QWidget):
 
     def __on_active_group_changed(self, new_group: str) -> None:
         self.__active_group_widget.update_active_group(new_group)
+
+
+    def __show_confirmation_widget(self):
+        packages_to_install = self.__processor.find_packages_with_an_installation_request()
+        confirmation_widget = ConfirmationWidget(packages_to_install)
+        install_packages = confirmation_widget.exec()
+        if install_packages == QMessageBox.Yes:
+            self.__processor.install_packages(packages_to_install)
 

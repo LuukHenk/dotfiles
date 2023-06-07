@@ -17,15 +17,13 @@ class InstallationWizardWidgetProcessor:
                 if package == package_info:
                     package.installation_request = not package.installation_request
 
-    def install_packages(self) -> None:
-        """Installs the packages with an installation request"""
-        print(self.__find_packages_with_an_installation_request())
-
-
-    def __find_packages_with_an_installation_request(self) -> List[PackageInfo]:
+    def find_packages_with_an_installation_request(self) -> List[PackageInfo]:
         packages_with_installation_request = []
         for packages in self.__package_info_groups.values():
             for package in packages:
                 if package.installation_request:
                     packages_with_installation_request.append(package)
         return packages_with_installation_request
+
+    def install_packages(self, packages: List[PackageInfo]):
+        print(packages)
