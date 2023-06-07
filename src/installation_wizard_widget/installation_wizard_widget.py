@@ -49,8 +49,8 @@ class InstallationWizardWidget(QWidget):
 
     def __on_installation_request_update(self, package: PackageInfo) -> None:
         self.__package_accessor.update_installation_request_status(package)
-        active_request = bool(self.__package_accessor.find_packages_with_an_installation_request())
-        self.__controls_widget.setEnabled(active_request)
+        self.__controls_widget.setEnabled(self.__package_accessor.any_installation_request())
+        self.__groups_widget.highlight_groups(self.__package_accessor.find_package_groups_with_an_installation_request())
 
     def __show_confirmation_widget(self):
         packages_to_install = self.__package_accessor.find_packages_with_an_installation_request()

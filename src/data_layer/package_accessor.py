@@ -1,8 +1,9 @@
-
 from typing import Dict, List
 
 from data_models.package_info import PackageInfo
 from package_finder.package_finder import PackageFinder
+
+
 class PackageAccessor:
     def __init__(self):
         self.__package_groups = PackageFinder().get_package_info()
@@ -17,6 +18,22 @@ class PackageAccessor:
                 if package == package_info:
                     package.installation_request = not package.installation_request
 
+    def any_installation_request(self) -> bool:
+        for packages in self.__package_groups.values():
+            for package in packages:
+                if package.installation_request:
+                    return True
+        return False
+
+    def find_package_groups_with_an_installation_request(self) -> List[str]:
+        package_groups_with_installation_request = []
+        for package_group, packages in self.__package_groups.items():
+            for package in packages:
+                if package.installation_request:
+                    package_groups_with_installation_request.append(package_group)
+                    break
+        return package_groups_with_installation_request
+
     def find_packages_with_an_installation_request(self) -> List[PackageInfo]:
         packages_with_installation_request = []
         for packages in self.__package_groups.values():
@@ -24,3 +41,5 @@ class PackageAccessor:
                 if package.installation_request:
                     packages_with_installation_request.append(package)
         return packages_with_installation_request
+
+

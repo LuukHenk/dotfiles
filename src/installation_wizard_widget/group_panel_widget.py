@@ -1,6 +1,6 @@
 from sys import exit as sys_exit, argv
 
-from typing import List
+from typing import List, Dict
 from PySide6.QtWidgets import (
     QWidget, 
     QApplication, 
@@ -15,12 +15,24 @@ class GroupPanelWidget(QWidget):
     
     def __init__(self, groups: List[str], parent=None) -> None:
         super().__init__(parent)
-        self.__create_layout(groups)
+        self.__group_tiles: Dict[str, QPushButton] = self.__create_group_tiles(groups)
+        self.__create_layout()
 
-    def __create_layout(self, groups: List[str]) -> None:
+    def highlight_groups(self, group_names: List[str]):
+        for group_name, tile in self.__group_tiles.items():
+            if group_name in group_names:
+                tile.setStyleSheet("font-weight: bold;")
+            else:
+                tile.setStyleSheet("font-weight: normal;")
+
+    def __create_layout(self) -> None:
         layout = QVBoxLayout(self)
-        for group in groups:
-            layout.addWidget(self.__create_group_tile(group))
+        for group in self.__group_tiles.values():
+            layout.addWidget(group)
+        self.highlight_groups([])
+
+    def __create_group_tiles(self, groups: List[str]) -> Dict[str, QPushButton]:
+        return {group: self.__create_group_tile(group) for group in groups}
 
     def __create_group_tile(self, text: str) -> QPushButton:
         tile = QPushButton(text)
