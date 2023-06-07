@@ -9,8 +9,9 @@ from PySide6.QtWidgets import (
     QCheckBox,
     QStackedWidget,
 )
-from data_models.manager import Manager
+from PySide6.QtCore import Signal
 
+from data_models.manager import Manager
 from data_models.package_info import PackageInfo
 from data_models.version import Version
 
@@ -20,6 +21,8 @@ class ActiveGroupWidget(QStackedWidget):
     PACKAGE_TEXT_TEMPLATE: Final[str] = "{install_text}  {package_name} version {version} ({other})"
     INSTALL_TEXT: Final[str] = "Install"
     UNINSTALL_TEXT: Final[str] = "Uninstall"
+
+    InstallationRequest = Signal(PackageInfo)
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
@@ -36,7 +39,7 @@ class ActiveGroupWidget(QStackedWidget):
 
     def update_active_group(self, group_name: str) -> None:
         self.setCurrentWidget(self.__groups[group_name])
-
+    
     def __create_package_checkbox(self, package_info: PackageInfo) -> QCheckBox:
         package_text = self.PACKAGE_TEXT_TEMPLATE.format(
             install_text=self.UNINSTALL_TEXT if package_info.installed else self.INSTALL_TEXT,
@@ -44,8 +47,12 @@ class ActiveGroupWidget(QStackedWidget):
             version=package_info.version[0],
             other=f"{package_info.manager.title()} - {package_info.version[1].value}",
         )
-        return QCheckBox(package_text)
+        checkbox = QCheckBox(package_text)
+        checkbox.clicked.connect(lambda: self.__on_package_checkbox_clicked(package_info))
+        return checkbox
 
+    def __on_package_checkbox_clicked(self, package_checkbox_name: PackageInfo) -> None:
+        self.InstallationRequest.emit(package_checkbox_name)
 
 if __name__ == "__main__":
 

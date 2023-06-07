@@ -24,7 +24,7 @@ class GroupPanelWidget(QWidget):
 
     def __create_group_tile(self, text: str) -> QPushButton:
         tile = QPushButton(text)
-        tile.clicked.connect(lambda: self.__on_group_clicked(text)) #type:ignore
+        tile.clicked.connect(lambda: self.__on_group_clicked(text))
         return tile
     
     def __on_group_clicked(self, group_name: str) -> None:

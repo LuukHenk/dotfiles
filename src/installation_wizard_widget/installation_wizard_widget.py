@@ -13,15 +13,16 @@ class InstallationWizardWidget(QWidget):
         super().__init__(parent)
         self.__processor = InstallationWizardWidgetProcessor()
         self.__active_group_widget = self.__construct_active_group_widget()
-        self.__group_widget = GroupPanelWidget(list(self.__processor.package_info_groups))
-        self.__group_widget.groupClicked.connect(self.__on_active_group_changed)
+        self.__active_group_widget.InstallationRequest.connect(self.__processor.update_installation_request_status)
+        self.__groups_widget = GroupPanelWidget(list(self.__processor.package_info_groups))
+        self.__groups_widget.groupClicked.connect(self.__on_active_group_changed)
 
         self.__create_layout()
 
     def __create_layout(self) -> None:
         layout = QGridLayout(self)
-        layout.addWidget(self.__group_widget, 0, 0, Qt.AlignLeft) #type:ignore
-        layout.addWidget(self.__active_group_widget, 0, 1, Qt.AlignCenter) #type:ignore
+        layout.addWidget(self.__groups_widget, 0, 0, Qt.AlignLeft)
+        layout.addWidget(self.__active_group_widget, 0, 1, Qt.AlignCenter)
 
     def __construct_active_group_widget(self) -> ActiveGroupWidget:
         active_group_widget = ActiveGroupWidget()
@@ -31,6 +32,7 @@ class InstallationWizardWidget(QWidget):
                 packages=packages
             )
         return active_group_widget
-    
+
     def __on_active_group_changed(self, new_group: str) -> None:
         self.__active_group_widget.update_active_group(new_group)
+

@@ -6,3 +6,4 @@ class Version(str, Enum):
     LATEST_BETA = "Beta"
     LATEST_EDGE = "Edge"
     OTHER = "Other"
+

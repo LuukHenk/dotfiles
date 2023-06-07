@@ -9,3 +9,5 @@ class PackageInfo:
     version: Tuple[str, Version]
     installed: bool
     manager: Manager
+    installation_request: bool = False
+
