@@ -18,7 +18,7 @@ from installation_wizard_widget.package_info_text_generator import generate_pack
 
 class ActiveGroupWidget(QStackedWidget):
 
-    InstallationRequest = Signal(PackageInfo)
+    InstallationRequestUpdate = Signal(PackageInfo)
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
@@ -42,7 +42,7 @@ class ActiveGroupWidget(QStackedWidget):
         return checkbox
 
     def __on_package_checkbox_clicked(self, package_checkbox_name: PackageInfo) -> None:
-        self.InstallationRequest.emit(package_checkbox_name)
+        self.InstallationRequestUpdate.emit(package_checkbox_name)
 
 if __name__ == "__main__":
 

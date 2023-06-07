@@ -14,3 +14,4 @@ class ControlsWidget(QWidget):
         install_button = QPushButton("Apply changes")
         install_button.clicked.connect(self.InstallClicked)
         layout.addWidget(install_button)
+        self.setDisabled(True)

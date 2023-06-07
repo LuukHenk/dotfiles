@@ -4,6 +4,7 @@ from PySide6.QtWidgets import QWidget, QGridLayout, QMessageBox
 from PySide6.QtCore import Qt, Signal
 
 from data_layer.package_accessor import PackageAccessor
+from data_models.package_info import PackageInfo
 from installation_wizard_widget.active_group_widget import ActiveGroupWidget
 from installation_wizard_widget.group_panel_widget import GroupPanelWidget
 from installation_wizard_widget.controls_widget import ControlsWidget
@@ -18,8 +19,7 @@ class InstallationWizardWidget(QWidget):
         self.__package_accessor = package_accessor
 
         self.__active_group_widget = self.__construct_active_group_widget()
-        self.__active_group_widget.InstallationRequest.connect(
-            self.__package_accessor.update_installation_request_status)
+        self.__active_group_widget.InstallationRequestUpdate.connect(self.__on_installation_request_update)
 
         self.__groups_widget = GroupPanelWidget(list(self.__package_accessor.package_info_groups))
         self.__groups_widget.groupClicked.connect(self.__on_active_group_changed)
@@ -46,6 +46,11 @@ class InstallationWizardWidget(QWidget):
 
     def __on_active_group_changed(self, new_group: str) -> None:
         self.__active_group_widget.update_active_group(new_group)
+
+    def __on_installation_request_update(self, package: PackageInfo) -> None:
+        self.__package_accessor.update_installation_request_status(package)
+        active_request = bool(self.__package_accessor.find_packages_with_an_installation_request())
+        self.__controls_widget.setEnabled(active_request)
 
     def __show_confirmation_widget(self):
         packages_to_install = self.__package_accessor.find_packages_with_an_installation_request()
