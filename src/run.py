@@ -1,4 +1,4 @@
 
-from main_window import run_main_window
+from qt_application.application import run_application
 
-run_main_window()
+run_application()

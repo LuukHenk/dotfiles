@@ -1,7 +1,7 @@
-
+import time
 
 from PySide6.QtWidgets import QWidget, QGridLayout, QMessageBox
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
 
 from installation_wizard_widget.active_group_widget import ActiveGroupWidget
 from installation_wizard_widget.group_panel_widget import GroupPanelWidget
@@ -11,9 +11,11 @@ from installation_wizard_widget.confirmation_widget import ConfirmationWidget
 
 
 class InstallationWizardWidget(QWidget):
-    def __init__(self, parent=None) -> None:
+
+    install = Signal()
+    def __init__(self, processor: InstallationWizardWidgetProcessor, parent=None) -> None:
         super().__init__(parent)
-        self.__processor = InstallationWizardWidgetProcessor()
+        self.__processor = processor
 
         self.__active_group_widget = self.__construct_active_group_widget()
         self.__active_group_widget.InstallationRequest.connect(self.__processor.update_installation_request_status)
@@ -50,5 +52,9 @@ class InstallationWizardWidget(QWidget):
         confirmation_widget = ConfirmationWidget(packages_to_install)
         install_packages = confirmation_widget.exec()
         if install_packages == QMessageBox.Yes:
-            self.__processor.install_packages(packages_to_install)
+            self.setDisabled(True)
+            self.install_event()
 
+    def install_event(self):
+        self.install.emit()
+        self.close()
