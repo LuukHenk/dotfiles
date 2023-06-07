@@ -11,6 +11,6 @@ class ControlsWidget(QWidget):
 
     def __create_layout(self) -> None:
         layout = QHBoxLayout(self)
-        install_button = QPushButton("(Un)Install")
+        install_button = QPushButton("Apply changes")
         install_button.clicked.connect(self.InstallClicked)
         layout.addWidget(install_button)

@@ -2,6 +2,7 @@ README.md
 setup.cfg
 setup.py
 src/run.py
+src/data_layer/package_accessor.py
 src/data_models/__init__.py
 src/data_models/configuration_path.py
 src/data_models/installation_object.py
@@ -19,7 +20,6 @@ src/installation_wizard_widget/confirmation_widget.py
 src/installation_wizard_widget/controls_widget.py
 src/installation_wizard_widget/group_panel_widget.py
 src/installation_wizard_widget/installation_wizard_widget.py
-src/installation_wizard_widget/installation_wizard_widget_processor.py
 src/installation_wizard_widget/package_info_text_generator.py
 src/package_finder/__init__.py
 src/package_finder/package_finder.py
@@ -32,7 +32,6 @@ src/package_installer/__init__.py
 src/package_installer/package_installer.py
 src/package_installer/installation_progress_widget/__init__.py
 src/package_installer/installation_progress_widget/installation_progress_widget.py
-src/package_installer/installation_progress_widget/installation_progress_widget_processor.py
 src/qt_application/application.py
 src/qt_application/factory.py
 src/utils/subprocess_interface.py

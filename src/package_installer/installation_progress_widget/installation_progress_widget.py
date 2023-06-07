@@ -1,13 +1,14 @@
 
 
 from PySide6.QtWidgets import QWidget
-from package_installer.installation_progress_widget.installation_progress_widget_processor import InstallationProgressWidgetProcessor
+
+from data_layer.package_accessor import PackageAccessor
 
 class InstallationProgressWidget(QWidget):
-    def __init__(self, processor: InstallationProgressWidgetProcessor, parent=None):
+    def __init__(self, package_accessor: PackageAccessor, parent=None):
         super().__init__(parent)
-        self.__processor = processor
+        self.__package_accessor = package_accessor
 
     def show(self) -> None:
-        print("hi")
+        print(self.__package_accessor.find_packages_with_an_installation_request())
         super().show()
