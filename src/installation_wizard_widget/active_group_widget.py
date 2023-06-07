@@ -39,7 +39,7 @@ class ActiveGroupWidget(QStackedWidget):
 
     def update_active_group(self, group_name: str) -> None:
         self.setCurrentWidget(self.__groups[group_name])
-    
+
     def __create_package_checkbox(self, package_info: PackageInfo) -> QCheckBox:
         package_text = self.PACKAGE_TEXT_TEMPLATE.format(
             install_text=self.UNINSTALL_TEXT if package_info.installed else self.INSTALL_TEXT,
