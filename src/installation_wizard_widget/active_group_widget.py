@@ -17,7 +17,7 @@ from data_models.version import Version
 
 class ActiveGroupWidget(QStackedWidget):
 
-    PACKAGE_TEXT_TEMPLATE: Final[str] = "{install_text}  v{version} ({other})"
+    PACKAGE_TEXT_TEMPLATE: Final[str] = "{install_text}  {package_name} version {version} ({other})"
     INSTALL_TEXT: Final[str] = "Install"
     UNINSTALL_TEXT: Final[str] = "Uninstall"
 
@@ -34,7 +34,7 @@ class ActiveGroupWidget(QStackedWidget):
         self.__groups[group_name] = group
         self.addWidget(group)
 
-    def update_active_group(self, group_name: str):
+    def update_active_group(self, group_name: str) -> None:
         self.setCurrentWidget(self.__groups[group_name])
 
     def __create_package_checkbox(self, package_info: PackageInfo) -> QCheckBox:

@@ -17,5 +17,12 @@
             "neovim",
             "nvim"
         ]
+    },
+    "Terminator": {
+        "package_group": "Neovim",
+        "search_query": [
+            "terminator"
+        ]
     }
 }
+
