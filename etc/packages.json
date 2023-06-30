@@ -19,7 +19,7 @@
         ]
     },
     "Terminator": {
-        "package_group": "Neovim",
+        "package_group": "terminator",
         "search_query": [
             "terminator"
         ]
