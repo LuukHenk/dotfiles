@@ -2,6 +2,7 @@ README.md
 setup.cfg
 setup.py
 src/run.py
+src/data_layer/__init__.py
 src/data_layer/package_accessor.py
 src/data_models/__init__.py
 src/data_models/configuration_path.py
@@ -29,9 +30,16 @@ src/package_finder/package_managers/apt_package_manager_finder.py
 src/package_finder/package_managers/package_manager_finder.py
 src/package_finder/package_managers/snap_package_manager_finder.py
 src/package_installer/__init__.py
-src/package_installer/package_installer.py
+src/package_installer/packages_installer.py
 src/package_installer/installation_progress_widget/__init__.py
 src/package_installer/installation_progress_widget/installation_progress_widget.py
+src/package_installer/package_managers/__init__.py
+src/package_installer/package_managers/apt_package_installer.py
+src/package_installer/package_managers/package_installer.py
+src/qt_application/__init__.py
 src/qt_application/application.py
 src/qt_application/factory.py
+src/utils/__init__.py
 src/utils/subprocess_interface.py
+src/utils/logger/__init__.py
+src/utils/logger/logger.py

@@ -1,7 +1,7 @@
 from data_layer.package_accessor import PackageAccessor
 from installation_wizard_widget.installation_wizard_widget import InstallationWizardWidget
 from package_installer.installation_progress_widget.installation_progress_widget import InstallationProgressWidget
-from package_installer.package_installer import PackageInstaller
+from package_installer.packages_installer import PackagesInstaller
 class Factory:
     def __init__(self):
         self.__package_accessor = PackageAccessor()
@@ -10,5 +10,5 @@ class Factory:
         return InstallationWizardWidget(self.__package_accessor)
 
     def create_installation_progress_widget(self) -> InstallationProgressWidget:
-        package_installer = PackageInstaller(self.__package_accessor)
-        return InstallationProgressWidget(package_installer)
+        packages_installer = PackagesInstaller(self.__package_accessor)
+        return InstallationProgressWidget(packages_installer)
