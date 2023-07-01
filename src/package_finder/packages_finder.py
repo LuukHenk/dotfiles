@@ -19,3 +19,6 @@ class PackagesFinder:
                 for search_request in parsed_package.search_query:
                     packages_info += manager.find_package(search_request, parsed_package.package_group)
         return packages_info
+
+
+l
