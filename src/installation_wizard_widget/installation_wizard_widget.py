@@ -21,7 +21,7 @@ class InstallationWizardWidget(QWidget):
         self.__active_group_widget = self.__construct_active_group_widget()
         self.__active_group_widget.InstallationRequestUpdate.connect(self.__on_installation_request_update)
 
-        self.__groups_widget = GroupPanelWidget(list(self.__package_accessor.package_info_groups))
+        self.__groups_widget = GroupPanelWidget(self.__package_accessor.get_package_groups())
         self.__groups_widget.groupClicked.connect(self.__on_active_group_changed)
 
         self.__controls_widget = ControlsWidget()
@@ -37,10 +37,10 @@ class InstallationWizardWidget(QWidget):
 
     def __construct_active_group_widget(self) -> ActiveGroupWidget:
         active_group_widget = ActiveGroupWidget()
-        for group_name, packages in self.__package_accessor.package_info_groups.items():
+        groups = self.__package_accessor.get_package_groups()
+        for group in groups:
             active_group_widget.add_group(
-                group_name=group_name,
-                packages=packages
+                group_name=group, packages=self.__package_accessor.get_packages_in_group(group)
             )
         return active_group_widget
 
@@ -50,7 +50,9 @@ class InstallationWizardWidget(QWidget):
     def __on_installation_request_update(self, package: PackageInfo) -> None:
         self.__package_accessor.update_installation_request_status(package)
         self.__controls_widget.setEnabled(self.__package_accessor.any_installation_request())
-        self.__groups_widget.highlight_groups(self.__package_accessor.find_package_groups_with_an_installation_request())
+        self.__groups_widget.highlight_groups(
+            self.__package_accessor.find_package_groups_with_an_installation_request()
+        )
 
     def __show_confirmation_widget(self):
         packages_to_install = self.__package_accessor.find_packages_with_an_installation_request()

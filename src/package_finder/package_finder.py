@@ -12,7 +12,7 @@ class PackageFinder:
     def __init__(self) -> None:
         self.__package_managers: List[PackageManagerFinder] = [AptPackageManagerFinder(), SnapPackageManagerFinder()]
 
-    def get_package_info(self, search_requests: List[PackageSearchRequest]) -> Dict[str, List[PackageInfo]]:
+    def _get_packages_info(self, search_requests: List[PackageSearchRequest]) -> Dict[str, List[PackageInfo]]:
         package_info = {}
         for search_request in search_requests:
             package_group = []
@@ -22,7 +22,7 @@ class PackageFinder:
             package_info[search_request.package_group] = package_group
         return package_info
 
-    def _get_package_info(self, search_requests: List[PackageSearchRequest]) -> List[PackageInfo]:
+    def get_packages_info(self, search_requests: List[PackageSearchRequest]) -> List[PackageInfo]:
         packages_info = []
         for search_request in search_requests:
             for manager in self.__package_managers:

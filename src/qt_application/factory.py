@@ -20,5 +20,5 @@ class Factory:
     @staticmethod
     def __construct_package_accessor() -> PackageAccessor:
         package_search_request_parser = PackageSearchRequestParser()
-        package_groups = PackageFinder().get_package_info(package_search_request_parser.package_search_requests)
-        return PackageAccessor(package_groups)
+        packages_info = PackageFinder().get_packages_info(package_search_request_parser.package_search_requests)
+        return PackageAccessor(packages_info)
