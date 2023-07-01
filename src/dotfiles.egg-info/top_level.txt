@@ -1,8 +1,7 @@
+application
+configuration_loader
 data_layer
 data_models
-installation_wizard_widget
-package_finder
-package_installer
-qt_application
+logger
+old
 run
-utils

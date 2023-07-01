@@ -1,16 +1,18 @@
-import dataclasses
+from dataclasses import dataclass, field
 from uuid import uuid4, UUID
+
+from typing import List
 
 from data_models.state import State
 from old.data_models.manager import Manager
 
 
-@dataclasses.dataclass
+@dataclass
 class Object:
     search_name: str  # BK
     manager: Manager  # BK
     name: str = ""
-    group: str = ""
+    groups: List[str] = field(default_factory=list)
     state: State = State.UNKNOWN
 
     def update(self, **kwargs):  # TODO: #0000001

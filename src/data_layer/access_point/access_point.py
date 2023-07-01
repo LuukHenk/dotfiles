@@ -1,4 +1,3 @@
-from abc import ABC
 from typing import Optional, Dict
 
 from data_models.manager import Manager
@@ -7,7 +6,7 @@ from data_models.result import Result
 from data_models.accessor_result_message import AccessorResultMessage as ResultMessage
 
 
-class AccessPoint(ABC):
+class AccessPoint:
     def __init__(self):
         self.__objects: Dict[int, Object] = {}
 

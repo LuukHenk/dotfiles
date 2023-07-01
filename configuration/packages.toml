@@ -1,0 +1,58 @@
+
+
+
+# Basics
+[[package_groups]]
+name="Basics"
+
+[[package_groups.package]]
+name="Python"
+[[package_groups.package.search_name]]
+name="python3"
+
+# Home Basics
+[[package_groups]]
+name="Home Basics"
+
+[[package_groups.package]]
+name="Spotify"
+[[package_groups.package.search_name]]
+name="spotify"
+
+[[package_groups.package]]
+name="Python"
+[[package_groups.package.search_name]]
+name="python3"
+
+[[package_groups.package]]
+name="Terminator"
+[[package_groups.package.search_name]]
+name="terminator"
+
+[[package_groups.package]]
+name="Neovim"
+[[package_groups.package.search_name]]
+name="neovim"
+[[package_groups.package.search_name]]
+name="nvim"
+
+# Terminal Tools
+[[package_groups]]
+name="Terminal Tools"
+
+[[package_groups.package]]
+name="Terminator"
+[[package_groups.package.search_name]]
+name="terminator"
+
+[[package_groups.package]]
+name="Neovim"
+[[package_groups.package.search_name]]
+name="neovim"
+[[package_groups.package.search_name]]
+name="nvim"
+
+[[package_groups.package]]
+name="NCDU"
+[[package_groups.package.search_name]]
+name="ncdu"

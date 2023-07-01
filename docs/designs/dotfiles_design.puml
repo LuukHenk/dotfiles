@@ -1,121 +1,30 @@
-@startuml dotfiles design
+@startuml dotfiles
 
-package main {
-    class Run{}
+
+package application {
+    class Application {}
+    class Factory {}
 }
 
-' -------------------------------------------------------
-
-package "Installation wizard widget" as installation_widget {
-
-    class InstallationWizardWidgetProcessor {}
-
-    class InstallationWizardWidget {}
-
-    class GroupPanelWidget {}
-
-    class ActiveGroupWidget {}
-
-    class ControlsWidget {}
-}
-
-InstallationWizardWidget --> InstallationWizardWidgetProcessor
-InstallationWizardWidget --> GroupPanelWidget
-InstallationWizardWidget --> ActiveGroupWidget
-InstallationWizardWidget --> ControlsWidget
-GroupPanelWidget ..> InstallationWizardWidgetProcessor
-ActiveGroupWidget ..> InstallationWizardWidgetProcessor
-ControlsWidget ..> InstallationWizardWidgetProcessor
-
-' -------------------------------------------------------
-
-package "Package finder" as package_finder {
-
-    class PackageFinder {
-        + get_package_info()
-    }
-
-    class PackageSearchRequestParser {
-        + get_package_search_requests() -> List[PackageSearchRequest] 
-    }
-    package "Package managers" as package_managers_finder {
-        abstract class PackageManagerFinder {
-            + find_package(package_name: str)
-        }
-
-        class AptPackageManagerFinder {}
-        class SnapPackageManagerFinder {}
-    }
-
-}
-
-PackageSearchRequestParser <- PackageFinder 
-PackageFinder --> package_managers_finder
-AptPackageManagerFinder --|> PackageManagerFinder
-SnapPackageManagerFinder --|> PackageManagerFinder
-
-' -------------------------------------------------------
-
-package "Package installer" as package_installer {
-    class PackageInstaller {
-        + install_package(package: InstallationObject)
-        + uninstall_package(package: InstallationObject)
+package accessor {
+    class AccessPoint {}
+    class Accessor {
+        + package_accessor
     }
 }
-
-
-' -------------------------------------------------------
 
 package data_models {
-
-    class PackageSearchRequest {
-        + name: str
-        + search_query: List[str]
-        + package_group: str
-    }
-
-    class PackageInfo {
-        + name: str
-        + version: Tuple[str, Version]
-        + installed: bool
-        + manager: Manager
-    }
-
-    class InstallationObject {
-        + package_info: PackageInfo
-        + configuration: ...
-    }
-
-    enum Manager {
-        APT
-        SNAP
-    }
-
-    enum Version {
-        LATEST_STABLE
-        LATEST_CANDIDATE
-        LATEST_BETA
-        LATEST_EDGE
-        OTHER
-    }
-
-    enum ConfigurationPath {
-        PACKAGE_CONFIGURATION_PATH
-    }
+    class Object {}
+    class Package {}
 }
 
-' -------------------------------------------------------
-
-package "etc/" as configuration {
-    struct packages {}
-}
-
-packages --> PackageSearchRequestParser
-' -------------------------------------------------------
-
-Run --> InstallationWizardWidget
-InstallationWizardWidgetProcessor -down-> PackageInstaller
-InstallationWizardWidgetProcessor --> PackageFinder
 
 
+
+Application --> Factory
+
+Accessor --> AccessPoint
+application -> Accessor
+
+Object --|> Package
 @enduml
