@@ -1,6 +1,6 @@
 from tomllib import load, TOMLDecodeError
 from pathlib import Path
-from typing import List, Any, Dict
+from typing import List, Any, Dict, Union
 
 from configuration_loader.parsers.package_parser_keys import PackageParserKeys as Keys
 from data_models.package import Package
@@ -9,62 +9,46 @@ from package_manager_manager.package_manager_manager import PackageManagerManage
 
 
 class PackageParser:
+    CONFIG_PACKAGE_FORMAT = Dict[str, Union[List[str], str]]
+    CONFIG_FORMAT = Dict[str, List[CONFIG_PACKAGE_FORMAT]]
+
     def __init__(self):
         self.__package_manager_manager = PackageManagerManager()
+        self.__packages = {}
 
     def parse(self, file_path: Path) -> List[Package]:
         try:
-            raw_package_data = self.__load_from_toml(file_path)
-            packages = self.__parse_package_data(raw_package_data)
+            raw_packages = self.__load_packages_from_toml(file_path)
+            packages = self.__parse_raw_packages(raw_packages)
         except (KeyError, TOMLDecodeError) as err:
             log_error(f"Failed to parse packages: {err}")
             return []
         return packages
 
     @staticmethod
-    def __load_from_toml(file_path: Path) -> Dict[str, Any]:
+    def __load_packages_from_toml(file_path: Path) -> List[CONFIG_PACKAGE_FORMAT]:
         with open(file_path, "rb") as f:
-            data = load(f)
-        return data
+            data: PackageParser.CONFIG_FORMAT = load(f)
+        return [package for package in data[Keys.PACKAGES]]
 
-    def __parse_package_data(self, raw_package_data: Dict[str, Any]) -> List[Package]:
+    def __parse_raw_packages(self, raw_packages: List[CONFIG_PACKAGE_FORMAT]) -> List[Package]:
         packages = []
-        covered_packages = []
-        package_name_to_groups_mapping = self.__map_package_name_and_groups(raw_package_data)
-        raw_packages = [package for group in raw_package_data[Keys.PACKAGE_GROUPS] for package in group[Keys.PACKAGES]]
-        for package in raw_packages:
-            for search_name in package[Keys.SEARCH_NAMES]:
-                package_name = package[Keys.NAME]
-                if package_name in covered_packages:
-                    continue
-                covered_packages.append(package_name)
-                groups = package_name_to_groups_mapping[package_name]
-                search_results = self.__package_manager_manager.find_package(search_name[Keys.NAME])
-                for search_result in search_results:
-                    packages.append(
-                        Package(
-                            name=package[Keys.NAME],
-                            search_name=search_name[Keys.NAME],
-                            groups=groups,
-                            manager_name=search_result.manager_name,
-                            installed=search_result.package_installed,
-                            version=search_result.package_version,
-                        )
-                    )
+        for raw_package in raw_packages:
+            packages += self.__parse_raw_package(raw_package)
         return packages
 
-    @staticmethod
-    def __map_package_name_and_groups(raw_package_data: Dict[str, Any]) -> Dict[str, List[str]]:
-        package_name_to_group_name_mapper = {}
-        package_groups = raw_package_data[Keys.PACKAGE_GROUPS]
-        for group in package_groups:
-            group_name = group[Keys.NAME]
-            for package in group[Keys.PACKAGES]:
-                package_name = package[Keys.NAME]
-                if package_name in package_name_to_group_name_mapper:
-                    groups = package_name_to_group_name_mapper[package_name]
-                    if group_name not in groups:
-                        groups.append(group_name)
-                    continue
-                package_name_to_group_name_mapper[package_name] = [group_name]
-        return package_name_to_group_name_mapper
+    def __parse_raw_package(self, raw_package: CONFIG_PACKAGE_FORMAT) -> List[Package]:
+        packages = []
+        for search_name in raw_package[Keys.SEARCH_NAMES]:
+            search_results = self.__package_manager_manager.find_package(search_name)
+            for search_result in search_results:
+                package = Package(
+                    name=raw_package[Keys.NAME],
+                    search_name=search_name,
+                    groups=raw_package[Keys.GROUPS],
+                    manager_name=search_result.manager_name,
+                    installed=search_result.package_installed,
+                    version=search_result.package_version,
+                )
+                packages.append(package)
+        return packages
