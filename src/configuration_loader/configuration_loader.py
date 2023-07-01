@@ -15,4 +15,4 @@ class ConfigurationLoader:
         for package in PackageParser().parse(self.__packages_config_path):
             result = package_accessor.add_package(package)
             if not result.success:
-                log_error(f"Failed to load package {package.name}: {result.message}")
+                log_error(f"Failed to load package '{package.name}': {result.message}")

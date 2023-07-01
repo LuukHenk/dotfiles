@@ -23,13 +23,3 @@ search_names=["nvim", "neovim"]
 name="NCDU"
 groups=["Terminal Tools"]
 search_names=["ncdu"]
-
-[[packages]]
-name="something"
-groups=["Terminal Tools"]
-search_names=["ncdu"]
-
-[[packages]]
-name="NCDU"
-groups=["Terminal Tools"]
-search_names=["htop"]

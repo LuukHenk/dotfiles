@@ -28,8 +28,10 @@ class PackageAccessor:
             return None
 
     def add_package(self, package: Package) -> Result:
-        if self.find_package_via_bk(package.search_name, package.manager_name, package.version) is not None:
-            return Result(success=False, message=ResultMessage.DUPLICATION)
+        already_existing_package = self.find_package_via_bk(package.search_name, package.manager_name, package.version)
+        if already_existing_package is not None:
+            message = ResultMessage.DUPLICATION.value.format(already_existing_package.name, package.name)
+            return Result(success=False, message=message)
         self.__packages[package.id_] = package
         return Result(success=True)
 
@@ -49,13 +51,13 @@ class PackageAccessor:
 
     def __validate_update(self, package: Optional[Package], updated_package: Package) -> Result:
         if not package:
-            return Result(success=False, message=ResultMessage.NOT_FOUND)
+            return Result(success=False, message=ResultMessage.NOT_FOUND.value)
         duplicate = self.find_package_via_bk(
             updated_package.search_name, updated_package.manager_name, updated_package.version
         )
         if duplicate is not None:
             if duplicate.id_ == package.id_:
-                return Result(success=False, message=ResultMessage.UNCHANGED)
+                return Result(success=False, message=ResultMessage.UNCHANGED.value)
             else:
-                return Result(success=False, message=ResultMessage.DUPLICATION)
+                return Result(success=False, message=ResultMessage.DUPLICATION.value)
         return Result(success=True)
