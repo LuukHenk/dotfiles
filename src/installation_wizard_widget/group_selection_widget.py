@@ -1,16 +1,11 @@
 from sys import exit as sys_exit, argv
 
 from typing import List, Dict
-from PySide6.QtWidgets import (
-    QWidget,
-    QApplication,
-    QVBoxLayout,
-    QPushButton
-)
+from PySide6.QtWidgets import QWidget, QApplication, QVBoxLayout, QPushButton
 from PySide6.QtCore import Signal
 
 
-class GroupPanelWidget(QWidget):
+class GroupSelectionWidget(QWidget):
     groupClicked = Signal(str)
 
     def __init__(self, groups: List[str], parent=None) -> None:
@@ -51,8 +46,9 @@ class GroupPanelWidget(QWidget):
             tile.setChecked(clicked_group_name == group_name)
         self.groupClicked.emit(clicked_group_name)
 
+
 if __name__ == "__main__":
     app = QApplication(argv)
-    window = GroupPanelWidget(["Nvim", "Python"])
+    window = GroupSelectionWidget(["Nvim", "Python"])
     window.show()
     sys_exit(app.exec())

@@ -8,7 +8,7 @@ class PackageAccessor:
     def __init__(self, packages_info: List[PackageInfo]):
         self.__packages_info = packages_info
 
-    def get_package_groups(self) -> List[str]:
+    def get_package_group_names(self) -> List[str]:
         package_groups = []
         for package in self.__packages_info:
             if package.group not in package_groups:
