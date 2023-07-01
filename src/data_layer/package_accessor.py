@@ -3,7 +3,6 @@ from typing import Optional, Dict
 from data_models.version import Version
 
 from data_models.manager_name import ManagerName
-from data_models.object import Object
 from data_models.package import Package
 from data_models.result import Result
 from data_models.accessor_result_message import AccessorResultMessage as ResultMessage
@@ -14,7 +13,7 @@ class PackageAccessor:
         super().__init__()
         self.__packages: Dict[int, Package] = {}
 
-    def find_package_via_bk(self, search_name: str, manager: ManagerName, version: Version) -> Optional[Object]:
+    def find_package_via_bk(self, search_name: str, manager: ManagerName, version: Version) -> Optional[Package]:
         """Use the business keys to find the object. This will take longer then finding the object via the PK"""
         for package in self.__packages.values():
             if package.manager_name == manager and package.search_name == search_name and package.version == version:

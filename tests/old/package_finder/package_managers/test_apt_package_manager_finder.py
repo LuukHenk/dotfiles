@@ -82,7 +82,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         # Assert
         self.assertEqual(package_info, [])
         package_info_call = run_patch.call_args_list[0].args[0]
-        self.assertEqual(package_info_call, package_manager_handler.INFO_COMMAND + [package_name])
+        self.assertEqual(package_info_call, package_manager_handler.__INFO_COMMAND + [package_name])
 
     @patch(RUN_PATCH)
     def test_find_latest_package_version_no_version_indicator(self, run_patch: Mock):
@@ -102,7 +102,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         # Assert
         self.assertEqual(package_info, [])
         package_info_call = run_patch.call_args_list[0].args[0]
-        self.assertEqual(package_info_call, package_manager_handler.INFO_COMMAND + [package_name])
+        self.assertEqual(package_info_call, package_manager_handler.__INFO_COMMAND + [package_name])
 
     @patch(PACKAGE_INFO_PATCH)
     @patch(RUN_PATCH)
@@ -133,7 +133,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         )
         self.assertEqual(package_info, [package_info_mock])
         package_info_call = run_patch.call_args_list[0].args[0]
-        self.assertEqual(package_info_call, package_manager_handler.INFO_COMMAND + [package_name])
+        self.assertEqual(package_info_call, package_manager_handler.__INFO_COMMAND + [package_name])
 
     @patch(RUN_PATCH)
     def test_find_installed_version_no_version_indicator(self, run_patch: Mock):
@@ -151,7 +151,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         # Assert
         self.assertEqual(package_info, [])
         package_info_call = run_patch.call_args_list[1].args[0]
-        self.assertEqual(package_info_call, package_manager_handler.INSTALLED_COMMAND + [package_name])
+        self.assertEqual(package_info_call, package_manager_handler.__INSTALLED_COMMAND + [package_name])
 
     @patch(PACKAGE_INFO_PATCH)
     @patch(RUN_PATCH)
@@ -180,7 +180,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         )
         self.assertEqual(package_info, [package_info_mock])
         package_info_call = run_patch.call_args_list[1].args[0]
-        self.assertEqual(package_info_call, package_manager_handler.INSTALLED_COMMAND + [package_name])
+        self.assertEqual(package_info_call, package_manager_handler.__INSTALLED_COMMAND + [package_name])
 
     @patch(PACKAGE_INFO_PATCH)
     @patch(RUN_PATCH)

@@ -30,7 +30,7 @@ class TestAptPackageManagerFinder(TestCase):
 
         # Assert
         self.assertEqual(package_info, [])
-        package_info_command = package_manager_handler.INFO_COMMAND + [package_name]
+        package_info_command = package_manager_handler.__INFO_COMMAND + [package_name]
         run_patch.assert_called_once_with(package_info_command)
 
     def test_find_latest_package_versions_with_no_text_of_interest(self) -> None:
