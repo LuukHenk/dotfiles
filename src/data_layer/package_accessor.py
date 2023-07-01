@@ -5,8 +5,8 @@ from package_finder.package_finder import PackageFinder
 
 
 class PackageAccessor:
-    def __init__(self):
-        self.__package_groups = PackageFinder().get_package_info()
+    def __init__(self, package_groups: Dict[str, List[PackageInfo]]):
+        self.__package_groups = package_groups
 
     @property
     def package_info_groups(self) -> Dict[str, List[PackageInfo]]:
