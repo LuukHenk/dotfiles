@@ -6,6 +6,6 @@ from application.factory import Factory
 def run_application():
     app = QApplication(argv)
     factory = Factory()
-    # installation_wizard_widget = factory.create_installation_wizard_widget()
-    # installation_wizard_widget.show()
-    # sys_exit(app.exec_())
+    installation_wizard_widget = factory.create_installation_wizard_widget()
+    installation_wizard_widget.show()
+    sys_exit(app.exec_())
