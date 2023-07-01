@@ -51,7 +51,6 @@ class PackageParser:
                             version=search_result.package_version,
                         )
                     )
-        print(packages)
         return packages
 
     @staticmethod

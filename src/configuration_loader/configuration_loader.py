@@ -1,7 +1,8 @@
 from pathlib import Path
 
 from configuration_loader.parsers.package_parser import PackageParser
-from old.data_layer.package_accessor import PackageAccessor
+from data_layer.package_accessor import PackageAccessor
+from logger.logger import log_error
 
 
 class ConfigurationLoader:
@@ -12,3 +13,7 @@ class ConfigurationLoader:
 
     def load_packages(self, package_accessor: PackageAccessor) -> None:
         parsed_packages = PackageParser().parse(self.__packages_config_path)
+        for package in parsed_packages:
+            result = package_accessor.add_package(package)
+            if not result.success:
+                log_error(f"Failed to load package {package.name}: {result.message}")

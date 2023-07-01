@@ -40,12 +40,12 @@ class PackageAccessor:
             return validation_result
 
         # TODO: #0000001
-        self.__packages.search_name = updated_package.search_name
-        self.__packages.manager = updated_package.manager_name
-        self.__packages.name = updated_package.name
-        self.__packages.groups = updated_package.groups
-        self.__packages.state = updated_package.state
-        self.__packages.version = updated_package.version
+        package.search_name = updated_package.search_name
+        package.manager = updated_package.manager_name
+        package.name = updated_package.name
+        package.groups = updated_package.groups
+        package.installed = updated_package.installed
+        package.version = updated_package.version
 
     def __validate_update(self, package: Optional[Package], updated_package: Package) -> Result:
         if not package:
