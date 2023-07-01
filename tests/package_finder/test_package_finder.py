@@ -1,4 +1,3 @@
-
 from unittest import TestCase, main
 from unittest.mock import Mock, patch, create_autospec
 
@@ -10,6 +9,7 @@ from package_finder.package_managers.snap_package_manager_finder import SnapPack
 
 
 PATCH_TEMPLATE = "package_finder.package_finder.{}"
+
 
 class TestPackageFinder(TestCase):
     APT_PACKAGE_MANAGER_FINDER_PATCH: str = PATCH_TEMPLATE.format("AptPackageManagerFinder")
@@ -32,15 +32,9 @@ class TestPackageFinder(TestCase):
         python_package_name = "python"
         get_package_search_requests_patch.return_value = [
             ParsedPackage(
-                name="Neovim",
-                search_query=[neovim_package_name_1, neovim_package_name_2],
-                package_group="Neovim"
+                name="Neovim", search_query=[neovim_package_name_1, neovim_package_name_2], package_group="Neovim"
             ),
-            ParsedPackage(
-                name="Python",
-                search_query=[python_package_name],
-                package_group="Python"
-            )
+            ParsedPackage(name="Python", search_query=[python_package_name], package_group="Python"),
         ]
         package_info_mock = create_autospec(PackageInfo)
         snap_package_manager_mock = create_autospec(SnapPackageManagerFinder)
@@ -60,7 +54,8 @@ class TestPackageFinder(TestCase):
         self.assertEqual(snap_package_manager_mock.method_calls[0].args[0], neovim_package_name_1)
         self.assertEqual(snap_package_manager_mock.method_calls[1].args[0], neovim_package_name_2)
         self.assertEqual(snap_package_manager_mock.method_calls[2].args[0], python_package_name)
-        self.assertEqual(package_info, [package_info_mock]*expected_info_packages)
+        self.assertEqual(package_info, [package_info_mock] * expected_info_packages)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

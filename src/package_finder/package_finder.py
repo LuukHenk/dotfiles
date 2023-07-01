@@ -17,5 +17,5 @@ class PackageFinder:
         for parsed_package in parsed_packages:
             for manager in self.__package_managers:
                 for search_request in parsed_package.search_query:
-                    packages_info += manager.find_package(package_identifier, search_request.package_group)
+                    packages_info += manager.find_package(search_request, parsed_package.package_group)
         return packages_info
