@@ -4,10 +4,10 @@ from utils.subprocess_interface import run_
 from data_models.version import Version
 from data_models.manager import Manager
 from data_models.package_info import PackageInfo
-from package_finder.package_managers.package_manager_finder import PackageManagerFinder
+from package_finder.package_managers.package_finder import PackageFinder
 
 
-class AptPackageManagerFinder(PackageManagerFinder):
+class AptPackageFinder(PackageFinder):
     INFO_COMMAND: Final[List[str]] = ["apt", "info"]
     INSTALLED_COMMAND: Final[List[str]] = ["dpkg-query", "-l"]
     VERSION_INDICATOR: Final[str] = "\nVersion: "

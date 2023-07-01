@@ -7,7 +7,7 @@ from subprocess import CompletedProcess
 from data_models.manager import Manager
 from data_models.package_info import PackageInfo
 from data_models.version import Version
-from package_finder.package_managers.snap_package_manager_finder import SnapPackageManagerFinder
+from package_finder.package_managers.snap_package_finder import SnapPackageFinder
 
 MANAGER_CLASS_PATCH_TEMPLATE = "package_finder.package_managers.snap_package_manager_finder.{}"
 
@@ -23,7 +23,7 @@ class TestAptPackageManagerFinder(TestCase):
         completed_process_mock.returncode = 1
         run_patch.return_value = completed_process_mock
         package_name = "package_name"
-        package_manager_handler = SnapPackageManagerFinder()
+        package_manager_handler = SnapPackageFinder()
 
         # Act
         package_info = package_manager_handler.find_package(package_name, DEFAULT_GROUP)
@@ -307,7 +307,7 @@ class TestAptPackageManagerFinder(TestCase):
         run_mock.stdout = snap_info_text
         run_mock.returncode = 0
         package_name = PACKAGE_NAME
-        package_manager_handler = SnapPackageManagerFinder()
+        package_manager_handler = SnapPackageFinder()
         # Act
         with (
             patch(self.RUN_PATCH) as run_patch,

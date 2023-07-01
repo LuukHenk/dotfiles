@@ -1,16 +1,16 @@
 from typing import Dict, List
 
 from data_models.package_info import PackageInfo
-from data_models.package_search_request import ParsedPackage
+from data_models.parsed_package import ParsedPackage
 
-from package_finder.package_managers.package_manager_finder import PackageManagerFinder
-from package_finder.package_managers.apt_package_manager_finder import AptPackageManagerFinder
-from package_finder.package_managers.snap_package_manager_finder import SnapPackageManagerFinder
+from package_finder.package_managers.package_finder import PackageFinder
+from package_finder.package_managers.apt_package_finder import AptPackageFinder
+from package_finder.package_managers.snap_package_finder import SnapPackageFinder
 
 
-class PackageFinder:
+class PackagesFinder:
     def __init__(self) -> None:
-        self.__package_managers: List[PackageManagerFinder] = [AptPackageManagerFinder(), SnapPackageManagerFinder()]
+        self.__package_managers: List[PackageFinder] = [AptPackageFinder(), SnapPackageFinder()]
 
     def get_packages_info(self, parsed_packages: List[ParsedPackage]) -> List[PackageInfo]:
         packages_info = []

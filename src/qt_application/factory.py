@@ -1,6 +1,6 @@
 from data_layer.package_accessor import PackageAccessor
 from installation_wizard_widget.installation_wizard_widget import InstallationWizardWidget
-from package_finder.package_finder import PackageFinder
+from package_finder.packages_finder import PackagesFinder
 from package_finder.package_search_request_parser import PackageSearchRequestParser
 from package_installer.installation_progress_widget.installation_progress_widget import InstallationProgressWidget
 from package_installer.packages_installer import PackagesInstaller
@@ -20,5 +20,5 @@ class Factory:
     @staticmethod
     def __construct_package_accessor() -> PackageAccessor:
         package_search_request_parser = PackageSearchRequestParser()
-        packages_info = PackageFinder().get_packages_info(package_search_request_parser.package_search_requests)
+        packages_info = PackagesFinder().get_packages_info(package_search_request_parser.package_search_requests)
         return PackageAccessor(packages_info)

@@ -5,7 +5,7 @@ from subprocess import CompletedProcess
 from data_models.manager import Manager
 from data_models.package_info import PackageInfo
 from data_models.version import Version
-from package_finder.package_managers.apt_package_manager_finder import AptPackageManagerFinder
+from package_finder.package_managers.apt_package_finder import AptPackageFinder
 
 
 MANAGER_CLASS_PATCH_TEMPLATE = "package_finder.package_managers.apt_package_manager_finder.{}"
@@ -74,7 +74,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         completed_process_mock.returncode = 1
         run_patch.return_value = completed_process_mock
         package_name = "package_name"
-        package_manager_handler = AptPackageManagerFinder()
+        package_manager_handler = AptPackageFinder()
 
         # Act
         package_info = package_manager_handler.find_package(package_name, self.DEFAULT_GROUP)
@@ -94,7 +94,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         installed_version_run_mock.returncode = 1
         run_patch.side_effect = [latest_version_run_mock, installed_version_run_mock]
         package_name = "python3"
-        package_manager_handler = AptPackageManagerFinder()
+        package_manager_handler = AptPackageFinder()
 
         # Act
         package_info = package_manager_handler.find_package(package_name, self.DEFAULT_GROUP)
@@ -118,7 +118,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         installer_version_run_mock.returncode = 1
         run_patch.side_effect = [latest_version_run_mock, installer_version_run_mock]
         package_name = "python3"
-        package_manager_handler = AptPackageManagerFinder()
+        package_manager_handler = AptPackageFinder()
 
         # Act
         package_info = package_manager_handler.find_package(package_name, self.DEFAULT_GROUP)
@@ -145,7 +145,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         latest_version_run_mock.returncode = 1
         run_patch.side_effect = [latest_version_run_mock, installed_version_run_mock]
         package_name = "python3"
-        package_manager_handler = AptPackageManagerFinder()
+        package_manager_handler = AptPackageFinder()
         # Act
         package_info = package_manager_handler.find_package(package_name, self.DEFAULT_GROUP)
         # Assert
@@ -167,7 +167,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         latest_version_run_mock.returncode = 1
         run_patch.side_effect = [latest_version_run_mock, installed_version_run_mock]
         package_name = "python3"
-        package_manager_handler = AptPackageManagerFinder()
+        package_manager_handler = AptPackageFinder()
         # Act
         package_info = package_manager_handler.find_package(package_name, self.DEFAULT_GROUP)
         # Assert
@@ -197,7 +197,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         latest_version_run_mock.stdout = self.EXAMPLE_INFO_STDOUT_LATEST_VERSION.format(latest_version)
         run_patch.side_effect = [latest_version_run_mock, installed_version_run_mock]
         package_name = "python3"
-        package_manager_handler = AptPackageManagerFinder()
+        package_manager_handler = AptPackageFinder()
         # Act
         package_info = package_manager_handler.find_package(package_name, self.DEFAULT_GROUP)
         # Assert
@@ -226,7 +226,7 @@ ii  python3        {} amd64        interactive high-level object-oriented langua
         latest_version_run_mock.stdout = self.EXAMPLE_INFO_STDOUT_LATEST_VERSION.format(latest_version)
         run_patch.side_effect = [latest_version_run_mock, installed_version_run_mock]
         package_name = "python3"
-        package_manager_handler = AptPackageManagerFinder()
+        package_manager_handler = AptPackageFinder()
         # Act
         package_info = package_manager_handler.find_package(package_name, self.DEFAULT_GROUP)
         # Assert

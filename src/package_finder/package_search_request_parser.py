@@ -3,7 +3,7 @@ from typing import Dict, Final, List, Union
 from pathlib import Path
 import os
 
-from data_models.package_search_request import ParsedPackage
+from data_models.parsed_package import ParsedPackage
 from data_models.configuration_path import ConfigurationPath
 
 

@@ -1,7 +1,7 @@
 from typing import Dict, List
 
 from data_models.package_info import PackageInfo
-from package_finder.package_finder import PackageFinder
+from package_finder.packages_finder import PackagesFinder
 
 
 class PackageAccessor:

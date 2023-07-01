@@ -2,10 +2,10 @@ from unittest import TestCase, main
 from unittest.mock import Mock, patch, create_autospec
 
 from data_models.package_info import PackageInfo
-from data_models.package_search_request import ParsedPackage
-from package_finder.package_finder import PackageFinder
-from package_finder.package_managers.apt_package_manager_finder import AptPackageManagerFinder
-from package_finder.package_managers.snap_package_manager_finder import SnapPackageManagerFinder
+from data_models.parsed_package import ParsedPackage
+from package_finder.packages_finder import PackagesFinder
+from package_finder.package_managers.apt_package_finder import AptPackageFinder
+from package_finder.package_managers.snap_package_finder import SnapPackageFinder
 
 
 PATCH_TEMPLATE = "package_finder.package_finder.{}"
@@ -37,15 +37,15 @@ class TestPackageFinder(TestCase):
             ParsedPackage(name="Python", search_query=[python_package_name], package_group="Python"),
         ]
         package_info_mock = create_autospec(PackageInfo)
-        snap_package_manager_mock = create_autospec(SnapPackageManagerFinder)
+        snap_package_manager_mock = create_autospec(SnapPackageFinder)
         snap_package_manager_mock.find_package.return_value = [package_info_mock]
         snap_package_manager_patch.return_value = snap_package_manager_mock
-        apt_package_manager_mock = create_autospec(AptPackageManagerFinder)
+        apt_package_manager_mock = create_autospec(AptPackageFinder)
         apt_package_manager_mock.find_package.return_value = [package_info_mock]
         apt_package_manager_patch.return_value = apt_package_manager_mock
 
         # Act
-        package_info = PackageFinder().get_package_info()
+        package_info = PackagesFinder().get_package_info()
 
         # Assert
         self.assertEqual(apt_package_manager_mock.method_calls[0].args[0], neovim_package_name_1)

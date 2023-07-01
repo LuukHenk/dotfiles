@@ -5,10 +5,10 @@ from utils.subprocess_interface import run_
 from data_models.version import Version
 from data_models.manager import Manager
 from data_models.package_info import PackageInfo
-from package_finder.package_managers.package_manager_finder import PackageManagerFinder
+from package_finder.package_managers.package_finder import PackageFinder
 
 
-class SnapPackageManagerFinder(PackageManagerFinder):
+class SnapPackageFinder(PackageFinder):
     INSTALLED_INDICATOR: Final[str] = "installed:"
 
     LATEST_INDICATOR: Final[str] = "latest/"
