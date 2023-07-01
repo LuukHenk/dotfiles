@@ -4,7 +4,7 @@ from typing import Dict, Final, List, Union
 from pathlib import Path
 import os
 
-from data_models.package_search_request import PackageSearchRequest
+from data_models.package_search_request import ParsedPackage
 from data_models.configuration_path import ConfigurationPath
 
 
@@ -27,7 +27,7 @@ class PackageSearchRequestParser:
         self.__parse_package_search_requests_dict()
 
     @property
-    def package_search_requests(self) -> List[PackageSearchRequest]:
+    def package_search_requests(self) -> List[ParsedPackage]:
         return self.__package_search_requests
 
     def __parse_package_search_requests_dict(self) -> None:
@@ -72,7 +72,7 @@ class PackageSearchRequestParser:
             raise ValueError(f"File {self.__package_configuration_path} contains a key duplicate: '{package_id}'")
 
     def __create_package_search_request(self, package_id: str, package_data: PackageDataFormat) -> None:
-        package_search_request = PackageSearchRequest(
+        package_search_request = ParsedPackage(
             name = package_id,
             search_query=package_data[self.__SEARCH_QUERY_KEY], #type:ignore
             package_group=package_data[self.__PACKAGE_GROUP_KEY], #type:ignore

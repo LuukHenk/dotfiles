@@ -3,7 +3,7 @@ from unittest import TestCase, main
 from unittest.mock import Mock, patch, create_autospec
 
 from data_models.package_info import PackageInfo
-from data_models.package_search_request import PackageSearchRequest
+from data_models.package_search_request import ParsedPackage
 from package_finder.package_finder import PackageFinder
 from package_finder.package_managers.apt_package_manager_finder import AptPackageManagerFinder
 from package_finder.package_managers.snap_package_manager_finder import SnapPackageManagerFinder
@@ -31,12 +31,12 @@ class TestPackageFinder(TestCase):
         neovim_package_name_2 = "nvim"
         python_package_name = "python"
         get_package_search_requests_patch.return_value = [
-            PackageSearchRequest(
+            ParsedPackage(
                 name="Neovim",
                 search_query=[neovim_package_name_1, neovim_package_name_2],
                 package_group="Neovim"
             ),
-            PackageSearchRequest(
+            ParsedPackage(
                 name="Python",
                 search_query=[python_package_name],
                 package_group="Python"
