@@ -9,6 +9,7 @@ src/configuration_loader/__init__.py
 src/configuration_loader/configuration_loader.py
 src/configuration_loader/parsers/__init__.py
 src/configuration_loader/parsers/package_parser.py
+src/configuration_loader/parsers/package_parser_keys.py
 src/configuration_loader/parsers/parser.py
 src/data_layer/__init__.py
 src/data_layer/accessor.py

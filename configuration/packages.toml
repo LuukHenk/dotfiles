@@ -5,54 +5,54 @@
 [[package_groups]]
 name="Basics"
 
-[[package_groups.package]]
+[[package_groups.packages]]
 name="Python"
-[[package_groups.package.search_name]]
+[[package_groups.packages.search_names]]
 name="python3"
 
 # Home Basics
 [[package_groups]]
 name="Home Basics"
 
-[[package_groups.package]]
+[[package_groups.packages]]
 name="Spotify"
-[[package_groups.package.search_name]]
+[[package_groups.packages.search_names]]
 name="spotify"
 
-[[package_groups.package]]
+[[package_groups.packages]]
 name="Python"
-[[package_groups.package.search_name]]
+[[package_groups.packages.search_names]]
 name="python3"
 
-[[package_groups.package]]
+[[package_groups.packages]]
 name="Terminator"
-[[package_groups.package.search_name]]
+[[package_groups.packages.search_names]]
 name="terminator"
 
-[[package_groups.package]]
+[[package_groups.packages]]
 name="Neovim"
-[[package_groups.package.search_name]]
+[[package_groups.packages.search_names]]
 name="neovim"
-[[package_groups.package.search_name]]
+[[package_groups.packages.search_names]]
 name="nvim"
 
 # Terminal Tools
 [[package_groups]]
 name="Terminal Tools"
 
-[[package_groups.package]]
+[[package_groups.packages]]
 name="Terminator"
-[[package_groups.package.search_name]]
+[[package_groups.packages.search_names]]
 name="terminator"
 
-[[package_groups.package]]
+[[package_groups.packages]]
 name="Neovim"
-[[package_groups.package.search_name]]
+[[package_groups.packages.search_names]]
 name="neovim"
-[[package_groups.package.search_name]]
+[[package_groups.packages.search_names]]
 name="nvim"
 
-[[package_groups.package]]
+[[package_groups.packages]]
 name="NCDU"
-[[package_groups.package.search_name]]
+[[package_groups.packages.search_names]]
 name="ncdu"
