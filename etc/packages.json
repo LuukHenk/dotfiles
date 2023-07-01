@@ -12,16 +12,22 @@
         ]
     },
     "Neovim": {
-        "package_group": "Neovim",
+        "package_group": "Terminal Tools",
         "search_query": [
             "neovim",
             "nvim"
         ]
     },
     "Terminator": {
-        "package_group": "terminator",
+        "package_group": "Terminal Tools",
         "search_query": [
             "terminator"
+        ]
+    },
+    "NCDU": {
+        "package_group": "Terminal Tools",
+        "search_query": [
+            "ncdu"
         ]
     }
 }
