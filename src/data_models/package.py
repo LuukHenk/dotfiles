@@ -5,4 +5,4 @@ from data_models.object import Object
 
 
 class Package(Object):
-    version: Tuple[str, Version]
+    version: Tuple[str, Version] = ("", Version.UNKNOWN)
