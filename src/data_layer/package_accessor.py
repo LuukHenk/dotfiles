@@ -1,4 +1,4 @@
-from typing import Optional, Dict, List
+from typing import Optional, Dict, List, Set
 
 from data_models.version import Version
 
@@ -13,15 +13,15 @@ class PackageAccessor:
         super().__init__()
         self.__packages: Dict[int, Package] = {}
 
-    def get_packages_per_group(self) -> Dict[str, List[Package]]:
-        groups = {}
-        for package in self.__packages.values():
-            for package_group in package.groups:
-                if package_group in groups:
-                    groups[package_group].append(package)
-                    continue
-                groups[package_group] = [package]
-        return groups
+    @property
+    def packages(self) -> List[Package]:
+        return list(self.__packages.values())
+
+    def get_groups(self) -> Set[str]:
+        return {group for package in self.__packages.values() for group in package.groups}
+
+    def get_package_names(self) -> Set[str]:
+        return {package.name for package in self.__packages.values()}
 
     def find_package_via_bk(self, search_name: str, manager: ManagerName, version: Version) -> Optional[Package]:
         """Use the business keys to find the object. This will take longer then finding the object via the PK"""
