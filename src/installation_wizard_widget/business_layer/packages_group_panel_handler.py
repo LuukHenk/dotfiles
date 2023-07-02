@@ -1,21 +1,26 @@
-from typing import List, Dict
+from typing import Dict
 
 from data_layer.package_accessor import PackageAccessor
-
-from data_models.package import Package
 from installation_wizard_widget.presentation_layer.packages_group_panel import PackagesGroupPanel
 
 
 class PackagesGroupPanelHandler:
     def __init__(self, package_accessor: PackageAccessor):
-        packages = package_accessor.packages
-        package_sets: Dict[str, List[Package]] = {}
-        for package_name in package_accessor.get_package_names():
-            package_sets[package_name] = [package for package in packages if package.name == package_name]
-        #
-        # for group in package_accessor.get_groups():
-        #     [package_sets[package.name] for package in packages if group in package.groups]
-        #     PackagesGroupPanel(group, packages)
+        self.__packages_group_panels = self.__construct_panels(package_accessor)
 
-    def get_active_groups_panel(self) -> PackagesGroupPanel:
-        return PackagesGroupPanel("Dummy", [[], []])
+    def get_groups_panel(self, group_name: str) -> PackagesGroupPanel:
+        return self.__packages_group_panels[group_name]
+
+    @staticmethod
+    def __construct_panels(package_accessor) -> Dict[str, PackagesGroupPanel]:
+        # TODO: #0000002
+        groups = {}
+        for group in package_accessor.get_groups():
+            package_sets = []
+            for package_name in package_accessor.get_package_names():
+                package_set = package_accessor.find(name=package_name)
+                package_groups = [group for package in package_set for group in package.groups]
+                if group in package_groups:
+                    package_sets.append(package_set)
+            groups[group] = PackagesGroupPanel(group, package_sets)
+        return groups

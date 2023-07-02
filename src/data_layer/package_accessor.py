@@ -17,6 +17,18 @@ class PackageAccessor:
     def packages(self) -> List[Package]:
         return list(self.__packages.values())
 
+    def find(self, **kwargs) -> List[Package]:
+        packages = []
+        for package in self.__packages.values():
+            matching_package = True
+            for attr, value in kwargs.items():
+                matching_package = package.__getattribute__(attr) == value
+                if not matching_package:
+                    break
+            if matching_package:
+                packages.append(package)
+        return packages
+
     def get_groups(self) -> Set[str]:
         return {group for package in self.__packages.values() for group in package.groups}
 

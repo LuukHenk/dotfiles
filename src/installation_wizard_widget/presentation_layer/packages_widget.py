@@ -13,8 +13,8 @@ class PackagesWidget(QWidget):
 
     def __init__(self, packages: List[Package], parent=None):
         super().__init__(parent=parent)
-        self.__create_layout(packages)
         self.__package_header_point_size = QFont().pointSize() * 2
+        self.__create_layout(packages)
 
     def __create_layout(self, packages: List[Package]):
         layout = QVBoxLayout(self)
@@ -31,7 +31,7 @@ class PackagesWidget(QWidget):
 
     @Slot(int)
     def __on_package_clicked(self, package_id: int):
-        self.PackageClicked.emit(package_id)
+        self.packageClicked.emit(package_id)
 
     def __create_header(self, text: str) -> QLabel:
         header = QLabel(text)
