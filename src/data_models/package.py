@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from uuid import uuid4, UUID
 from typing import List
 
+from business_layer.id_generator import IdGenerator
 from data_models.version import Version
 from data_models.manager_name import ManagerName
 
@@ -16,8 +17,8 @@ class Package:
     groups: List[str] = field(default_factory=list)
 
     def __post_init__(self):
-        self._id: UUID = uuid4()  # PK
+        self._id: int = IdGenerator().generate_id()  # PK
 
     @property
     def id_(self) -> int:
-        return self._id.int
+        return self._id

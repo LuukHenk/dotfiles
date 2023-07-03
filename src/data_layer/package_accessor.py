@@ -54,6 +54,7 @@ class PackageAccessor:
         if already_existing_package is not None:
             message = ResultMessage.DUPLICATION.value.format(already_existing_package.name, package.name)
             return Result(success=False, message=message)
+        print(package.id_)
         self.__packages[package.id_] = package
         return Result(success=True)
 
