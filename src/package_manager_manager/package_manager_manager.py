@@ -1,6 +1,7 @@
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from data_models.manager_name import ManagerName
+from data_models.package import Package
 from data_models.package_manager_search_result import PackageManagerSearchResult
 from package_manager_manager.package_managers.apt_package_manager import AptPackageManager
 from package_manager_manager.package_managers.package_manager import PackageManager
@@ -19,3 +20,6 @@ class PackageManagerManager:
         for manager in self.__managers.values():
             results += manager.find_package(package_name)
         return results
+
+    def install_package(self, package: Package) -> Tuple[bool, str]:
+        return False, f"{package.name} Dummy text"

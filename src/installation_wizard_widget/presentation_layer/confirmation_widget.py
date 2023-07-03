@@ -6,8 +6,8 @@ from installation_wizard_widget.business_layer.package_info_text_generator impor
 
 
 class ConfirmationWidget(QMessageBox):
-    def __init__(self, packages: List[Package]):
-        super().__init__()
+    def __init__(self, packages: List[Package], parent=None):
+        super().__init__(parent)
         self.setStandardButtons(QMessageBox.No | QMessageBox.Yes)
         self.setWindowTitle("Update packages?")
         text = "\n".join([f"- {generate_package_text(package)} ?" for package in packages])
