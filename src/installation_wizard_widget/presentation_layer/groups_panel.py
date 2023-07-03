@@ -19,6 +19,9 @@ class GroupsPanel(QWidget):
             else:
                 group_button.setStyleSheet("font-weight: normal;")
 
+    def check_group(self, group_name) -> None:
+        self.__on_group_clicked(group_name)
+
     def __create_layout(self) -> None:
         layout = QVBoxLayout(self)
         for group in self.__group_buttons:
@@ -31,10 +34,10 @@ class GroupsPanel(QWidget):
         self.groupClicked.emit(clicked_group_name)
 
     def __create_group_buttons(self, group_names: List[str]) -> List[QPushButton]:
-        group_buttons = []
-        for group_name in group_names:
-            button = QPushButton(group_name)
-            button.setCheckable(True)
-            button.clicked.connect(lambda: self.__on_group_clicked(group_name))
-            group_buttons.append(button)
-        return group_buttons
+        return [self.__create_group_button(group_name) for group_name in group_names]
+
+    def __create_group_button(self, group_name: str) -> QPushButton:
+        button = QPushButton(group_name)
+        button.setCheckable(True)
+        button.clicked.connect(lambda: self.__on_group_clicked(group_name))
+        return button
