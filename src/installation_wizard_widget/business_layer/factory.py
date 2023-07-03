@@ -2,6 +2,7 @@ from typing import Dict, List
 
 from data_layer.package_accessor import PackageAccessor
 from data_models.package import Package
+from installation_wizard_widget.business_layer.id_tracker import IdTracker
 
 from installation_wizard_widget.presentation_layer.installation_wizard_widget import InstallationWizardWidget
 from installation_wizard_widget.presentation_layer.stacked_group_panels import StackedGroupPanels
@@ -19,7 +20,8 @@ class Factory:
     def __create_installation_wizard_widget(self) -> InstallationWizardWidget:
         sorted_group_names = sorted(self.__package_accessor.get_groups())
         stacked_group_panels = self.__construct_stacked_group_panels()
-        return InstallationWizardWidget(sorted_group_names, stacked_group_panels)
+        package_id_tracker = IdTracker()
+        return InstallationWizardWidget(sorted_group_names, stacked_group_panels, package_id_tracker)
 
     def __construct_stacked_group_panels(self) -> StackedGroupPanels:
         stacked_group_panels = StackedGroupPanels()

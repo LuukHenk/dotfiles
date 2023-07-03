@@ -9,7 +9,7 @@ from installation_wizard_widget.presentation_layer.package_widget import Package
 
 
 class PackagesWidget(QWidget):
-    packageClicked = Signal(int)
+    packageStateChange = Signal(int, int)  # Tuple[package ID, package state]
 
     def __init__(self, packages: List[Package], parent=None):
         super().__init__(parent=parent)
@@ -26,12 +26,12 @@ class PackagesWidget(QWidget):
 
     def __create_package_widget(self, package: Package) -> PackageWidget:
         package_widget = PackageWidget(package)
-        package_widget.clicked.connect(lambda: self.__on_package_clicked(package.id_))
+        package_widget.stateChanged.connect(lambda state: self.__on_package_clicked(package.id_, state))
         return package_widget
 
-    @Slot(int)
-    def __on_package_clicked(self, package_id: int):
-        self.packageClicked.emit(package_id)
+    @Slot(int, int)
+    def __on_package_clicked(self, package_id: int, package_state: int):
+        self.packageStateChange.emit(package_id, package_state)
 
     def __create_header(self, text: str) -> QLabel:
         header = QLabel(text)
