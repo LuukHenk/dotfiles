@@ -10,6 +10,7 @@ from installation_wizard_widget.presentation_layer.packages_widget import Packag
 
 class PackagesGroupPanel(QWidget):
     packageStateChange = Signal(int, int)  # Tuple[package ID, package state]
+    updatePackageState = Signal(int, int)  # Tuple[package ID, package state]
 
     def __init__(self, group_name: str, package_sets: List[List[Package]], parent=None):
         super().__init__(parent)
@@ -22,6 +23,7 @@ class PackagesGroupPanel(QWidget):
         for package_set in package_sets:
             packages_widget = PackagesWidget(package_set)
             packages_widget.packageStateChange.connect(self.packageStateChange)
+            self.updatePackageState.connect(packages_widget.updatePackageState)
             layout.addWidget(packages_widget)
 
     def __create_header(self, text: str) -> QLabel:

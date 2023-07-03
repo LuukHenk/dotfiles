@@ -9,6 +9,7 @@ from installation_wizard_widget.presentation_layer.packages_group_panel import P
 
 class StackedGroupPanels(QStackedWidget):
     packageStateChange = Signal(int, int)  # Tuple[package ID, package state]
+    updatePackageState = Signal(int, int)  # Tuple[package ID, package state]
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
@@ -17,6 +18,8 @@ class StackedGroupPanels(QStackedWidget):
     def add_group_panel(self, group_name, package_sets: List[List[Package]]):
         group_panel = PackagesGroupPanel(group_name, package_sets)
         group_panel.packageStateChange.connect(self.packageStateChange)
+        group_panel.packageStateChange.connect(self.updatePackageState)
+        self.updatePackageState.connect(group_panel.updatePackageState)
         self.__groups[group_name] = group_panel
         self.addWidget(group_panel)
 

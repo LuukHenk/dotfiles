@@ -53,4 +53,4 @@ class InstallationWizardWidget(QWidget):
             self.__package_id_tracker.add_id(package_id)
         if state == Qt.Unchecked.value:
             self.__package_id_tracker.remove_id(package_id)
-        print(self.__package_id_tracker.ids)
+        self.__apply_button.setEnabled(len(self.__package_id_tracker.ids))

@@ -10,6 +10,7 @@ from installation_wizard_widget.presentation_layer.package_widget import Package
 
 class PackagesWidget(QWidget):
     packageStateChange = Signal(int, int)  # Tuple[package ID, package state]
+    updatePackageState = Signal(int, int)  # Tuple[package ID, package state]
 
     def __init__(self, packages: List[Package], parent=None):
         super().__init__(parent=parent)
@@ -27,6 +28,7 @@ class PackagesWidget(QWidget):
     def __create_package_widget(self, package: Package) -> PackageWidget:
         package_widget = PackageWidget(package)
         package_widget.stateChanged.connect(lambda state: self.__on_package_clicked(package.id_, state))
+        self.updatePackageState.connect(package_widget.updatePackageState)
         return package_widget
 
     @Slot(int, int)
