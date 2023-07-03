@@ -2,7 +2,6 @@ from typing import Dict, List
 
 from data_layer.package_accessor import PackageAccessor
 from data_models.package import Package
-from installation_wizard_widget.business_layer.package_id_tracker import PackageIdTracker
 
 from installation_wizard_widget.presentation_layer.installation_wizard_widget import InstallationWizardWidget
 from installation_wizard_widget.presentation_layer.stacked_group_panels import StackedGroupPanels
@@ -11,7 +10,6 @@ from installation_wizard_widget.presentation_layer.stacked_group_panels import S
 class Factory:
     def __init__(self, package_accessor: PackageAccessor):
         self.__package_accessor = package_accessor
-        self.__package_id_tracker = PackageIdTracker()
         self.__installation_wizard_widget = self.__create_installation_wizard_widget()
 
     @property
