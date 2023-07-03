@@ -15,6 +15,7 @@ class Package:
     manager_name: ManagerName  # BK
     name: str = ""
     groups: List[str] = field(default_factory=list)
+    installation_request: bool = False
 
     def __post_init__(self):
         self._id: int = IdGenerator().generate_id()  # PK

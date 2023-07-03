@@ -53,6 +53,7 @@ class InstallationWizardWidget(QWidget):
         install_packages = confirmation_widget.exec()
         if install_packages == QMessageBox.Yes:
             self.setDisabled(True)
+            self.__installation_wizard_processor.set_installation_requests()
             self.install_event()
 
     @Slot(str)

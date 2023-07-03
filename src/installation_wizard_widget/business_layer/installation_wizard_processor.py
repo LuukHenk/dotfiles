@@ -24,3 +24,8 @@ class InstallationWizardProcessor:
         for package_id in self.__packages_to_install.ids:
             packages.append(self.__package_accessor.find_package_via_id(package_id))
         return packages
+
+    def set_installation_requests(self) -> None:
+        for package in self.get_packages_to_install():
+            package.installation_request = True
+            _result = self.__package_accessor.update_package(package.id_, package)
