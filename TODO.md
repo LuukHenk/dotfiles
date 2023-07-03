@@ -12,6 +12,8 @@
 - #0000003: Write tests
 - #0000004: Cleanup
 - #0000005: Update the readme
+- #0000006: order the package names in the installation wizard widget
+- #0000007: Better formatting of the installation wizard widget needed
 
 
 
