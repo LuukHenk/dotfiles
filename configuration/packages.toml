@@ -2,7 +2,7 @@
 [[packages]]
 name="Python"
 groups=["Home Basics"]
-search_names=["python3"]
+search_names=["python3, python3.11"]
 
 [[packages]]
 name="Spotify"
