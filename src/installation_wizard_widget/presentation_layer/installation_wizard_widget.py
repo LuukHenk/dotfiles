@@ -5,6 +5,7 @@ from PySide6.QtWidgets import QGridLayout, QWidget, QPushButton, QMessageBox
 
 from installation_wizard_widget.business_layer.id_tracker import IdTracker
 from installation_wizard_widget.business_layer.installation_wizard_processor import InstallationWizardProcessor
+from installation_wizard_widget.presentation_layer.confirmation_widget import ConfirmationWidget
 from installation_wizard_widget.presentation_layer.groups_panel import GroupsPanel
 from installation_wizard_widget.presentation_layer.stacked_group_panels import StackedGroupPanels
 
@@ -26,8 +27,10 @@ class InstallationWizardWidget(QWidget):
         self.__installation_wizard_processor = installation_wizard_processor
 
         self.__layout = self.__create_layout()
+
         self.__groups_panel.groupClicked.connect(self.__on_group_clicked)
         self.__stacked_group_panels.packageStateChange.connect(self.__update_packages_to_install)
+
         if len(group_names):
             self.__groups_panel.check_group(group_names[0])
 
@@ -40,16 +43,17 @@ class InstallationWizardWidget(QWidget):
 
     def __create_apply_button(self) -> QPushButton:
         apply_button = QPushButton("Apply changes")
-        apply_button.clicked.connect(self.install)
+        apply_button.clicked.connect(self.__show_confirmation_widget)
         apply_button.setDisabled(True)
         return apply_button
 
-    # def __show_confirmation_widget(self):
-    #     confirmation_widget = ConfirmationWidget()
-    #     install_packages = confirmation_widget.exec()
-    #     if install_packages == QMessageBox.Yes:
-    #         self.setDisabled(True)
-    #         self.install_event()
+    def __show_confirmation_widget(self):
+        packages_to_install = self.__installation_wizard_processor.get_packages_to_install()
+        confirmation_widget = ConfirmationWidget(packages_to_install)
+        install_packages = confirmation_widget.exec()
+        if install_packages == QMessageBox.Yes:
+            self.setDisabled(True)
+            self.install_event()
 
     @Slot(str)
     def __on_group_clicked(self, group_name: str):

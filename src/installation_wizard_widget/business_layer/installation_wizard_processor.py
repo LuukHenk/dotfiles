@@ -1,4 +1,7 @@
+from typing import List
+
 from data_layer.package_accessor import PackageAccessor
+from data_models.package import Package
 from installation_wizard_widget.business_layer.id_tracker import IdTracker
 
 
@@ -15,3 +18,9 @@ class InstallationWizardProcessor:
             self.__packages_to_install.add_id(package_id)
             return
         self.__packages_to_install.remove_id(package_id)
+
+    def get_packages_to_install(self) -> List[Package]:
+        packages = []
+        for package_id in self.__packages_to_install.ids:
+            packages.append(self.__package_accessor.find_package_via_id(package_id))
+        return packages
