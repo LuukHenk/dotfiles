@@ -1,6 +1,8 @@
-from typing import List, Final, Optional
+from typing import List, Final, Optional, Tuple
 
 from data_models.manager_name import ManagerName
+from data_models.package import Package
+from data_models.result import Result
 from data_models.version import Version
 
 from data_models.package_manager_search_result import PackageManagerSearchResult
@@ -13,6 +15,9 @@ class AptPackageManager(PackageManager):
     __INFO_COMMAND: Final[List[str]] = ["apt", "info"]
     __INSTALLED_COMMAND: Final[List[str]] = ["dpkg-query", "-l"]
     __VERSION_INDICATOR: Final[str] = "\nVersion: "
+
+    def install_package(self, package: Package) -> Result:
+        return Result(success=False, message=f"Failed to install package {package.name}. Installation not implemented")
 
     def find_package(self, package_name: str) -> List[PackageManagerSearchResult]:
         latest_version = self.__find_latest_package_version(package_name)

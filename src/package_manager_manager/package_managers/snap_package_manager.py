@@ -2,6 +2,8 @@ from subprocess import CompletedProcess
 from typing import List, Final, Dict, Optional
 
 from data_models.manager_name import ManagerName
+from data_models.package import Package
+from data_models.result import Result
 from data_models.version import Version
 from utils.subprocess_interface import run_
 
@@ -22,6 +24,9 @@ class SnapPackageManager(PackageManager):
     __EDGE_INDICATOR: Final[str] = "latest/edge"
 
     __INFO_COMMAND: Final[List[str]] = ["snap", "info"]
+
+    def install_package(self, package: Package) -> Result:
+        return Result(success=False, message=f"Failed to install package {package.name}. Installation not implemented")
 
     def find_package(self, package_name: str) -> List[PackageManagerSearchResult]:
         package_info_run_result: CompletedProcess = run_(self.__INFO_COMMAND + [package_name])

@@ -17,8 +17,9 @@ class Installer:
         messages = []
         packages_to_install = self.__package_accessor.find(installation_request=True)
         for i, package in enumerate(packages_to_install):
-            success, message = self.__package_manager_manager.install_package(package)
-            messages.append(message)
+            messages.append(f"Installing {package}...")
+            result = self.__package_manager_manager.install_package(package)
+            messages[-1] = result.message
             percentage_done = int(i / len(packages_to_install) * 100)
             self.__installation_status_widget.update_installation_status(percentage_done, messages)
         self.__installation_status_widget.update_installation_status(100, messages)
