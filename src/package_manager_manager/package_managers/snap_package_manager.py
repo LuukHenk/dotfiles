@@ -25,7 +25,7 @@ class SnapPackageManager(PackageManager):
 
     __INFO_COMMAND: Final[List[str]] = ["snap", "info"]
 
-    def install_package(self, package: Package) -> Result:
+    def swap_installation_status(self, package: Package) -> Result:
         return Result(success=False, message=f"Failed to install package {package.name}. Installation not implemented")
 
     def find_package(self, package_name: str) -> List[PackageManagerSearchResult]:

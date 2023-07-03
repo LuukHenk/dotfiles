@@ -12,5 +12,5 @@ class PackageManager(ABC):
         pass
 
     @abstractmethod
-    def install_package(self, package: Package) -> Result:
+    def swap_installation_status(self, package: Package) -> Result:
         pass

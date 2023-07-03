@@ -1,3 +1,4 @@
+from subprocess import CompletedProcess
 from typing import List, Final, Optional, Tuple
 
 from data_models.manager_name import ManagerName
@@ -12,12 +13,21 @@ from package_manager_manager.utils.subprocess_interface import run_
 
 
 class AptPackageManager(PackageManager):
-    __INFO_COMMAND: Final[List[str]] = ["apt", "info"]
+    __APT = "apt"
+    __APT_GET = "apt-get"
+    __INFO_COMMAND: Final[List[str]] = [__APT, "info"]
     __INSTALLED_COMMAND: Final[List[str]] = ["dpkg-query", "-l"]
     __VERSION_INDICATOR: Final[str] = "\nVersion: "
+    __SUCCESS_RESULT_MESSAGE = "Package {} successfully {}"
 
-    def install_package(self, package: Package) -> Result:
-        return Result(success=False, message=f"Failed to install package {package.name}. Installation not implemented")
+    def swap_installation_status(self, package: Package) -> Result:
+        installed_text = "remove" if package.installed else "install"
+        installation_command = [self.__APT_GET, installed_text, package.search_name]
+        package_install_run_result: CompletedProcess = run_(installation_command)
+        if package_install_run_result.returncode != 0:
+            return Result(success=False, message=package_install_run_result.stderr)
+        result_text = "removed" if package.installed else "installed"
+        return Result(success=True, message=self.__SUCCESS_RESULT_MESSAGE.format(package.name, result_text))
 
     def find_package(self, package_name: str) -> List[PackageManagerSearchResult]:
         latest_version = self.__find_latest_package_version(package_name)

@@ -22,5 +22,5 @@ class PackageManagerManager:
             results += manager.find_package(package_name)
         return results
 
-    def install_package(self, package: Package) -> Result:
-        return self.__managers[package.manager_name].install_package(package)
+    def swap_installation_status(self, package: Package) -> Result:
+        return self.__managers[package.manager_name].swap_installation_status(package)
