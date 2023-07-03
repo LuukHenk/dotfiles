@@ -5,7 +5,7 @@ from PySide6.QtGui import QFont
 from PySide6.QtWidgets import QWidget, QPushButton, QVBoxLayout, QLabel
 
 from data_models.package import Package
-from installation_wizard_widget.presentation_layer.package_widget import PackageWidget
+from installation_wizard.presentation_layer.package_widget import PackageWidget
 
 
 class PackagesWidget(QWidget):

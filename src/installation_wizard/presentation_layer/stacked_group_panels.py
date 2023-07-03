@@ -4,7 +4,7 @@ from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QStackedWidget
 
 from data_models.package import Package
-from installation_wizard_widget.presentation_layer.packages_group_panel import PackagesGroupPanel
+from installation_wizard.presentation_layer.packages_group_panel import PackagesGroupPanel
 
 
 class StackedGroupPanels(QStackedWidget):

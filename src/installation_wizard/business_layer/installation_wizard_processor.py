@@ -2,7 +2,7 @@ from typing import List
 
 from data_layer.package_accessor import PackageAccessor
 from data_models.package import Package
-from installation_wizard_widget.business_layer.id_tracker import IdTracker
+from installation_wizard.business_layer.id_tracker import IdTracker
 
 
 class InstallationWizardProcessor:

@@ -4,7 +4,7 @@ from PySide6.QtCore import Signal, Qt, Slot
 from PySide6.QtWidgets import QCheckBox
 
 from data_models.package import Package
-from installation_wizard_widget.business_layer.package_info_text_generator import generate_package_text
+from installation_wizard.business_layer.package_info_text_generator import generate_package_text
 
 
 class PackageWidget(QCheckBox):
