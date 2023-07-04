@@ -11,9 +11,11 @@ class InstallationStatusWidget(QWidget):
         self.__log.setReadOnly(True)
         self.__create_layout()
 
-    def update_installation_status(self, percentage_done: int, messages: List[str]):
-        self.__log.setText("\n".join(messages))
-        self.__progress_bar.setValue(percentage_done)
+    def add_message(self, message: str) -> None:
+        self.__log.append(message)
+
+    def update_progress_bar(self, value: int):
+        self.__progress_bar.setValue(value)
 
     def __create_layout(self) -> None:
         layout = QVBoxLayout(self)

@@ -1,6 +1,7 @@
 from time import sleep
 
 from data_layer.package_accessor import PackageAccessor
+from data_models.package import Package
 
 from installer.installing_status_widget.installation_status_widget import InstallationStatusWidget
 from package_manager_manager.package_manager_manager import PackageManagerManager
@@ -17,18 +18,18 @@ class Installer:
         return self.__installation_status_widget
 
     def install(self):
-        messages = []
         packages_to_install = self.__package_accessor.find(installation_request=True)
-        messages.append(f"Installing {len(packages_to_install)} packages")
-        self.__installation_status_widget.update_installation_status(0, messages)
+        self.__installation_status_widget.add_message(f"Installing {len(packages_to_install)} packages")
         for i, package in enumerate(packages_to_install):
-            messages.append(f"Installing {package}...")
-            result = self.__package_manager_manager.swap_installation_status(package)
-            if result.success:
-                package.installed = not package.installed
-                package.installation_request = False
-                self.__package_accessor.update_package(package.id_, package)
-            messages[-1] = result.message
-            percentage_done = int(i / len(packages_to_install) * 100)
-            self.__installation_status_widget.update_installation_status(percentage_done, messages)
-        self.__installation_status_widget.update_installation_status(100, messages)
+            self.__install_package(package)
+            percentage_done = int((i + 1) / len(packages_to_install) * 100)
+            self.__installation_status_widget.update_progress_bar(percentage_done)
+
+    def __install_package(self, package: Package):
+        self.__installation_status_widget.add_message(f"Installing {package.name} {package.version.name}...")
+        result = self.__package_manager_manager.swap_installation_status(package)
+        if result.success:
+            package.installed = not package.installed
+            package.installation_request = False
+            self.__package_accessor.update_package(package.id_, package)
+        self.__installation_status_widget.add_message(result.message)
