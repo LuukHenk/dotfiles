@@ -1,4 +1,4 @@
-from subprocess import CompletedProcess
+from subprocess import CompletedProcess, Popen
 from typing import List, Final, Optional, Tuple
 
 from data_models.manager_name import ManagerName
@@ -9,7 +9,7 @@ from data_models.version import Version
 from data_models.package_manager_search_result import PackageManagerSearchResult
 from data_models.version_type import VersionType
 from package_manager_manager.package_managers.package_manager import PackageManager
-from package_manager_manager.utils.subprocess_interface import run_
+from package_manager_manager.utils.subprocess_interface import run_, run_async
 
 
 class AptPackageManager(PackageManager):
@@ -22,12 +22,14 @@ class AptPackageManager(PackageManager):
 
     def swap_installation_status(self, package: Package) -> Result:
         installed_text = "remove" if package.installed else "install"
-        installation_command = [self.__APT_GET, installed_text, package.search_name]
-        package_install_run_result: CompletedProcess = run_(installation_command)
-        if package_install_run_result.returncode != 0:
-            return Result(success=False, message=package_install_run_result.stderr)
-        result_text = "removed" if package.installed else "installed"
-        return Result(success=True, message=self.__SUCCESS_RESULT_MESSAGE.format(package.name, result_text))
+        installation_command = [self.__APT_GET, installed_text, package.search_name, "-y"]
+        run_async(installation_command)
+        return Result(success=True, message="succesfully send command")  # TODO: The result should not come from here
+        # package_install_run_result: CompletedProcess = Popen(installation_command)
+        # if package_install_run_result.returncode != 0:
+        #     return Result(success=False, message=package_install_run_result.stderr)
+        # result_text = "removed" if package.installed else "installed"
+        # return Result(success=True, message=self.__SUCCESS_RESULT_MESSAGE.format(package.name, result_text))
 
     def find_package(self, package_name: str) -> List[PackageManagerSearchResult]:
         latest_version = self.__find_latest_package_version(package_name)
