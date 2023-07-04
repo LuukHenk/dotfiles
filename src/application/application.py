@@ -1,5 +1,7 @@
 import time
 from sys import argv, exit as sys_exit
+
+from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication
 
 from configuration_loader.configuration_loader import ConfigurationLoader
@@ -26,12 +28,15 @@ class MainApplication:
             self.__installation_wizard.installation_wizard_widget,
             self.__installer.installation_status_widget,
         )
+        self.__main_window.readyForInstallation.connect(self.__start_installation, type=Qt.QueuedConnection)
 
     def show_main_window(self):
         self.__main_window.show()
 
     def __on_installation_request(self):
         self.__main_window.show_installation_status_widget()
+
+    def __start_installation(self):
         self.__installer.install()
 
     @staticmethod
