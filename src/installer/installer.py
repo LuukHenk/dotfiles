@@ -19,14 +19,14 @@ class Installer:
 
     def install(self):
         packages_to_install = self.__package_accessor.find(installation_request=True)
-        self.__installation_status_widget.add_message(f"Installing {len(packages_to_install)} packages")
         for i, package in enumerate(packages_to_install):
             self.__install_package(package)
             percentage_done = int((i + 1) / len(packages_to_install) * 100)
             self.__installation_status_widget.update_progress_bar(percentage_done)
 
     def __install_package(self, package: Package):
-        self.__installation_status_widget.add_message(f"Installing {package.name} {package.version.name}...")
+        install_status = "Uninstalling" if package.installed else "Installing"
+        self.__installation_status_widget.add_message(f"{install_status} {package.name} {package.version.name}...")
         result = self.__package_manager_manager.swap_installation_status(package)
         if result.success:
             package.installed = not package.installed

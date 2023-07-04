@@ -18,18 +18,12 @@ class AptPackageManager(PackageManager):
     __INFO_COMMAND: Final[List[str]] = [__APT, "info"]
     __INSTALLED_COMMAND: Final[List[str]] = ["dpkg-query", "-l"]
     __VERSION_INDICATOR: Final[str] = "\nVersion: "
-    __SUCCESS_RESULT_MESSAGE = "Package {} successfully {}"
 
     def swap_installation_status(self, package: Package) -> Result:
         installed_text = "remove" if package.installed else "install"
         installation_command = [self.__APT_GET, installed_text, package.search_name, "-y"]
-        run_async(installation_command)
-        return Result(success=True, message="succesfully send command")  # TODO: The result should not come from here
-        # package_install_run_result: CompletedProcess = Popen(installation_command)
-        # if package_install_run_result.returncode != 0:
-        #     return Result(success=False, message=package_install_run_result.stderr)
-        # result_text = "removed" if package.installed else "installed"
-        # return Result(success=True, message=self.__SUCCESS_RESULT_MESSAGE.format(package.name, result_text))
+        result = run_async(installation_command)
+        return self._generate_installation_result_message(package, result)
 
     def find_package(self, package_name: str) -> List[PackageManagerSearchResult]:
         latest_version = self.__find_latest_package_version(package_name)
