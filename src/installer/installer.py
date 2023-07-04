@@ -2,7 +2,7 @@ from time import sleep
 
 from data_layer.package_accessor import PackageAccessor
 
-from installer.installing_status_widget.installing_status_widget import InstallationStatusWidget
+from installer.installing_status_widget.installation_status_widget import InstallationStatusWidget
 from package_manager_manager.package_manager_manager import PackageManagerManager
 
 
@@ -12,8 +12,11 @@ class Installer:
         self.__installation_status_widget = InstallationStatusWidget()
         self.__package_manager_manager = PackageManagerManager()
 
+    @property
+    def installation_status_widget(self):
+        return self.__installation_status_widget
+
     def install(self):
-        self.__installation_status_widget.show()
         messages = []
         packages_to_install = self.__package_accessor.find(installation_request=True)
         for i, package in enumerate(packages_to_install):
