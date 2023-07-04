@@ -23,18 +23,18 @@ class MainApplication:
         package_accessor = self.__load_packages()
         self.__installation_wizard = InstallationWizard(package_accessor)
         self.__installer = Installer(package_accessor)
-        self.__installation_wizard.set_install_request_callback(self.__on_installation_request)
         self.__main_window = MainWindow(
             self.__installation_wizard.installation_wizard_widget,
             self.__installer.installation_status_widget,
         )
+        self.__installation_wizard.install.connect(self.__on_installation_request, type=Qt.QueuedConnection)
         self.__main_window.readyForInstallation.connect(self.__start_installation, type=Qt.QueuedConnection)
 
     def show_main_window(self):
         self.__main_window.show()
 
     def __on_installation_request(self):
-        self.__main_window.show_installation_status_widget()
+            self.__main_window.show_installation_status_widget()
 
     def __start_installation(self):
         self.__installer.install()

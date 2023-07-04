@@ -1,4 +1,4 @@
-from PySide6.QtCore import QObject
+from PySide6.QtCore import QObject, Signal
 from typing import Dict, List, Callable
 
 from data_layer.package_accessor import PackageAccessor
@@ -9,18 +9,16 @@ from installation_wizard.presentation_layer.installation_wizard_widget import In
 
 
 class InstallationWizard(QObject):
+    install = Signal()
+
     def __init__(self, package_accessor: PackageAccessor, parent=None) -> None:
         super().__init__(parent)
         self.__package_accessor = package_accessor
-        self.__install_request_callable = None
         self.__installation_wizard_widget = self.__create_installation_wizard_widget()
 
     @property
     def installation_wizard_widget(self):
         return self.__installation_wizard_widget
-
-    def set_install_request_callback(self, install_request_callback: Callable[[], None]):
-        self.__install_request_callable = install_request_callback
 
     def __create_installation_wizard_widget(self) -> InstallationWizardWidget:
         installation_wizard_processor = InstallationWizardProcessor(self.__package_accessor, IdTracker())
@@ -29,8 +27,7 @@ class InstallationWizard(QObject):
         return wizard
 
     def __on_installation_request(self) -> None:
-        if self.__install_request_callable is not None:
-            self.__install_request_callable()
+        self.install.emit()
 
     def __get_group_data(self) -> Dict[str, List[List[Package]]]:
         # TODO: #0000002
