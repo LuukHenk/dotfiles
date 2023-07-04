@@ -1,7 +1,7 @@
 import time
 from sys import argv, exit as sys_exit
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QObject
 from PySide6.QtWidgets import QApplication
 
 from configuration_loader.configuration_loader import ConfigurationLoader
@@ -18,8 +18,9 @@ def run_application():
     sys_exit(qt_app.exec_())
 
 
-class MainApplication:
-    def __init__(self):
+class MainApplication(QObject):
+    def __init__(self, parent=None):
+        super().__init__(parent=parent)
         package_accessor = self.__load_packages()
         self.__installation_wizard = InstallationWizard(package_accessor)
         self.__installer = Installer(package_accessor)
@@ -34,7 +35,7 @@ class MainApplication:
         self.__main_window.show()
 
     def __on_installation_request(self):
-            self.__main_window.show_installation_status_widget()
+        self.__main_window.show_installation_status_widget()
 
     def __start_installation(self):
         self.__installer.install()
