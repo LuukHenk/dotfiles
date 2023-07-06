@@ -1,0 +1,34 @@
+
+
+QCheckBox#PackageCheckBox::indicator {
+	height: 35px;
+	width: 35px;
+	background-color:#DEDDDA;
+	border-radius:10px;
+}
+QCheckBox#PackageCheckBox {
+	spacing:0px;
+}
+QPushButton#package_button_widget {
+	background: #DEDDDA;
+	border-radius:10px;
+}
+QLabel#Snap {
+	background:#6D8764;
+	padding:5px;
+	border-radius:10px;
+}
+QLabel#Apt {
+	background:#BA4D00;
+	padding:5px;
+	border-radius:10px;
+}
+
+QLabel#Install {
+	color:#001933;
+	background:#DEDDDA;
+	border-radius:10px;
+	padding-left:10px;
+}
+
+

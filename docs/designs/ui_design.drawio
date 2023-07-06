@@ -1,0 +1,163 @@
+<mxfile host="app.diagrams.net" modified="2023-07-05T09:48:56.563Z" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/111.0" etag="wsZhrGAjCA9w21aZaI0W" version="21.5.2" type="device">
+  <diagram name="Page-1" id="OWfsFwKeIauyP2tnIejS">
+    <mxGraphModel dx="2284" dy="795" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hNC3DygrZD1I8Ap333j7-110" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-298" y="100" width="1158" height="540" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-3" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-264" y="190" width="260" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-9" value="&lt;div&gt;Snap&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;fontColor=#ffffff;strokeColor=none;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-74" y="250" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-11" value="Install V1.005" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;fontColor=#001933;strokeColor=none;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-224" y="250" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-13" value="Apt" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BA4D00;fontColor=#FFFFFF;strokeColor=#C73500;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-74" y="286" width="60" height="31" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-15" value="Uninstall V1.003" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;fontColor=#001933;strokeColor=none;align=center;glass=0;shadow=0;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-224" y="286" width="160" height="31" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-18" value="Python" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="-241" y="205" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-21" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;" vertex="1" parent="1">
+          <mxGeometry x="-253" y="250" width="27" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-23" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;" vertex="1" parent="1">
+          <mxGeometry x="-253" y="286" width="27" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-24" value="" style="html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;shadow=0;dashed=0;strokeWidth=4;shape=mxgraph.ios7.misc.check;strokeColor=#0080f0;fontSize=19;" vertex="1" parent="1">
+          <mxGeometry x="-251" y="254" width="25" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-26" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="16" y="190" width="260" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-27" value="&lt;div&gt;Snap&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;fontColor=#ffffff;strokeColor=none;align=center;" vertex="1" parent="1">
+          <mxGeometry x="206" y="250" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-28" value="Install V1.0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;fontColor=#001933;strokeColor=none;align=center;" vertex="1" parent="1">
+          <mxGeometry x="56" y="250" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-31" value="Steam" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="36" y="205" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-32" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;" vertex="1" parent="1">
+          <mxGeometry x="27" y="250" width="27" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-34" value="" style="html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;shadow=0;dashed=0;strokeWidth=4;shape=mxgraph.ios7.misc.check;strokeColor=#0080f0;fontSize=19;" vertex="1" parent="1">
+          <mxGeometry x="29" y="254" width="25" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-35" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="296" y="190" width="260" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-38" value="Too long name to ..." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="306" y="205" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-39" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;" vertex="1" parent="1">
+          <mxGeometry x="307" y="250" width="27" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-41" value="Apt" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BA4D00;fontColor=#FFFFFF;strokeColor=#C73500;align=center;" vertex="1" parent="1">
+          <mxGeometry x="486" y="249" width="60" height="31" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-37" value="Install V1.005-ubuntu22.02..." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;fontColor=#001933;strokeColor=none;align=center;" vertex="1" parent="1">
+          <mxGeometry x="336" y="250" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-42" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="576" y="190" width="260" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-43" value="&lt;div&gt;Snap&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;fontColor=#ffffff;strokeColor=none;align=center;" vertex="1" parent="1">
+          <mxGeometry x="766" y="250" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-44" value="Install V1.005" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;fontColor=#001933;strokeColor=none;align=center;" vertex="1" parent="1">
+          <mxGeometry x="616" y="250" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-45" value="Apt" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BA4D00;fontColor=#FFFFFF;strokeColor=#C73500;align=center;" vertex="1" parent="1">
+          <mxGeometry x="766" y="286" width="60" height="31" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-46" value="Uninstall V1.003" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;fontColor=#001933;strokeColor=none;align=center;glass=0;shadow=0;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="616" y="286" width="160" height="31" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-47" value="Git" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="591" y="205" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-48" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;" vertex="1" parent="1">
+          <mxGeometry x="587" y="250" width="27" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-49" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;" vertex="1" parent="1">
+          <mxGeometry x="587" y="286" width="27" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-50" value="" style="html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;shadow=0;dashed=0;strokeWidth=4;shape=mxgraph.ios7.misc.check;strokeColor=#0080f0;fontSize=19;" vertex="1" parent="1">
+          <mxGeometry x="589" y="254" width="25" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-80" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-264" y="351" width="260" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-81" value="&lt;div&gt;Snap&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;fontColor=#ffffff;strokeColor=none;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-74" y="411" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-82" value="Install V1.005" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;fontColor=#001933;strokeColor=none;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-224" y="411" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-83" value="Apt" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BA4D00;fontColor=#FFFFFF;strokeColor=#C73500;align=center;" vertex="1" parent="1">
+          <mxGeometry x="-74" y="447" width="60" height="31" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-84" value="Uninstall V1.003" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;fontColor=#001933;strokeColor=none;align=center;glass=0;shadow=0;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-224" y="447" width="160" height="31" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-85" value="Django" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="-241" y="366" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-86" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;" vertex="1" parent="1">
+          <mxGeometry x="-253" y="411" width="27" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-87" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;" vertex="1" parent="1">
+          <mxGeometry x="-253" y="447" width="27" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-88" value="" style="html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;shadow=0;dashed=0;strokeWidth=4;shape=mxgraph.ios7.misc.check;strokeColor=#0080f0;fontSize=19;" vertex="1" parent="1">
+          <mxGeometry x="-251" y="415" width="25" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-89" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="16" y="351" width="260" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-90" value="&lt;div&gt;Snap&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;fontColor=#ffffff;strokeColor=none;align=center;" vertex="1" parent="1">
+          <mxGeometry x="206" y="411" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-91" value="Install V1.0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;fontColor=#001933;strokeColor=none;align=center;" vertex="1" parent="1">
+          <mxGeometry x="56" y="411" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-92" value="Spotify" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="36" y="366" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-93" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;" vertex="1" parent="1">
+          <mxGeometry x="27" y="411" width="27" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-94" value="" style="html=1;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;shadow=0;dashed=0;strokeWidth=4;shape=mxgraph.ios7.misc.check;strokeColor=#0080f0;fontSize=19;" vertex="1" parent="1">
+          <mxGeometry x="29" y="415" width="25" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-95" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="296" y="351" width="260" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-96" value="NCDU" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=24;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="306" y="366" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-97" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;" vertex="1" parent="1">
+          <mxGeometry x="307" y="411" width="27" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-98" value="Apt" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BA4D00;fontColor=#FFFFFF;strokeColor=#C73500;align=center;" vertex="1" parent="1">
+          <mxGeometry x="486" y="410" width="60" height="31" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-99" value="Install V1.005-ubuntu22.02..." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#deddda;fontColor=#001933;strokeColor=none;align=center;" vertex="1" parent="1">
+          <mxGeometry x="336" y="411" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hNC3DygrZD1I8Ap333j7-109" value="Packages" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=36;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="-264" y="100" width="139" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
