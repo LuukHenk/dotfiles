@@ -6,6 +6,7 @@ from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
 
 from data_models.package import Package
 from installation_wizard.presentation_layer.designed_package_widget.package_widget import PackageWidget
+from installation_wizard.presentation_layer.style import DEFAULT_STYLE
 
 
 class PackageNameSet(QWidget):
@@ -15,6 +16,7 @@ class PackageNameSet(QWidget):
     def __init__(self, package_name: str, packages: List[Package], parent=None):
         super().__init__(parent=parent)
         self.__create_layout(package_name, packages)
+        self.setStyleSheet(DEFAULT_STYLE)
 
     def __create_layout(self, package_name: str, packages: List[Package]):
         layout = QVBoxLayout(self)
@@ -35,6 +37,5 @@ class PackageNameSet(QWidget):
     @staticmethod
     def __create_header(text: str) -> QLabel:
         header = QLabel(text)
-        # header.setObjectName()
-        header.setStyleSheet(f"font-size: 36px; font-weight: bold;")
+        # header.setStyleSheet(f"font-size: 36px; font-weight: bold;")
         return header

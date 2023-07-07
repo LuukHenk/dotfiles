@@ -80,6 +80,7 @@ HOVER_STYLE = f"""
     QLabel#{VERSION_LABEL_NAME} {{
         background-color: {__DEFAULT_BACKGROUND_COLOR};
         border-radius: 0px;
+        margin-left: 0px;
         border-right: 2px solid {__DEFAULT_BACKGROUND_COLOR};
         border-left: 2px solid {__DEFAULT_BACKGROUND_COLOR};
         border-top: 2px solid {__HOVER_BORDER_COLOR};
