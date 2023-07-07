@@ -10,6 +10,7 @@ from utils.subprocess_interface import run_
 from data_models.package_manager_search_result import PackageManagerSearchResult
 from data_models.version_type import VersionType
 from package_manager_manager.package_managers.package_manager import PackageManager
+from package_manager_manager.utils.subprocess_interface import run_async_command
 
 
 class SnapPackageManager(PackageManager):
@@ -23,10 +24,14 @@ class SnapPackageManager(PackageManager):
     __BETA_INDICATOR: Final[str] = "latest/beta"
     __EDGE_INDICATOR: Final[str] = "latest/edge"
 
-    __INFO_COMMAND: Final[List[str]] = ["snap", "info"]
+    __SNAP: Final[str] = "snap"
+    __INFO_COMMAND: Final[List[str]] = [__SNAP, "info"]
 
     def swap_installation_status(self, package: Package) -> Result:
-        return Result(success=False, message=f"Failed to install package {package.name}. Installation not implemented")
+        installed_text = "remove" if package.installed else "install"
+        installation_command = f"{self.__SNAP} {installed_text} {package.search_name}"
+        result = run_async_command(installation_command)
+        return self._generate_installation_result_message(package, result)
 
     def find_package(self, package_name: str) -> List[PackageManagerSearchResult]:
         package_info_run_result: CompletedProcess = run_(self.__INFO_COMMAND + [package_name])
