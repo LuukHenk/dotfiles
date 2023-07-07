@@ -34,7 +34,7 @@ class PackageWidget(QWidget):
         self.__checkbox = self.__create_checkbox()
         self.__button = PackageButtonWidget()
         self.__create_layout()
-        self.setObjectName("designed_package_widget")
+        self.setObjectName("_designed_package_widget")
         self.installEventFilter(self)
 
     def __create_layout(self):
