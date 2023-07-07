@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QLabel
 
-from installation_wizard.presentation_layer.designed_package_widget.style import VERSION_LABEL_NAME
+from installation_wizard.presentation_layer.style import VERSION_LABEL_NAME
 
 
 class VersionLabel(QLabel):
