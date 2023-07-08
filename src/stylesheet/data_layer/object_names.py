@@ -2,3 +2,6 @@ PACKAGE = "package_"
 PACKAGE_LABEL = f"{PACKAGE}label"
 PACKAGE_CHECKBOX = f"{PACKAGE}checkbox"
 PACKAGE_VERSION = f"{PACKAGE}version"
+
+PACKAGE_NAME_SET = "package_name_set_"
+PACKAGE_NAME_SET_HEADER = f"{PACKAGE_NAME_SET}header"

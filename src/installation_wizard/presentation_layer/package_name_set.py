@@ -1,18 +1,21 @@
 from typing import List
 
 from PySide6.QtCore import Signal, Slot
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
+from PySide6.QtGui import QPaintEvent, QPainter
+from PySide6.QtWidgets import QFrame, QVBoxLayout, QLabel, QSizePolicy, QSpacerItem, QStyleOption, QApplication, QStyle
 
 from data_models.package import Package
 from installation_wizard.presentation_layer.designed_package_widget.package_widget import PackageWidget
+from stylesheet.data_layer.object_names import PACKAGE_NAME_SET_HEADER, PACKAGE_NAME_SET
 
 
-class PackageNameSet(QWidget):
+class PackageNameSet(QFrame):
     otherPackageChecked = Signal(int, bool)  # Tuple[package ID, package check state]
     packageChecked = Signal(int, bool)  # Tuple[package ID, package check state]
 
     def __init__(self, package_name: str, packages: List[Package], parent=None):
         super().__init__(parent=parent)
+        self.setObjectName(PACKAGE_NAME_SET)
         self.__create_layout(package_name, packages)
 
     def __create_layout(self, package_name: str, packages: List[Package]):
@@ -20,6 +23,7 @@ class PackageNameSet(QWidget):
         layout.addWidget(self.__create_header(package_name))
         for package in packages:
             layout.addWidget(self.__create_package_widget(package))
+        layout.addSpacerItem(QSpacerItem(0, 0, QSizePolicy.Fixed, QSizePolicy.MinimumExpanding))
 
     def __create_package_widget(self, package: Package) -> PackageWidget:
         package_widget = PackageWidget(package)
@@ -34,5 +38,5 @@ class PackageNameSet(QWidget):
     @staticmethod
     def __create_header(text: str) -> QLabel:
         header = QLabel(text)
-        # header.setStyleSheet(f"font-size: 36px; font-weight: bold;")
+        header.setObjectName(PACKAGE_NAME_SET_HEADER)
         return header

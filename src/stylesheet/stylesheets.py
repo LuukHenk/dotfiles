@@ -1,5 +1,6 @@
 from typing import Dict
 
+from stylesheet.sub_stylesheets.generic_stylesheet import get_raw_generic_stylesheet
 from stylesheet.sub_stylesheets.package_stylesheet import get_raw_package_stylesheet
 
 
@@ -18,6 +19,7 @@ class StyleSheets:
 
     def __construct_stylesheet(self, package_hover: bool = False) -> str:
         stylesheet = ""
+        stylesheet += self.__construct_stylesheet_from_raw(get_raw_generic_stylesheet())
         stylesheet += self.__construct_stylesheet_from_raw(get_raw_package_stylesheet(package_hover))
         return stylesheet
 

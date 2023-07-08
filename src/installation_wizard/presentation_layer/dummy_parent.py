@@ -11,7 +11,6 @@ from stylesheet.stylesheets import StyleSheets
 class DummyParent(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
-        self.setStyleSheet(StyleSheets().default_stylesheet)
         layout = QHBoxLayout(self)
 
         packages_names = "Python"
@@ -35,4 +34,6 @@ class DummyParent(QWidget):
         )
         packages = [dummy_apt_package, dummy_snap_package]
         package_widget = PackageNameSet(packages_names, packages)
+        package_widget2 = PackageNameSet(packages_names, packages)
         layout.addWidget(package_widget)
+        layout.addWidget(package_widget2)
