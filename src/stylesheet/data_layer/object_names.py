@@ -1,0 +1,4 @@
+PACKAGE = "package_"
+PACKAGE_LABEL = f"{PACKAGE}label"
+PACKAGE_CHECKBOX = f"{PACKAGE}checkbox"
+PACKAGE_VERSION = f"{PACKAGE}version"

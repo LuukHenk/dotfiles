@@ -1,0 +1,56 @@
+from data_models.manager_name import ManagerName
+from stylesheet.data_layer.object_names import PACKAGE_LABEL, PACKAGE_CHECKBOX, PACKAGE_VERSION, PACKAGE
+from stylesheet.data_layer.defaults import BORDER_RADIUS, PRIMARY_COLOR, PRIMARY_BACKGROUND_COLOR, HOVER_BORDER_COLOR
+from stylesheet.data_layer import keys
+
+DEFAULT_HEIGHT = 33
+DEFAULT_BORDER_SIZE = 2
+APT_COLOR = "#BA4D00"
+SNAP_COLOR = "#6D8764"
+
+
+def get_raw_package_stylesheet(hover: bool = False):
+    return {
+        f"#{PACKAGE_LABEL}": {
+            keys.BACKGROUND_COLOR: PRIMARY_COLOR,
+            keys.BORDER: f"{DEFAULT_BORDER_SIZE}px solid {HOVER_BORDER_COLOR if hover else PRIMARY_COLOR}",
+            keys.BORDER_RADIUS: BORDER_RADIUS,
+            keys.HEIGHT: f"{DEFAULT_HEIGHT}px",
+        },
+        f"#{PACKAGE_CHECKBOX}": {
+            keys.BACKGROUND_COLOR: PRIMARY_COLOR,
+            keys.BORDER_RADIUS: BORDER_RADIUS,
+            keys.SPACING: 0,
+        },
+        f"::indicator#{PACKAGE_CHECKBOX}": {
+            keys.BACKGROUND_COLOR: PRIMARY_COLOR,
+            keys.BORDER: f"{DEFAULT_BORDER_SIZE}px solid {HOVER_BORDER_COLOR if hover else PRIMARY_COLOR}",
+            keys.BORDER_RADIUS: BORDER_RADIUS,
+            keys.HEIGHT: f"{DEFAULT_HEIGHT}px",
+            keys.WIDTH: f"{DEFAULT_HEIGHT}px",
+        },
+        f"::indicator:checked#{PACKAGE_CHECKBOX}": {
+            keys.IMAGE: "url(../static/images/icons8-checked.svg)",
+        },
+        f"#{PACKAGE_VERSION}": {
+            keys.BACKGROUND_COLOR: PRIMARY_COLOR,
+            keys.BORDER_RADIUS: BORDER_RADIUS,
+            keys.COLOR: PRIMARY_BACKGROUND_COLOR,
+            keys.MARGIN_LEFT: f"{DEFAULT_BORDER_SIZE}px",
+            keys.PADDING: "5px",
+        },
+        f"#{PACKAGE}{ManagerName.APT.value}": {
+            keys.BACKGROUND_COLOR: APT_COLOR,
+            keys.BORDER: f"{DEFAULT_BORDER_SIZE}px solid {HOVER_BORDER_COLOR if hover else APT_COLOR}",
+            keys.BORDER_RADIUS: BORDER_RADIUS,
+            keys.COLOR: PRIMARY_BACKGROUND_COLOR,
+            keys.PADDING: "5px",
+        },
+        f"#{PACKAGE}{ManagerName.SNAP.value}": {
+            keys.BACKGROUND_COLOR: SNAP_COLOR,
+            keys.BORDER: f"{DEFAULT_BORDER_SIZE}px solid {HOVER_BORDER_COLOR if hover else SNAP_COLOR}",
+            keys.BORDER_RADIUS: BORDER_RADIUS,
+            keys.COLOR: PRIMARY_BACKGROUND_COLOR,
+            keys.PADDING: "5px",
+        },
+    }

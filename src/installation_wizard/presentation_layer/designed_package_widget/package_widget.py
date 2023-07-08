@@ -3,11 +3,8 @@ from PySide6.QtWidgets import QCheckBox, QWidget, QHBoxLayout, QSpacerItem, QSiz
 
 from data_models.package import Package
 from installation_wizard.presentation_layer.designed_package_widget.package_label import PackageLabel
-from installation_wizard.presentation_layer.style import (
-    PACKAGE_WIDGET_NAME,
-    DEFAULT_STYLE,
-    HOVER_STYLE,
-)
+from stylesheet.data_layer.object_names import PACKAGE_CHECKBOX, PACKAGE
+from stylesheet.stylesheets import StyleSheets
 
 
 class PackageWidget(QWidget):
@@ -17,11 +14,12 @@ class PackageWidget(QWidget):
     def __init__(self, package: Package, parent=None):
         super().__init__(parent=parent)
         self.__id = package.id_
-        self.setObjectName(PACKAGE_WIDGET_NAME)
+        self.setObjectName(PACKAGE)
         self.__checkbox = QCheckBox()
+        self.__checkbox.setObjectName(PACKAGE_CHECKBOX)
         self.__package_label = PackageLabel(package)
+        self.__stylesheet_handler = StyleSheets()
         self.__create_layout()
-        self.setStyleSheet(DEFAULT_STYLE)
         self.installEventFilter(self)
         self.__package_label.clicked.connect(self.__swap_package_check_state)
         self.__checkbox.clicked.connect(self.__swap_package_check_state)
@@ -29,9 +27,9 @@ class PackageWidget(QWidget):
 
     def eventFilter(self, watched: QObject, event: QEvent) -> bool:
         if event.type() == QEvent.Enter:
-            self.setStyleSheet(HOVER_STYLE)
+            self.setStyleSheet(self.__stylesheet_handler.stylesheet_on_package_hover)
         elif event.type() == QEvent.Leave:
-            self.setStyleSheet(DEFAULT_STYLE)
+            self.setStyleSheet(self.__stylesheet_handler.default_stylesheet)
         return False
 
     @Slot()

@@ -5,11 +5,13 @@ from data_models.version import Version
 from data_models.package import Package
 from data_models.version_type import VersionType
 from installation_wizard.presentation_layer.package_name_set import PackageNameSet
+from stylesheet.stylesheets import StyleSheets
 
 
 class DummyParent(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
+        self.setStyleSheet(StyleSheets().default_stylesheet)
         layout = QHBoxLayout(self)
 
         packages_names = "Python"
