@@ -50,8 +50,8 @@ class PackageWidget(QWidget):
     def __signal_checkbox_state(self):
         self.packageChecked.emit(self.__checkbox.isChecked())
 
-    @Slot(int, int)
-    def __on_other_package_checked(self, package_id: int, package_state: int):
+    @Slot(int, bool)
+    def __on_other_package_checked(self, package_id: int, package_state: bool):
         if package_id != self.__id:
             return
-        self.__checkbox.setChecked(Qt.CheckState(package_state))
+        self.__checkbox.setChecked(package_state)

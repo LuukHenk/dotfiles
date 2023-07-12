@@ -8,7 +8,7 @@ from installation_wizard.business_layer.id_tracker import IdTracker
 from installation_wizard.business_layer.installation_wizard_processor import InstallationWizardProcessor
 from installation_wizard.presentation_layer.confirmation_widget import ConfirmationWidget
 from installation_wizard.presentation_layer.groups_panel import GroupsPanel
-from installation_wizard.presentation_layer.stacked_group_panels import StackedGroupPanels
+from installation_wizard.presentation_layer.stacked_packages_panels import StackedPackagesPanels
 
 
 class InstallationWizardWidget(QWidget):
@@ -30,7 +30,7 @@ class InstallationWizardWidget(QWidget):
         self.__layout = self.__create_layout()
 
         self.__groups_panel.groupClicked.connect(self.__on_group_clicked)
-        self.__stacked_group_panels.packageStateChange.connect(self.__update_packages_to_install)
+        self.__stacked_group_panels.packageChecked.connect(self.__update_packages_to_install)
 
         if len(group_names):
             self.__groups_panel.check_group(group_names[0])
@@ -58,8 +58,8 @@ class InstallationWizardWidget(QWidget):
             self.install.emit()
 
     @staticmethod
-    def __construct_stacked_group_panels(group_data: Dict[str, List[List[Package]]]) -> StackedGroupPanels:
-        stacked_group_panels = StackedGroupPanels()
+    def __construct_stacked_group_panels(group_data: Dict[str, List[List[Package]]]) -> StackedPackagesPanels:
+        stacked_group_panels = StackedPackagesPanels()
         for group_name, package_sets in group_data.items():
             stacked_group_panels.add_group_panel(group_name, package_sets)
         return stacked_group_panels
