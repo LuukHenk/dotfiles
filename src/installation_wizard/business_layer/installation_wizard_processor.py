@@ -29,3 +29,16 @@ class InstallationWizardProcessor:
         for package in self.get_packages_to_install():
             package.installation_request = True
             _result = self.__package_accessor.update_package(package.id_, package)
+
+    def format_input_packages(self):
+        # TODO: #0000002
+        groups = {}
+        for group in self.__package_accessor.get_groups():
+            package_sets = []
+            for package_name in self.__package_accessor.get_package_names():
+                package_set = self.__package_accessor.find(name=package_name)
+                package_groups = [group for package in package_set for group in package.groups]
+                if group in package_groups:
+                    package_sets.append(package_set)
+            groups[group] = package_sets
+        return groups
