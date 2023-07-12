@@ -5,17 +5,17 @@ from PySide6.QtGui import QPaintEvent, QPainter
 from PySide6.QtWidgets import QFrame, QVBoxLayout, QLabel, QSizePolicy, QSpacerItem, QStyleOption, QApplication, QStyle
 
 from data_models.package import Package
-from installation_wizard.presentation_layer.designed_package_widget.package_widget import PackageWidget
-from stylesheet.data_layer.object_names import PACKAGE_NAME_SET_HEADER, PACKAGE_NAME_SET
+from installation_wizard.presentation_layer.package_checkbox.package_widget import PackageWidget
+from stylesheet.data_layer.object_names import PACKAGE_FRAME_HEADER, PACKAGE_FRAME
 
 
-class PackageNameSet(QFrame):
+class PackageFrame(QFrame):
     otherPackageChecked = Signal(int, bool)  # Tuple[package ID, package check state]
     packageChecked = Signal(int, bool)  # Tuple[package ID, package check state]
 
     def __init__(self, package_name: str, packages: List[Package], parent=None):
         super().__init__(parent=parent)
-        self.setObjectName(PACKAGE_NAME_SET)
+        self.setObjectName(PACKAGE_FRAME)
         self.__create_layout(package_name, packages)
 
     def __create_layout(self, package_name: str, packages: List[Package]):
@@ -38,5 +38,5 @@ class PackageNameSet(QFrame):
     @staticmethod
     def __create_header(text: str) -> QLabel:
         header = QLabel(text)
-        header.setObjectName(PACKAGE_NAME_SET_HEADER)
+        header.setObjectName(PACKAGE_FRAME_HEADER)
         return header

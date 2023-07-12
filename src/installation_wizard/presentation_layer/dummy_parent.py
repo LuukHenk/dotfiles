@@ -4,7 +4,7 @@ from data_models.version import Version
 
 from data_models.package import Package
 from data_models.version_type import VersionType
-from installation_wizard.presentation_layer.package_name_set import PackageNameSet
+from installation_wizard.presentation_layer.packages_panel import PackagesPanel
 
 
 class DummyParent(QWidget):
@@ -32,7 +32,5 @@ class DummyParent(QWidget):
             groups=[],
         )
         packages = [dummy_apt_package, dummy_snap_package]
-        package_widget = PackageNameSet(packages_names, packages)
-        package_widget2 = PackageNameSet(packages_names, packages)
+        package_widget = PackagesPanel("Home packages", [packages, packages])
         layout.addWidget(package_widget)
-        layout.addWidget(package_widget2)

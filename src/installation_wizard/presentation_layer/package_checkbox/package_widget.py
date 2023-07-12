@@ -2,7 +2,7 @@ from PySide6.QtCore import Qt, QObject, QEvent, Slot, Signal
 from PySide6.QtWidgets import QCheckBox, QWidget, QHBoxLayout, QSpacerItem, QSizePolicy
 
 from data_models.package import Package
-from installation_wizard.presentation_layer.designed_package_widget.package_label import PackageLabel
+from installation_wizard.presentation_layer.package_checkbox.package_label import PackageLabel
 from stylesheet.data_layer.object_names import PACKAGE_CHECKBOX, PACKAGE
 from stylesheet.stylesheets import StyleSheets
 
@@ -31,6 +31,7 @@ class PackageWidget(QWidget):
         elif event.type() == QEvent.Leave:
             self.setStyleSheet(self.__stylesheet_handler.default_stylesheet)
         return False
+
     def __create_layout(self):
         layout = QHBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -38,6 +39,7 @@ class PackageWidget(QWidget):
         layout.addWidget(self.__checkbox, alignment=Qt.AlignLeft)
         layout.addWidget(self.__package_label, alignment=Qt.AlignLeft)
         layout.addSpacerItem(QSpacerItem(0, 0, QSizePolicy.MinimumExpanding, QSizePolicy.Fixed))
+
     @Slot()
     def __swap_package_check_state(self):
         new_check_state = not self.__checkbox.isChecked()

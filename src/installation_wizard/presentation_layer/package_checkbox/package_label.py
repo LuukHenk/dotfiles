@@ -2,9 +2,9 @@ from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QPushButton, QHBoxLayout
 
 from data_models.package import Package
-from installation_wizard.presentation_layer.designed_package_widget.manager_label import ManagerLabel
+from installation_wizard.presentation_layer.package_checkbox.manager_label import ManagerLabel
 from stylesheet.data_layer.object_names import PACKAGE_LABEL
-from installation_wizard.presentation_layer.designed_package_widget.version_label import VersionLabel
+from installation_wizard.presentation_layer.package_checkbox.version_label import VersionLabel
 
 
 class PackageLabel(QPushButton):
