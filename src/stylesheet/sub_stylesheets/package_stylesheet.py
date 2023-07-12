@@ -1,5 +1,6 @@
 from typing import Dict
 
+from utils.root_finder import ROOT
 from data_models.manager_name import ManagerName
 from stylesheet.data_layer.object_names import PACKAGE_LABEL, PACKAGE_CHECKBOX, PACKAGE_VERSION, PACKAGE
 from stylesheet.data_layer.defaults import (
@@ -37,7 +38,7 @@ def get_raw_package_stylesheet(hover: bool = False) -> Dict[str, Dict[str, str]]
             keys.WIDTH: f"{DEFAULT_HEIGHT}px",
         },
         f"::indicator:checked#{PACKAGE_CHECKBOX}": {
-            keys.IMAGE: "url(../static/images/icons8-checked.svg)",
+            keys.IMAGE: f"url({ROOT}/static/images/icons8-checked.svg)",
         },
         f"#{PACKAGE_VERSION}": {
             keys.BACKGROUND_COLOR: PRIMARY_COLOR,

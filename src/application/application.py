@@ -11,8 +11,8 @@ from installer.installer import Installer
 from application.main_window import MainWindow
 from stylesheet.stylesheets import StyleSheets
 
-
 def run_test():
+    
     qt_app = QApplication(argv)
     qt_app.setStyleSheet(StyleSheets().default_stylesheet)
     main_app = DummyParent()

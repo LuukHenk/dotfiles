@@ -1,6 +1,6 @@
 from tomllib import load, TOMLDecodeError
 from pathlib import Path
-from typing import List, Any, Dict, Union
+from typing import List, Dict, Union
 
 from configuration_loader.parsers.package_parser_keys import PackageParserKeys as Keys
 from data_models.package import Package
@@ -14,7 +14,6 @@ class PackageParser:
 
     def __init__(self):
         self.__package_manager_manager = PackageManagerManager()
-        self.__packages = {}
 
     def parse(self, file_path: Path) -> List[Package]:
         try:

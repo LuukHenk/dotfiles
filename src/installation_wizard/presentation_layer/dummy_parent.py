@@ -5,7 +5,6 @@ from data_models.version import Version
 from data_models.package import Package
 from data_models.version_type import VersionType
 from installation_wizard.presentation_layer.package_name_set import PackageNameSet
-from stylesheet.stylesheets import StyleSheets
 
 
 class DummyParent(QWidget):

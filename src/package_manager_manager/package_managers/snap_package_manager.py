@@ -5,12 +5,11 @@ from data_models.manager_name import ManagerName
 from data_models.package import Package
 from data_models.result import Result
 from data_models.version import Version
-from utils.subprocess_interface import run_
 
 from data_models.package_manager_search_result import PackageManagerSearchResult
 from data_models.version_type import VersionType
 from package_manager_manager.package_managers.package_manager import PackageManager
-from package_manager_manager.utils.subprocess_interface import run_async_command
+from package_manager_manager.utils.subprocess_interface import run_async_command, run_
 
 
 class SnapPackageManager(PackageManager):
