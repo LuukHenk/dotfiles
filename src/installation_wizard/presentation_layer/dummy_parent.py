@@ -32,5 +32,5 @@ class DummyParent(QWidget):
             groups=[],
         )
         packages = [dummy_apt_package, dummy_snap_package]
-        package_widget = PackagesPanel("Home packages", [packages, packages])
+        package_widget = PackagesPanel("Home packages", [packages] * 20)
         layout.addWidget(package_widget)

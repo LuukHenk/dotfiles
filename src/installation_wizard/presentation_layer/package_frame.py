@@ -17,13 +17,13 @@ class PackageFrame(QFrame):
         super().__init__(parent=parent)
         self.setObjectName(PACKAGE_FRAME)
         self.__create_layout(package_name, packages)
+        self.setFixedSize(260, 170)
 
     def __create_layout(self, package_name: str, packages: List[Package]):
         layout = QVBoxLayout(self)
         layout.addWidget(self.__create_header(package_name))
         for package in packages:
             layout.addWidget(self.__create_package_widget(package))
-        layout.addSpacerItem(QSpacerItem(0, 0, QSizePolicy.Fixed, QSizePolicy.MinimumExpanding))
 
     def __create_package_widget(self, package: Package) -> PackageWidget:
         package_widget = PackageWidget(package)
