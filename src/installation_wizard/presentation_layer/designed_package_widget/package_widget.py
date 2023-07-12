@@ -31,7 +31,13 @@ class PackageWidget(QWidget):
         elif event.type() == QEvent.Leave:
             self.setStyleSheet(self.__stylesheet_handler.default_stylesheet)
         return False
-
+    def __create_layout(self):
+        layout = QHBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(2)
+        layout.addWidget(self.__checkbox, alignment=Qt.AlignLeft)
+        layout.addWidget(self.__package_label, alignment=Qt.AlignLeft)
+        layout.addSpacerItem(QSpacerItem(0, 0, QSizePolicy.MinimumExpanding, QSizePolicy.Fixed))
     @Slot()
     def __swap_package_check_state(self):
         new_check_state = not self.__checkbox.isChecked()
@@ -41,13 +47,6 @@ class PackageWidget(QWidget):
     @Slot(bool)
     def __signal_checkbox_state(self):
         self.packageChecked.emit(self.__checkbox.isChecked())
-    def __create_layout(self):
-        layout = QHBoxLayout(self)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(2)
-        layout.addWidget(self.__checkbox, alignment=Qt.AlignLeft)
-        layout.addWidget(self.__package_label, alignment=Qt.AlignLeft)
-        layout.addSpacerItem(QSpacerItem(0, 0, QSizePolicy.MinimumExpanding, QSizePolicy.Fixed))
 
     @Slot(int, int)
     def __on_other_package_checked(self, package_id: int, package_state: int):
