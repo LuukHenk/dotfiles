@@ -22,7 +22,7 @@ class PackageWidget(QWidget):
         self.__create_layout()
         self.installEventFilter(self)
         self.__package_label.clicked.connect(self.__swap_package_check_state)
-        self.__checkbox.clicked.connect(self.__swap_package_check_state)
+        self.__checkbox.clicked.connect(self.__signal_checkbox_state)
         self.otherPackageChecked.connect(self.__on_other_package_checked)
 
     def eventFilter(self, watched: QObject, event: QEvent) -> bool:
@@ -36,8 +36,11 @@ class PackageWidget(QWidget):
     def __swap_package_check_state(self):
         new_check_state = not self.__checkbox.isChecked()
         self.__checkbox.setChecked(new_check_state)
-        self.packageChecked.emit(new_check_state)
+        self.__signal_checkbox_state()
 
+    @Slot(bool)
+    def __signal_checkbox_state(self):
+        self.packageChecked.emit(self.__checkbox.isChecked())
     def __create_layout(self):
         layout = QHBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
