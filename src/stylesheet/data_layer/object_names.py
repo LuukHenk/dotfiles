@@ -11,3 +11,5 @@ PACKAGES_PANEL_HEADER = f"packages_panel_header"
 APPLY_BUTTON = "apply_button"
 
 GROUP_BUTTON = "group_button"
+
+GROUPS_PANEL_LINE = "groups_panel_line"

@@ -23,4 +23,5 @@ def get_raw_generic_stylesheet() -> Dict[str, Dict[str, str]]:
             keys.FONT_WEIGHT: "bold",
             keys.MARGIN_BOTTOM: "20px",
         },
+        f"#{objects.GROUPS_PANEL_LINE}": {keys.COLOR: defaults.PRIMARY_COLOR},
     }

@@ -1,16 +1,16 @@
 from typing import List, Dict
 
 from PySide6.QtCore import Qt, Signal, Slot
-from PySide6.QtWidgets import QGridLayout, QWidget, QPushButton, QMessageBox
+from PySide6.QtWidgets import QGridLayout, QWidget, QFrame
 
 from data_models.package import Package
-from installation_wizard.business_layer.id_tracker import IdTracker
 from installation_wizard.business_layer.installation_wizard_processor import InstallationWizardProcessor
 from installation_wizard.presentation_layer.apply_button import ApplyButton
 from installation_wizard.presentation_layer.confirmation_widget import ConfirmationWidget
 from installation_wizard.presentation_layer.groups_panel import GroupsPanel
 from installation_wizard.presentation_layer.stacked_packages_panels import StackedPackagesPanels
-from stylesheet.data_layer.object_names import APPLY_BUTTON
+from stylesheet.data_layer.defaults import BORDER_SIZE_INT
+from stylesheet.data_layer.object_names import GROUPS_PANEL_LINE
 
 
 class InstallationWizardWidget(QWidget):
@@ -42,9 +42,11 @@ class InstallationWizardWidget(QWidget):
 
     def __create_layout(self) -> QGridLayout:
         layout = QGridLayout(self)
+        layout.setSpacing(0)
         layout.addWidget(self.__groups_panel, 0, 0, Qt.AlignTop)
-        layout.addWidget(self.__stacked_group_panels, 0, 1, Qt.AlignTop)
-        layout.addWidget(self.__apply_button, 1, 0, 1, 0, Qt.AlignBottom | Qt.AlignRight)
+        layout.addWidget(self.__create_line(), 0, 1, 2, 1)
+        layout.addWidget(self.__stacked_group_panels, 0, 2, Qt.AlignTop)
+        layout.addWidget(self.__apply_button, 1, 2, Qt.AlignBottom | Qt.AlignRight)
         return layout
 
     def __show_confirmation_widget(self):
@@ -55,6 +57,14 @@ class InstallationWizardWidget(QWidget):
             self.setDisabled(True)
             self.__installation_wizard_processor.set_installation_requests()
             self.install.emit()
+
+    @staticmethod
+    def __create_line() -> QFrame:
+        line = QFrame()
+        line.setObjectName(GROUPS_PANEL_LINE)
+        line.setFrameShape(QFrame.VLine)
+        line.setLineWidth(BORDER_SIZE_INT)
+        return line
 
     @staticmethod
     def __construct_stacked_group_panels(group_data: Dict[str, List[List[Package]]]) -> StackedPackagesPanels:
