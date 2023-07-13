@@ -6,18 +6,9 @@ from PySide6.QtWidgets import QApplication
 from configuration_loader.configuration_loader import ConfigurationLoader
 from data_layer.package_accessor import PackageAccessor
 from installation_wizard.installation_wizard import InstallationWizard
-from installation_wizard.presentation_layer.dummy_parent import DummyParent
 from installer.installer import Installer
 from application.main_window import MainWindow
 from stylesheet.stylesheets import StyleSheets
-
-def run_test():
-    
-    qt_app = QApplication(argv)
-    qt_app.setStyleSheet(StyleSheets().default_stylesheet)
-    main_app = DummyParent()
-    main_app.show()
-    sys_exit(qt_app.exec_())
 
 
 def run_application():
