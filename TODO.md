@@ -10,7 +10,8 @@
 - #0000010: Redesign the widget using stylesheets
   - groups 
 - #0000008: Display if the user is root when running installation wizard
-- #0000006: order the package names in the installation wizard widget
+- #0000006: order the package names in the packages panel
+- #0000012: Order the group names in the groups panel
 - #0000011: Add the dotfiles
 
 - #0000002: Make it easier to access package groups. Maybe by indexing

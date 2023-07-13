@@ -3,6 +3,8 @@ from typing import List
 from PySide6.QtCore import Signal, Slot
 from PySide6.QtWidgets import QWidget, QPushButton, QVBoxLayout
 
+from installation_wizard.presentation_layer.group_button import GroupButton
+
 
 class GroupsPanel(QWidget):
     groupClicked = Signal(str)
@@ -33,11 +35,10 @@ class GroupsPanel(QWidget):
             button.setChecked(clicked_group_name == button.text())
         self.groupClicked.emit(clicked_group_name)
 
-    def __create_group_buttons(self, group_names: List[str]) -> List[QPushButton]:
+    def __create_group_buttons(self, group_names: List[str]) -> List[GroupButton]:
         return [self.__create_group_button(group_name) for group_name in group_names]
 
-    def __create_group_button(self, group_name: str) -> QPushButton:
-        button = QPushButton(group_name)
-        button.setCheckable(True)
-        button.clicked.connect(lambda: self.__on_group_clicked(group_name))
+    def __create_group_button(self, group_name: str) -> GroupButton:
+        button = GroupButton(group_name)
+        button.groupNameClicked.connect(self.__on_group_clicked)
         return button
