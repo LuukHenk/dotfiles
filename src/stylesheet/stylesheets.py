@@ -1,5 +1,6 @@
 from typing import Dict
 
+from stylesheet.sub_stylesheets.apply_button_stylesheet import get_apply_button_stylesheet
 from stylesheet.sub_stylesheets.generic_stylesheet import get_raw_generic_stylesheet
 from stylesheet.sub_stylesheets.package_stylesheet import get_raw_package_stylesheet
 
@@ -8,6 +9,7 @@ class StyleSheets:
     def __init__(self):
         self.__default_stylesheet = self.__construct_stylesheet()
         self.__stylesheet_on_package_hover = self.__construct_stylesheet(package_hover=True)
+        self.__stylesheet_on_apply_button_hover = self.__construct_stylesheet(apply_button_hover=True)
 
     @property
     def default_stylesheet(self) -> str:
@@ -17,10 +19,15 @@ class StyleSheets:
     def stylesheet_on_package_hover(self) -> str:
         return self.__stylesheet_on_package_hover
 
-    def __construct_stylesheet(self, package_hover: bool = False) -> str:
+    @property
+    def stylesheet_on_apply_button_hover(self) -> str:
+        return self.__stylesheet_on_apply_button_hover
+
+    def __construct_stylesheet(self, package_hover: bool = False, apply_button_hover: bool = False) -> str:
         stylesheet = ""
         stylesheet += self.__construct_stylesheet_from_raw(get_raw_generic_stylesheet())
         stylesheet += self.__construct_stylesheet_from_raw(get_raw_package_stylesheet(package_hover))
+        stylesheet += self.__construct_stylesheet_from_raw(get_apply_button_stylesheet(apply_button_hover))
         return stylesheet
 
     @staticmethod
