@@ -7,3 +7,5 @@ PACKAGE_FRAME = "package_frame"
 PACKAGE_FRAME_HEADER = f"{PACKAGE_FRAME}header"
 
 PACKAGES_PANEL_HEADER = f"packages_panel_header"
+
+APPLY_BUTTON = "apply_button"

@@ -32,8 +32,8 @@ class PackageFrame(QFrame):
         self.otherPackageChecked.connect(package_widget.otherPackageChecked)
         return package_widget
 
-    @Slot(int, int)
-    def __on_package_clicked(self, package_id: int, package_state: int):
+    @Slot(int, bool)
+    def __on_package_clicked(self, package_id: int, package_state: bool):
         self.packageChecked.emit(package_id, package_state)
 
     @staticmethod

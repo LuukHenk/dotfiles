@@ -9,10 +9,10 @@ from stylesheet.data_layer.defaults import (
     PRIMARY_BACKGROUND_COLOR,
     HOVER_BORDER_COLOR,
     BORDER_SIZE,
+    BUTTON_HEIGHT,
 )
 from stylesheet.data_layer import keys
 
-DEFAULT_HEIGHT = 33
 APT_COLOR = "#BA4D00"
 SNAP_COLOR = "#6D8764"
 
@@ -23,7 +23,7 @@ def get_raw_package_stylesheet(hover: bool = False) -> Dict[str, Dict[str, str]]
             keys.BACKGROUND_COLOR: PRIMARY_COLOR,
             keys.BORDER: f"{BORDER_SIZE} solid {HOVER_BORDER_COLOR if hover else PRIMARY_COLOR}",
             keys.BORDER_RADIUS: BORDER_RADIUS,
-            keys.HEIGHT: f"{DEFAULT_HEIGHT}px",
+            keys.HEIGHT: BUTTON_HEIGHT,
         },
         f"#{PACKAGE_CHECKBOX}": {
             keys.BACKGROUND_COLOR: PRIMARY_COLOR,
@@ -34,8 +34,8 @@ def get_raw_package_stylesheet(hover: bool = False) -> Dict[str, Dict[str, str]]
             keys.BACKGROUND_COLOR: PRIMARY_COLOR,
             keys.BORDER: f"{BORDER_SIZE} solid {HOVER_BORDER_COLOR if hover else PRIMARY_COLOR}",
             keys.BORDER_RADIUS: BORDER_RADIUS,
-            keys.HEIGHT: f"{DEFAULT_HEIGHT}px",
-            keys.WIDTH: f"{DEFAULT_HEIGHT}px",
+            keys.HEIGHT: BUTTON_HEIGHT,
+            keys.WIDTH: BUTTON_HEIGHT,
         },
         f"::indicator:checked#{PACKAGE_CHECKBOX}": {
             keys.IMAGE: f"url({ROOT}/static/images/icons8-checked.svg)",

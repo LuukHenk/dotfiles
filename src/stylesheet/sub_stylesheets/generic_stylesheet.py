@@ -23,4 +23,14 @@ def get_raw_generic_stylesheet() -> Dict[str, Dict[str, str]]:
             keys.FONT_WEIGHT: "bold",
             keys.MARGIN_BOTTOM: "20px",
         },
+        f"#{objects.APPLY_BUTTON}": {
+            keys.BACKGROUND_COLOR: defaults.PRIMARY_COLOR,
+            keys.BORDER: f"{defaults.BORDER_SIZE} solid {defaults.PRIMARY_COLOR}",
+            keys.BORDER_RADIUS: defaults.BORDER_RADIUS,
+            keys.COLOR: defaults.PRIMARY_BACKGROUND_COLOR,
+            keys.HEIGHT: defaults.BUTTON_HEIGHT,
+        },
+        f"#{objects.APPLY_BUTTON}:disabled": {
+            keys.COLOR: defaults.DISABLE_COLOR,
+        },
     }
