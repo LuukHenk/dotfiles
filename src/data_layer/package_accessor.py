@@ -65,7 +65,11 @@ class PackageAccessor:
     def __find_package_via_bk(self, search_name: str, manager: ManagerName, version: Version) -> Optional[Package]:
         """Use the business keys to find the object. This will take longer then finding the object via the PK"""
         for package in self.__packages.values():
-            if package.manager_name == manager and package.search_name == search_name and package.version == version:
+            if (
+                package.manager_name == manager
+                and package.search_name == search_name
+                and package.version.name == version.name
+            ):
                 return deepcopy(package)
         return None
 

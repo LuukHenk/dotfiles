@@ -33,12 +33,12 @@ class InstallationWizardProcessor:
     def format_input_packages(self):
         # TODO: #0000002
         groups = {}
-        for group in self.__package_accessor.get_groups():
+        for group_name in self.__package_accessor.get_groups():
             package_sets = []
             for package_name in self.__package_accessor.get_package_names():
                 package_set = self.__package_accessor.find(name=package_name)
                 package_groups = [group for package in package_set for group in package.groups]
-                if group in package_groups:
+                if group_name in package_groups:
                     package_sets.append(package_set)
-            groups[group] = package_sets
+            groups[group_name] = package_sets
         return groups

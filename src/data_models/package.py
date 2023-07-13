@@ -9,7 +9,7 @@ from data_models.manager_name import ManagerName
 
 @dataclass
 class Package:
-    version: Version  # BL
+    version: Version  # BK
     installed: bool
     search_name: str  # BK
     manager_name: ManagerName  # BK

@@ -43,14 +43,16 @@ class SnapPackageManager(PackageManager):
 
     def __find_latest_package_versions(self, package_info: str) -> List[Version]:
         latest_versions = []
+        version_names = []
         for line in package_info.splitlines():
             if self.__TRACKING_INDICATOR in line or self.__LATEST_INDICATOR not in line:
                 continue
-            version_type, version = line.strip().split(":")
-            version = self.__format_version(version)
-            if version in latest_versions or version == "^":
+            version_type, version_name = line.strip().split(":")
+            version_name = self.__format_version_name(version_name)
+            if version_name in version_names or version_name == "^":
                 continue
-            latest_versions.append(Version(type=self.__match_version_type(version_type), name=version))
+            latest_versions.append(Version(type=self.__match_version_type(version_type), name=version_name))
+            version_names.append(version_name)
         return latest_versions
 
     def __match_version_type(self, version_type: str) -> VersionType:
@@ -69,11 +71,11 @@ class SnapPackageManager(PackageManager):
         if self.__INSTALLED_INDICATOR not in package_info:
             return None
         installed_version = package_info.split(self.__INSTALLED_INDICATOR)[1]
-        installed_version = self.__format_version(installed_version)
+        installed_version = self.__format_version_name(installed_version)
         return installed_version
 
     @staticmethod
-    def __format_version(unformatted_version: str) -> str:
+    def __format_version_name(unformatted_version: str) -> str:
         unformatted_version = unformatted_version.strip()
         spacing = " "
         if spacing not in unformatted_version:
