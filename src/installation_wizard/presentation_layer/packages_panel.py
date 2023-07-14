@@ -24,7 +24,8 @@ class PackagesPanel(QWidget):
         layout.addWidget(self.__create_header(group_name), 0, 0, 1, self.__PACKAGE_FRAMES_PER_ROW)
 
         row_idx = 1
-        for i, package_set in enumerate(package_sets.values()):
+        for i, package_name in enumerate(sorted(package_sets.keys())):
+            package_set = package_sets[package_name]
             if not len(package_set):
                 return
             col_idx = i % self.__PACKAGE_FRAMES_PER_ROW
