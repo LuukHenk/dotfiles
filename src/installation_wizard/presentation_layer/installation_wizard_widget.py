@@ -25,7 +25,7 @@ class InstallationWizardWidget(QWidget):
         parent=None,
     ):
         super().__init__(parent)
-        group_names = list(group_data.keys())
+        group_names = sorted(group_data.keys())
         self.__stacked_group_panels = self.__construct_stacked_group_panels(group_data)
         self.__groups_panel = GroupsPanel(group_names)
         self.__apply_button = ApplyButton()

@@ -10,7 +10,7 @@
 
 
 - #0000006: order the package names in the packages panel
-- #0000012: Order the group names in the groups panel
+- #0000014: Display the loading of packages (in terminal for now)
 - 
 - #0000011: Add the dotfiles
 
@@ -21,6 +21,7 @@
   - https://packaging.python.org/en/latest/tutorials/packaging-projects/
 - #0000003: Write tests
 - #0000004: Cleanup
+- #0000015: Add splashscreen for loading the package data 
 
 
 
