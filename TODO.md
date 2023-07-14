@@ -19,6 +19,7 @@
 # TODO for future versions
 
 - #0000015: Add splashscreen for loading the package data 
+- #0000016: The package label does not display the version type and the version name is not always complete... Can we do something about that? 
 
 
 

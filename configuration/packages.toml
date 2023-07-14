@@ -2,7 +2,7 @@
 [[packages]]
 name="Python"
 groups=["Home Basics"]
-search_names=["python3, python3.11"]
+search_names=["python3", "python3.11"]
 
 [[packages]]
 name="Spotify"
@@ -23,3 +23,8 @@ search_names=["nvim", "neovim"]
 name="NCDU"
 groups=["Terminal Tools"]
 search_names=["ncdu"]
+
+[[packages]]
+name="wget"
+groups=["Terminal Tools"]
+search_names=["wget"]

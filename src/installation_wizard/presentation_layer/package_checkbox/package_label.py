@@ -8,6 +8,8 @@ from installation_wizard.presentation_layer.package_checkbox.version_label impor
 
 
 class PackageLabel(QPushButton):
+    __MAX_TEXT_LENGTH = 11
+
     def __init__(self, package: Package, parent=None):
         super().__init__(parent=parent)
         self.setObjectName(PACKAGE_LABEL)
@@ -24,8 +26,7 @@ class PackageLabel(QPushButton):
         layout.addWidget(self.__version_label)
         layout.addWidget(self.__manager_label, alignment=Qt.AlignRight)
 
-    @staticmethod
-    def __style_version_text(version_text: str) -> str:
-        if len(version_text) > 13:
-            version_text = version_text[:13] + "..."
+    def __style_version_text(self, version_text: str) -> str:
+        if len(version_text) > self.__MAX_TEXT_LENGTH:
+            version_text = version_text[: self.__MAX_TEXT_LENGTH] + "..."
         return version_text
