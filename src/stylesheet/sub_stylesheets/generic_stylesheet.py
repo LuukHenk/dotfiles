@@ -13,9 +13,9 @@ def get_raw_generic_stylesheet() -> Dict[str, Dict[str, str]]:
         },
         f"#{objects.PACKAGE_FRAME_HEADER}": {
             keys.COLOR: defaults.PRIMARY_COLOR,
-            keys.FONT_SIZE: "32px",
+            keys.FONT_SIZE: "24px",
             keys.FONT_WEIGHT: "bold",
-            keys.MARGIN_BOTTOM: "10px",
+            keys.MARGIN_BOTTOM: "5px",
         },
         f"#{objects.PACKAGES_PANEL_HEADER}": {
             keys.COLOR: defaults.PRIMARY_COLOR,
@@ -23,5 +23,7 @@ def get_raw_generic_stylesheet() -> Dict[str, Dict[str, str]]:
             keys.FONT_WEIGHT: "bold",
             keys.MARGIN_BOTTOM: "20px",
         },
-        f"#{objects.GROUPS_PANEL_LINE}": {keys.COLOR: defaults.PRIMARY_COLOR},
+        f"#{objects.GROUPS_PANEL_LINE}": {
+            keys.COLOR: defaults.PRIMARY_COLOR,
+        },
     }

@@ -12,7 +12,8 @@ class PackageLabel(QPushButton):
         super().__init__(parent=parent)
         self.setObjectName(PACKAGE_LABEL)
         install_text = "Uninstall" if package.installed else "Install"
-        self.__version_label = VersionLabel(f"{install_text} {package.version.name}")
+        version_text = self.__style_version_text(package.version.name)
+        self.__version_label = VersionLabel(f"{install_text} {version_text}")
         self.__manager_label = ManagerLabel(package.manager_name)
         self.__create_layout()
         self.setFixedWidth(200)
@@ -22,3 +23,9 @@ class PackageLabel(QPushButton):
         layout.setContentsMargins(10, 0, 0, 0)
         layout.addWidget(self.__version_label)
         layout.addWidget(self.__manager_label, alignment=Qt.AlignRight)
+
+    @staticmethod
+    def __style_version_text(version_text: str) -> str:
+        if len(version_text) > 13:
+            version_text = version_text[:13] + "..."
+        return version_text

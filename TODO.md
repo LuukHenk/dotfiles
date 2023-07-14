@@ -7,13 +7,15 @@
 
 # TODO (ordered on priority)
 
-- #0000010: Redesign the widget using stylesheets
-  - groups 
-- #0000008: Display if the user is root when running installation wizard
+
+
 - #0000006: order the package names in the packages panel
 - #0000012: Order the group names in the groups panel
+- 
 - #0000011: Add the dotfiles
 
+- #0000013: Move the groups to the top of the widget
+- - #0000008: Display if the user is root when running installation wizard
 - #0000002: Make it easier to access package groups. Maybe by indexing
 - #0000005: Update the readme and setup.cfg
   - https://packaging.python.org/en/latest/tutorials/packaging-projects/

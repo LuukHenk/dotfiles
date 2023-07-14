@@ -44,8 +44,6 @@ def get_raw_package_stylesheet(hover: bool = False) -> Dict[str, Dict[str, str]]
             keys.BACKGROUND_COLOR: PRIMARY_COLOR,
             keys.BORDER_RADIUS: BORDER_RADIUS,
             keys.COLOR: PRIMARY_BACKGROUND_COLOR,
-            keys.MARGIN_LEFT: f"{BORDER_SIZE}",
-            keys.PADDING: "5px",
         },
         f"#{PACKAGE}{ManagerName.APT.value}": {
             keys.BACKGROUND_COLOR: APT_COLOR,
