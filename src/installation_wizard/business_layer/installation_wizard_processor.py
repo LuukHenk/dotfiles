@@ -1,8 +1,9 @@
-from typing import List
+from typing import List, Dict
 
 from data_layer.package_accessor import PackageAccessor
 from data_models.package import Package
 from installation_wizard.business_layer.id_tracker import IdTracker
+from installation_wizard.data_layer.typing_hints import NestedPackageGroups
 
 
 class InstallationWizardProcessor:
@@ -30,15 +31,15 @@ class InstallationWizardProcessor:
             package.installation_request = True
             _result = self.__package_accessor.update_package(package.id_, package)
 
-    def format_input_packages(self):
-        # TODO: #0000002
+    def format_packages_for_installation_wizard(self) -> NestedPackageGroups:
         groups = {}
-        for group_name in self.__package_accessor.get_groups():
-            package_sets = []
-            for package_name in self.__package_accessor.get_package_names():
-                package_set = self.__package_accessor.find(name=package_name)
-                package_groups = [group for package in package_set for group in package.groups]
-                if group_name in package_groups:
-                    package_sets.append(package_set)
-            groups[group_name] = package_sets
+        for package_name in self.__package_accessor.get_package_names():
+            package_set = self.__package_accessor.find(name=package_name)
+            if not len(package_set):
+                continue
+            for group in package_set[0].groups:
+                if group in groups:
+                    groups[group][package_name] = package_set
+                    continue
+                groups[group] = {package_name: package_set}
         return groups

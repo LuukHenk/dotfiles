@@ -4,6 +4,7 @@ from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QWidget, QGridLayout, QLabel, QSpacerItem, QSizePolicy
 
 from data_models.package import Package
+from installation_wizard.data_layer.typing_hints import PackageSets
 from installation_wizard.presentation_layer.package_frame import PackageFrame
 from stylesheet.data_layer.object_names import PACKAGES_PANEL_HEADER
 
@@ -14,16 +15,16 @@ class PackagesPanel(QWidget):
 
     __PACKAGE_FRAMES_PER_ROW = 6
 
-    def __init__(self, group_name: str, package_sets: List[List[Package]], parent=None):
+    def __init__(self, group_name: str, package_sets: PackageSets, parent=None):
         super().__init__(parent)
         self.__create_layout(group_name, package_sets)
 
-    def __create_layout(self, group_name: str, package_sets: List[List[Package]]):
+    def __create_layout(self, group_name: str, package_sets: PackageSets):
         layout = QGridLayout(self)
         layout.addWidget(self.__create_header(group_name), 0, 0, 1, self.__PACKAGE_FRAMES_PER_ROW)
 
         row_idx = 1
-        for i, package_set in enumerate(package_sets):
+        for i, package_set in enumerate(package_sets.values()):
             if not len(package_set):
                 return
             col_idx = i % self.__PACKAGE_FRAMES_PER_ROW

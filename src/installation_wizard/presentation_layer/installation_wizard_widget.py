@@ -5,6 +5,7 @@ from PySide6.QtWidgets import QGridLayout, QWidget, QFrame
 
 from data_models.package import Package
 from installation_wizard.business_layer.installation_wizard_processor import InstallationWizardProcessor
+from installation_wizard.data_layer.typing_hints import NestedPackageGroups
 from installation_wizard.presentation_layer.apply_button import ApplyButton
 from installation_wizard.presentation_layer.confirmation_widget import ConfirmationWidget
 from installation_wizard.presentation_layer.groups_panel import GroupsPanel
@@ -20,7 +21,7 @@ class InstallationWizardWidget(QWidget):
 
     def __init__(
         self,
-        group_data: Dict[str, List[List[Package]]],
+        group_data: NestedPackageGroups,
         installation_wizard_processor: InstallationWizardProcessor,
         parent=None,
     ):
@@ -67,7 +68,7 @@ class InstallationWizardWidget(QWidget):
         return line
 
     @staticmethod
-    def __construct_stacked_group_panels(group_data: Dict[str, List[List[Package]]]) -> StackedPackagesPanels:
+    def __construct_stacked_group_panels(group_data: NestedPackageGroups) -> StackedPackagesPanels:
         stacked_group_panels = StackedPackagesPanels()
         for group_name, package_sets in group_data.items():
             stacked_group_panels.add_group_panel(group_name, package_sets)

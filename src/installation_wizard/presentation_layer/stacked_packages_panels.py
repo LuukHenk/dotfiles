@@ -4,6 +4,7 @@ from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QStackedWidget
 
 from data_models.package import Package
+from installation_wizard.data_layer.typing_hints import PackageSets
 from installation_wizard.presentation_layer.packages_panel import PackagesPanel
 
 
@@ -15,7 +16,7 @@ class StackedPackagesPanels(QStackedWidget):
         super().__init__(parent)
         self.__panels: Dict[str, PackagesPanel] = {}
 
-    def add_group_panel(self, group_name, package_sets: List[List[Package]]):
+    def add_group_panel(self, group_name, package_sets: PackageSets):
         panel = PackagesPanel(group_name, package_sets)
         panel.packageChecked.connect(self.packageChecked)
         panel.packageChecked.connect(self.otherPackageChecked)

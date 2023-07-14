@@ -23,7 +23,7 @@ class InstallationWizard(QObject):
     def __create_installation_wizard_widget(self) -> InstallationWizardWidget:
         installation_wizard_processor = InstallationWizardProcessor(self.__package_accessor, IdTracker())
         wizard = InstallationWizardWidget(
-            installation_wizard_processor.format_input_packages(), installation_wizard_processor
+            installation_wizard_processor.format_packages_for_installation_wizard(), installation_wizard_processor
         )
         wizard.install.connect(self.__on_installation_request)
         return wizard

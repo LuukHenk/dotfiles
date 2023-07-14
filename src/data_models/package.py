@@ -10,12 +10,12 @@ from data_models.manager_name import ManagerName
 @dataclass
 class Package:
     version: Version  # BK
-    installed: bool
+    installed: bool = field(repr=False)
     search_name: str  # BK
     manager_name: ManagerName  # BK
-    name: str = ""
-    groups: List[str] = field(default_factory=list)
-    installation_request: bool = False
+    name: str = field(repr=False, default="")
+    groups: List[str] = field(default_factory=list, repr=False)
+    installation_request: bool = field(default=False, repr=False)
 
     def __post_init__(self):
         self._id: int = IdGenerator().generate_id()  # PK
@@ -23,3 +23,6 @@ class Package:
     @property
     def id_(self) -> int:
         return self._id
+
+    def __str__(self) -> str:
+        return f"{self.search_name} {self.version.type} {self.manager_name}"

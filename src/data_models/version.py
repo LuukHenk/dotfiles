@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from data_models.version_type import VersionType
 
@@ -6,4 +6,4 @@ from data_models.version_type import VersionType
 @dataclass
 class Version:
     type: VersionType
-    name: str
+    name: str = field(repr=False)

@@ -16,7 +16,6 @@
 
 - #0000013: Move the groups to the top of the widget
 - - #0000008: Display if the user is root when running installation wizard
-- #0000002: Make it easier to access package groups. Maybe by indexing
 - #0000005: Update the readme and setup.cfg
   - https://packaging.python.org/en/latest/tutorials/packaging-projects/
 - #0000003: Write tests
