@@ -16,4 +16,4 @@ Personalised configuration setup for Linux Ubuntu
 - Thanks to [Sidney Liebrand](https://github.com/SidOfc) for his vim statusbar
 - Thanks to [mathiasbynens](https://github.com/mathiasbynens/dotfiles) for some useful configuration filesettings
 
-<sub>Version 0.3.0</sub>
+<sub>Version 0.3.1</sub>
