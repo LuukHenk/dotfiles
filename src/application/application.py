@@ -46,5 +46,6 @@ class MainApplication(QObject):
         package_accessor = PackageAccessor()
         configuration_loader = ConfigurationLoader()
         configuration_loader.load_packages(package_accessor)
-        dotfiles_accessor = configuration_loader.construct_dotfile_accessor()
+        dotfiles = configuration_loader.load_dotfiles()
+        print(dotfiles)
         return package_accessor

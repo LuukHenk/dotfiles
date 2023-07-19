@@ -2,10 +2,11 @@ from pathlib import Path
 from typing import List, Dict, Union
 from tomllib import load, TOMLDecodeError
 
+
 from configuration_loader.data_models.config_format import ConfigFormat
 from configuration_loader.parsers.dotfile_parser import parse_dotfile_config
 from configuration_loader.parsers.package_parser import PackageParser
-from data_layer.dotfile_accessor import DotfileAccessor
+
 from data_layer.package_accessor import PackageAccessor
 from data_models.dotfile import Dotfile
 from logger.logger import log_error, log_info
@@ -29,16 +30,14 @@ class ConfigurationLoader:
             if not result.success:
                 log_error(f"Failed to load package '{package.name}': {result.message}")
 
-    def construct_dotfile_accessor(self) -> DotfileAccessor:
-        accessor = DotfileAccessor()
+    def load_dotfiles(self) -> List[Dotfile]:
+        dotfiles = []
         try:
             dotfiles = parse_dotfile_config(self.__config)
         except KeyError as key_error:
             log_error(f"Failed to parse dotfile configuration in {self.__config_path}. KeyError: {key_error}")
-            return accessor
-
-        # TODO; add dotfiles to accessor
-        return accessor
+            return dotfiles
+        return dotfiles
 
     @staticmethod
     def __load_config(config_path: Path) -> ConfigFormat:
