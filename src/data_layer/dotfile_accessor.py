@@ -1,0 +1,2 @@
+class DotfileAccessor:
+    pass

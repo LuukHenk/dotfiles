@@ -1,0 +1,47 @@
+[[packages]]
+name="Python"
+group="Programming Languages"
+search_names=["python3", "python3.11"]
+
+[[packages]]
+name="Spotify"
+group="Other"
+search_names=["spotify"]
+
+[[packages]]
+name="Terminator"
+group="Terminal Setup"
+search_names=["terminator"]
+
+[[packages]]
+name="Neovim"
+group="Terminal Setup"
+search_names=["nvim", "neovim"]
+
+[[packages]]
+name="NCDU"
+group="Terminal Setup"
+search_names=["ncdu"]
+
+[[packages]]
+name="wget"
+group="Terminal Setup"
+search_names=["wget"]
+
+[[dotfiles]]
+name="bashrc"
+group="Terminal Setup"
+repo_path="."
+deploy_path="~/.bashrc"
+
+[[dotfiles]]
+name="inputrc"
+group="Terminal Setup"
+repo_path="."
+deploy_path="~/.inputrc"
+
+[[dotfiles]]
+name="nonsense"
+group="nonsense"
+repo_path="./nonsense.txt"
+deploy_path="~/.nonsense.txt"

@@ -44,5 +44,7 @@ class MainApplication(QObject):
     @staticmethod
     def __load_packages() -> PackageAccessor:
         package_accessor = PackageAccessor()
-        ConfigurationLoader().load_packages(package_accessor)
+        configuration_loader = ConfigurationLoader()
+        configuration_loader.load_packages(package_accessor)
+        dotfiles_accessor = configuration_loader.construct_dotfile_accessor()
         return package_accessor
