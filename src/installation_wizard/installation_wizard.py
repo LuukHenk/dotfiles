@@ -2,7 +2,7 @@ from PySide6.QtCore import QObject, Signal
 from typing import Dict, List, Callable
 
 from data_layer.package_accessor import PackageAccessor
-from data_models.package import Package
+from data_models.package_old import PackageOld
 from installation_wizard.business_layer.id_tracker import IdTracker
 from installation_wizard.business_layer.installation_wizard_processor import InstallationWizardProcessor
 from installation_wizard.presentation_layer.installation_wizard_widget import InstallationWizardWidget
@@ -31,7 +31,7 @@ class InstallationWizard(QObject):
     def __on_installation_request(self) -> None:
         self.install.emit()
 
-    def __get_group_data(self) -> Dict[str, List[List[Package]]]:
+    def __get_group_data(self) -> Dict[str, List[List[PackageOld]]]:
         # TODO: #0000002
         groups = {}
         for group in self.__package_accessor.get_groups():

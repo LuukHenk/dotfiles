@@ -3,7 +3,7 @@ from typing import List, Dict
 from PySide6.QtCore import Qt, Signal, Slot
 from PySide6.QtWidgets import QGridLayout, QWidget, QFrame
 
-from data_models.package import Package
+from data_models.package_old import PackageOld
 from installation_wizard.business_layer.installation_wizard_processor import InstallationWizardProcessor
 from installation_wizard.data_layer.typing_hints import NestedPackageGroups
 from installation_wizard.presentation_layer.apply_button import ApplyButton

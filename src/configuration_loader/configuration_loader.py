@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Dict, Union
+from typing import List
 from tomllib import load, TOMLDecodeError
 
 
@@ -7,9 +7,8 @@ from configuration_loader.data_models.config_format import ConfigFormat
 from configuration_loader.parsers.dotfile_parser import parse_dotfile_config
 from configuration_loader.parsers.package_parser import PackageParser
 
-from data_layer.package_accessor import PackageAccessor
-from data_models.dotfile import Dotfile
-from logger.logger import log_error, log_info
+from data_models.item import Item
+from logger.logger import log_error
 from utils.root_finder import ROOT
 
 
@@ -18,29 +17,20 @@ class ConfigurationLoader:
 
     def __init__(self, config_path: Path = __default_config_path):
         self.__config_path = config_path
-        self.__config = self.__load_config(self.__config_path)
-        self.__packages_config_path = ROOT / "configuration" / "packages.toml"
+        self.__config = self.__load_config_from_toml_file(self.__config_path)
 
-    def load_packages(self, package_accessor: PackageAccessor) -> None:
-        packages = PackageParser().parse(self.__packages_config_path)
-        log_info(f"Found {len(packages)} packages in '{self.__packages_config_path}'")
-        for i, package in enumerate(packages):
-            log_info(f"Loading packages: {i+1}/{len(packages)}")
-            result = package_accessor.add_package(package)
-            if not result.success:
-                log_error(f"Failed to load package '{package.name}': {result.message}")
-
-    def load_dotfiles(self) -> List[Dotfile]:
-        dotfiles = []
+    def load_config(self) -> List[Item]:
+        items = []
         try:
-            dotfiles = parse_dotfile_config(self.__config)
+            items += parse_dotfile_config(self.__config)
+            items += PackageParser().parse_packages_config(self.__config)
         except KeyError as key_error:
-            log_error(f"Failed to parse dotfile configuration in {self.__config_path}. KeyError: {key_error}")
-            return dotfiles
-        return dotfiles
+            log_error(f"Failed to parse configuration in {self.__config_path}. KeyError: {key_error}")
+            return items
+        return items
 
     @staticmethod
-    def __load_config(config_path: Path) -> ConfigFormat:
+    def __load_config_from_toml_file(config_path: Path) -> ConfigFormat:
         try:
             with open(config_path, "rb") as f:
                 data: ConfigFormat = load(f)

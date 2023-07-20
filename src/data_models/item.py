@@ -1,5 +1,5 @@
 from abc import ABC
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from business_layer.id_generator import IdGenerator
 

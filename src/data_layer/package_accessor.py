@@ -5,7 +5,7 @@ from dataclasses import fields
 from data_models.version import Version
 
 from data_models.manager_name import ManagerName
-from data_models.package import Package
+from data_models.package_old import PackageOld
 from data_models.result import Result
 from data_models.accessor_result_message import AccessorResultMessage as ResultMessage
 
@@ -13,13 +13,13 @@ from data_models.accessor_result_message import AccessorResultMessage as ResultM
 class PackageAccessor:
     def __init__(self):
         super().__init__()
-        self.__packages: Dict[int, Package] = {}
+        self.__packages: Dict[int, PackageOld] = {}
 
     @property
-    def packages(self) -> List[Package]:
+    def packages(self) -> List[PackageOld]:
         return list(self.__packages.values())
 
-    def find(self, **kwargs) -> List[Package]:
+    def find(self, **kwargs) -> List[PackageOld]:
         packages = []
         for package in self.__packages.values():
             matching_package = True
@@ -37,14 +37,14 @@ class PackageAccessor:
     def get_package_names(self) -> Set[str]:
         return {package.name for package in self.__packages.values()}
 
-    def find_package_via_id(self, package_id: int) -> Optional[Package]:
+    def find_package_via_id(self, package_id: int) -> Optional[PackageOld]:
         """Use the primary key to find the object"""
         try:
             return deepcopy(self.__packages[package_id])
         except KeyError:
             return None
 
-    def add_package(self, package: Package) -> Result:
+    def add_package(self, package: PackageOld) -> Result:
         already_existing_package = self.__find_package_via_bk(
             package.search_name, package.manager_name, package.version
         )
@@ -54,7 +54,7 @@ class PackageAccessor:
         self.__packages[package.id_] = package
         return Result(success=True)
 
-    def update_package(self, package_id: int, updated_package: Package) -> Result:
+    def update_package(self, package_id: int, updated_package: PackageOld) -> Result:
         package = self.find_package_via_id(package_id)
         validation_result = self.__validate_update(package, updated_package)
         if not validation_result.success:
@@ -62,7 +62,7 @@ class PackageAccessor:
         self.__packages[package_id] = updated_package
         return Result(success=True)
 
-    def __find_package_via_bk(self, search_name: str, manager: ManagerName, version: Version) -> Optional[Package]:
+    def __find_package_via_bk(self, search_name: str, manager: ManagerName, version: Version) -> Optional[PackageOld]:
         """Use the business keys to find the object. This will take longer then finding the object via the PK"""
         for package in self.__packages.values():
             if (
@@ -73,7 +73,7 @@ class PackageAccessor:
                 return deepcopy(package)
         return None
 
-    def __validate_update(self, package: Optional[Package], updated_package: Package) -> Result:
+    def __validate_update(self, package: Optional[PackageOld], updated_package: PackageOld) -> Result:
         if not package:
             return Result(success=False, message=ResultMessage.NOT_FOUND.value)
 

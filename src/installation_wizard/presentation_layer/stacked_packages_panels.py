@@ -3,7 +3,7 @@ from typing import Dict, List
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QStackedWidget
 
-from data_models.package import Package
+from data_models.package_old import PackageOld
 from installation_wizard.data_layer.typing_hints import PackageSets
 from installation_wizard.presentation_layer.packages_panel import PackagesPanel
 

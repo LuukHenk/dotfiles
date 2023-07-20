@@ -1,9 +1,8 @@
 from pathlib import Path
 from typing import List
 
-from logger.logger import log_error
 
-from configuration_loader.data_models.config_format import ConfigFormat, ItemFormat
+from configuration_loader.data_models.config_format import ConfigFormat
 from configuration_loader.data_models.config_keys import ConfigKeys
 from data_models.dotfile import Dotfile
 

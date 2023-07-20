@@ -1,7 +1,7 @@
 from typing import Dict, List, Tuple
 
 from data_models.manager_name import ManagerName
-from data_models.package import Package
+from data_models.package_old import PackageOld
 from data_models.package_manager_search_result import PackageManagerSearchResult
 from data_models.result import Result
 from package_manager_manager.package_managers.apt_package_manager import AptPackageManager
@@ -22,5 +22,5 @@ class PackageManagerManager:
             results += manager.find_package(package_name)
         return results
 
-    def swap_installation_status(self, package: Package) -> Result:
+    def swap_installation_status(self, package: PackageOld) -> Result:
         return self.__managers[package.manager_name].swap_installation_status(package)

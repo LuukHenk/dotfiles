@@ -3,7 +3,7 @@ from typing import List
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QWidget, QGridLayout, QLabel, QSpacerItem, QSizePolicy
 
-from data_models.package import Package
+from data_models.package_old import PackageOld
 from installation_wizard.data_layer.typing_hints import PackageSets
 from installation_wizard.presentation_layer.package_frame import PackageFrame
 from stylesheet.data_layer.object_names import PACKAGES_PANEL_HEADER
@@ -35,7 +35,7 @@ class PackagesPanel(QWidget):
                 row_idx += 1
         layout.addItem(QSpacerItem(0, 0, QSizePolicy.Fixed, QSizePolicy.MinimumExpanding), row_idx + 1, 0)
 
-    def __create_package_frame(self, package_set: List[Package]) -> PackageFrame:
+    def __create_package_frame(self, package_set: List[PackageOld]) -> PackageFrame:
         package_frame = PackageFrame(package_set[0].name, package_set)
         package_frame.packageChecked.connect(self.packageChecked)
         self.otherPackageChecked.connect(package_frame.otherPackageChecked)

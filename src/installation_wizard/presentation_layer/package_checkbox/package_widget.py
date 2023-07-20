@@ -1,7 +1,7 @@
 from PySide6.QtCore import Qt, QObject, QEvent, Slot, Signal
 from PySide6.QtWidgets import QCheckBox, QWidget, QHBoxLayout, QSpacerItem, QSizePolicy
 
-from data_models.package import Package
+from data_models.package_old import PackageOld
 from installation_wizard.presentation_layer.package_checkbox.package_label import PackageLabel
 from stylesheet.data_layer.object_names import PACKAGE_CHECKBOX, PACKAGE
 from stylesheet.stylesheets import StyleSheets
@@ -11,7 +11,7 @@ class PackageWidget(QWidget):
     otherPackageChecked = Signal(int, bool)  # Tuple[package ID, package check state]
     packageChecked = Signal(bool)
 
-    def __init__(self, package: Package, parent=None):
+    def __init__(self, package: PackageOld, parent=None):
         super().__init__(parent=parent)
         self.__id = package.id_
         self.setObjectName(PACKAGE)
