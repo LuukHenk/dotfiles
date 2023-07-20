@@ -29,13 +29,13 @@ group="Terminal Setup"
 search_names=["wget"]
 
 [[dotfiles]]
-name="bashrc"
+name="Bashrc"
 group="Terminal Setup"
 repo_path="."
 deploy_path="~/.bashrc"
 
 [[dotfiles]]
-name="inputrc"
+name="Inputrc"
 group="Terminal Setup"
 repo_path="."
 deploy_path="~/.inputrc"

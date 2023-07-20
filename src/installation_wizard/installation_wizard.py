@@ -19,8 +19,8 @@ class InstallationWizard(QObject):
         return self.__installation_wizard_widget
 
     def __create_installation_wizard_widget(self, config: List[Item]) -> InstallationWizardWidget:
-        formatted_config = format_by_groups(config)
-        wizard = InstallationWizardWidget()
+        config_groups = format_by_groups(config)
+        wizard = InstallationWizardWidget(config_groups)
         return wizard
 
     def __on_installation_request(self) -> None:
