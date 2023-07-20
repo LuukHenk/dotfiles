@@ -1,17 +1,26 @@
-from PySide6.QtCore import Slot, Qt
+from typing import List
+
+from PySide6.QtCore import Slot, Qt, Signal
 from PySide6.QtWidgets import QTreeWidget, QTreeWidgetItem
 
+from data_models.item import Item
 from installation_wizard.data_models.installation_wizard_data_formats import ItemGroupsFormat
 from installation_wizard.presentation_layer.tree_widget_item import TreeWidgetItem
 
 
 class GroupTreeWidget(QTreeWidget):
+    checkedItemsChanged = Signal(bool)
+
     def __init__(self, item_groups: ItemGroupsFormat, parent=None):
         super().__init__(parent)
         self.setHeaderLabel("Groups")
         self.__add_all_items(item_groups)
         self.itemChanged.connect(self.__update_checked_items)
-        self.__checked_items = []
+        self.__checked_items: List[Item] = []
+
+    @property
+    def checked_items(self) -> List[Item]:
+        return self.__checked_items
 
     def __add_all_items(self, item_groups: ItemGroupsFormat) -> None:
         for group_name in sorted(list(item_groups.keys())):
@@ -29,3 +38,4 @@ class GroupTreeWidget(QTreeWidget):
             self.__checked_items.append(item)
         elif item_widget.checkState(0) == Qt.Unchecked and item in self.__checked_items:
             self.__checked_items.remove(item)
+        self.checkedItemsChanged.emit(bool(self.__checked_items))
