@@ -3,7 +3,7 @@ from typing import List
 from PySide6.QtCore import Signal, Slot
 from PySide6.QtWidgets import QWidget, QPushButton, QVBoxLayout
 
-from installation_wizard.presentation_layer.group_button import GroupButton
+from package_installation_wizard.presentation_layer.group_button import GroupButton
 
 
 class GroupsPanel(QWidget):

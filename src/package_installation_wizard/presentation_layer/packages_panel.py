@@ -4,8 +4,8 @@ from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QWidget, QGridLayout, QLabel, QSpacerItem, QSizePolicy
 
 from data_models.package_old import PackageOld
-from installation_wizard.data_layer.typing_hints import PackageSets
-from installation_wizard.presentation_layer.package_frame import PackageFrame
+from package_installation_wizard.data_layer.typing_hints import PackageSets
+from package_installation_wizard.presentation_layer.package_frame import PackageFrame
 from stylesheet.data_layer.object_names import PACKAGES_PANEL_HEADER
 
 

@@ -2,7 +2,7 @@ from typing import List
 from PySide6.QtWidgets import QMessageBox
 
 from data_models.package_old import PackageOld
-from installation_wizard.business_layer.package_info_text_generator import generate_package_text
+from package_installation_wizard.business_layer.package_info_text_generator import generate_package_text
 
 
 class ConfirmationWidget(QMessageBox):

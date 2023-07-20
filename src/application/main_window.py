@@ -1,6 +1,6 @@
 from PySide6.QtCore import Signal
 from PySide6.QtWidgets import QStackedWidget
-from installation_wizard.presentation_layer.installation_wizard_widget import InstallationWizardWidget
+from package_installation_wizard.presentation_layer.installation_wizard_widget import InstallationWizardWidget
 from installer.installing_status_widget.installation_status_widget import InstallationStatusWidget
 
 

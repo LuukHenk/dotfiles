@@ -2,8 +2,8 @@ from typing import List, Dict
 
 from data_layer.package_accessor import PackageAccessor
 from data_models.package_old import PackageOld
-from installation_wizard.business_layer.id_tracker import IdTracker
-from installation_wizard.data_layer.typing_hints import NestedPackageGroups
+from package_installation_wizard.business_layer.id_tracker import IdTracker
+from package_installation_wizard.data_layer.typing_hints import NestedPackageGroups
 
 
 class InstallationWizardProcessor:

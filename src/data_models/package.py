@@ -15,6 +15,3 @@ class Package(Item):
 
     def __post_init__(self):
         super().__post_init__()
-
-    def __repr__(self):
-        return f"Package(name={self.name}, installed={self.installed})"

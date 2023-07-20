@@ -5,7 +5,7 @@ from PySide6.QtGui import QPaintEvent, QPainter
 from PySide6.QtWidgets import QFrame, QVBoxLayout, QLabel, QSizePolicy, QSpacerItem, QStyleOption, QApplication, QStyle
 
 from data_models.package_old import PackageOld
-from installation_wizard.presentation_layer.package_checkbox.package_widget import PackageWidget
+from package_installation_wizard.presentation_layer.package_checkbox.package_widget import PackageWidget
 from stylesheet.data_layer.object_names import PACKAGE_FRAME_HEADER, PACKAGE_FRAME
 
 

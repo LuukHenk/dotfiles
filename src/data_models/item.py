@@ -17,3 +17,6 @@ class Item(ABC):
     @property
     def id_(self) -> int:
         return self._id
+
+    def __repr__(self):
+        return f"Item(group={self.group})"

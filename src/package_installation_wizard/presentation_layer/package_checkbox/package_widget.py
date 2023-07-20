@@ -2,7 +2,7 @@ from PySide6.QtCore import Qt, QObject, QEvent, Slot, Signal
 from PySide6.QtWidgets import QCheckBox, QWidget, QHBoxLayout, QSpacerItem, QSizePolicy
 
 from data_models.package_old import PackageOld
-from installation_wizard.presentation_layer.package_checkbox.package_label import PackageLabel
+from package_installation_wizard.presentation_layer.package_checkbox.package_label import PackageLabel
 from stylesheet.data_layer.object_names import PACKAGE_CHECKBOX, PACKAGE
 from stylesheet.stylesheets import StyleSheets
 

@@ -25,7 +25,7 @@ class MainApplication(QObject):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
         config = ConfigurationLoader().load_config()
-        print(config)
+        installation_wizard = InstallationWizard(config)
         # self.__installation_wizard = InstallationWizard(package_accessor)
         # self.__installer = Installer(package_accessor)
         # self.__main_window = MainWindow(
