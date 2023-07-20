@@ -9,7 +9,6 @@ class Item(ABC):
     installed: bool
     name: str
     group: str
-    installation_request: bool
 
     def __post_init__(self):
         self._id: int = IdGenerator().generate_id()  # PK

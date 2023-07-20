@@ -18,7 +18,6 @@ def parse_dotfile_config(config: ConfigFormat) -> List[Dotfile]:
             installed=deploy_path.is_file(),
             name=dotfile_config[ConfigKeys.NAME],
             group=dotfile_config[ConfigKeys.GROUP],
-            installation_request=False,
         )
         dotfiles.append(dotfile)
     return dotfiles

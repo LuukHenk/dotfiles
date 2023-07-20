@@ -28,7 +28,6 @@ class PackageParser:
                     manager_name=search_result.manager_name,
                     installed=search_result.package_installed,
                     version=search_result.package_version,
-                    installation_request=False,
                 )
                 packages.append(package)
         return packages
