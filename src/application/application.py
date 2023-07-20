@@ -17,27 +17,26 @@ def run_application():
     qt_app = QApplication(argv)
     qt_app.setStyleSheet(StyleSheets().default_stylesheet)
     main_app = MainApplication()
-    # main_app.show_main_window()
-    # sys_exit(qt_app.exec_())
+    main_app.show_main_window()
+    sys_exit(qt_app.exec_())
 
 
 class MainApplication(QObject):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
         config = ConfigurationLoader().load_config()
-        installation_wizard = InstallationWizard(config)
-        # self.__installation_wizard = InstallationWizard(package_accessor)
+        self.__installation_wizard = InstallationWizard(config)
         # self.__installer = Installer(package_accessor)
-        # self.__main_window = MainWindow(
-        #     self.__installation_wizard.installation_wizard_widget,
-        #     self.__installer.installation_status_widget,
-        # )
+        self.__main_window = MainWindow(
+            self.__installation_wizard.installation_wizard_widget,
+            # self.__installer.installation_status_widget,
+        )
         # self.__installation_wizard.install.connect(self.__on_installation_request, type=Qt.QueuedConnection)
         # self.__main_window.readyForInstallation.connect(self.__start_installation, type=Qt.QueuedConnection)
 
-    # def show_main_window(self):
-    #     self.__main_window.show()
-    #
+    def show_main_window(self):
+        self.__main_window.show()
+
     # def __on_installation_request(self):
     #     self.__main_window.show_installation_status_widget()
     #
