@@ -14,6 +14,7 @@ class MainWindow(QStackedWidget):
         parent=None,
     ):
         super().__init__(parent=parent)
+        self.setMinimumSize(500, 500)
         self.__installation_wizard_widget = installation_wizard_widget
         # self.__installation_status_widget = installation_status_widget
         self.addWidget(self.__installation_wizard_widget)
