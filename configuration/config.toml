@@ -41,13 +41,19 @@ repo_path="./inputrc"
 deploy_path="~/.inputrc"
 
 [[dotfiles]]
-name="non existing repo path"
-group="dotfile test"
-repo_path="./nonsense.txt"
-deploy_path="~/.nonsense.txt"
+name="NeoVim configuration"
+group="Terminal Setup"
+repo_path="./init.vim"
+deploy_path="~/.config/nvim/init.vim"
 
 [[dotfiles]]
-name="deploy path already existing"
-group="dotfile test"
-repo_path=""
-deploy_path="~/.nonsense.txt"
+name="NeoVim plugin script"
+group="Terminal Setup"
+repo_path="./plug.vim"
+deploy_path="~/.config/nvim/autoload/plug.vim"
+
+[[dotfiles]]
+name="Terminator configuration"
+group="Terminal Setup"
+repo_path="./terminator"
+deploy_path="~/.config/terminator/config"

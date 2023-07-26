@@ -5,15 +5,15 @@ Current dotfile version 0.3.1
 
 ### Must haves
 
-- Add the dotfiles to the installer
+- Cleanup unused files, unused imports etc
+- Write tests
 - Update the readme and setup.cfg
   - https://packaging.python.org/en/latest/tutorials/packaging-projects/
-- Write tests
-- Cleanup unused files, unused imports etc
 
 ### Should haves
 
 - Display if the user is root when running the installation wizard
+- Add neovim plugin installer
 - Add flatpak packages
 
 ### Could haves
