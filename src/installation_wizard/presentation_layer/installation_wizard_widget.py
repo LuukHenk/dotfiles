@@ -1,6 +1,7 @@
+from typing import List
+
 from PySide6.QtCore import Signal, Slot
 from PySide6.QtWidgets import QWidget, QPushButton, QVBoxLayout
-
 
 from installation_wizard.data_models.installation_wizard_data_formats import ItemGroupsFormat
 from installation_wizard.presentation_layer.confirmation_widget import ConfirmationWidget
@@ -8,7 +9,7 @@ from installation_wizard.presentation_layer.group_tree_widget import GroupTreeWi
 
 
 class InstallationWizardWidget(QWidget):
-    install = Signal()
+    install = Signal(object)  # List[Item]
     __INSTALLATION_APPROVED_ID = 16384
 
     def __init__(self, item_groups: ItemGroupsFormat, parent=None):
@@ -30,7 +31,7 @@ class InstallationWizardWidget(QWidget):
         install_packages = confirmation_widget.exec()
         if install_packages == self.__INSTALLATION_APPROVED_ID:
             self.setDisabled(True)
-            self.install.emit()
+            self.install.emit(self.__group_tree_widget.checked_items)
 
     @Slot(bool)
     def __enable_apply_button(self, enabled: bool):

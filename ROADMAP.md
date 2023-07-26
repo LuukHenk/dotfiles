@@ -9,7 +9,7 @@ Current dotfile version 0.3.1
 - Update the readme and setup.cfg
   - https://packaging.python.org/en/latest/tutorials/packaging-projects/
 - Write tests
-- Cleanup unused files etc
+- Cleanup unused files, unused imports etc
 
 ### Should haves
 

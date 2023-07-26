@@ -10,17 +10,17 @@ class MainWindow(QStackedWidget):
     def __init__(
         self,
         installation_wizard_widget: InstallationWizardWidget,
-        # installation_status_widget: InstallationStatusWidget,
+        installation_status_widget: InstallationStatusWidget,
         parent=None,
     ):
         super().__init__(parent=parent)
         self.setMinimumSize(500, 500)
         self.__installation_wizard_widget = installation_wizard_widget
-        # self.__installation_status_widget = installation_status_widget
+        self.__installation_status_widget = installation_status_widget
         self.addWidget(self.__installation_wizard_widget)
-        # self.addWidget(self.__installation_status_widget)
+        self.addWidget(self.__installation_status_widget)
         self.setCurrentWidget(self.__installation_wizard_widget)
 
-    # def show_installation_status_widget(self):
-    #     self.setCurrentWidget(self.__installation_status_widget)
-    #     self.readyForInstallation.emit()
+    def show_installation_status_widget(self):
+        self.setCurrentWidget(self.__installation_status_widget)
+        self.readyForInstallation.emit()

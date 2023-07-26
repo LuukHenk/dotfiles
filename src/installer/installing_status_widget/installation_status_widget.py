@@ -1,5 +1,3 @@
-from typing import List
-
 from PySide6.QtWidgets import QWidget, QProgressBar, QTextEdit, QVBoxLayout
 
 

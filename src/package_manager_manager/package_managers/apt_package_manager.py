@@ -1,8 +1,8 @@
-from subprocess import CompletedProcess, Popen
-from typing import List, Final, Optional, Tuple
+from typing import List, Final, Optional
+
+from data_models.package import Package
 
 from data_models.manager_name import ManagerName
-from data_models.package_old import PackageOld
 from data_models.result import Result
 from data_models.version import Version
 
@@ -19,7 +19,7 @@ class AptPackageManager(PackageManager):
     __INSTALLED_COMMAND: Final[List[str]] = ["dpkg-query", "-l"]
     __VERSION_INDICATOR: Final[str] = "\nVersion: "
 
-    def swap_installation_status(self, package: PackageOld) -> Result:
+    def swap_installation_status(self, package: Package) -> Result:
         installed_text = "remove" if package.installed else "install"
         installation_command = f"{self.__APT_GET} {installed_text} {package.search_name} -y"
         result = run_async_command(installation_command)
