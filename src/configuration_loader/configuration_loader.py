@@ -13,19 +13,19 @@ from utils.root_finder import ROOT
 
 
 class ConfigurationLoader:
-    __default_config_path = ROOT / "configuration" / "config.toml"
+    __default_config_folder = ROOT / "configuration"
 
-    def __init__(self, config_path: Path = __default_config_path):
-        self.__config_path = config_path
-        self.__config = self.__load_config_from_toml_file(self.__config_path)
+    def __init__(self):
+        self.__config_file = self.__default_config_folder / "config.toml"
+        self.__config = self.__load_config_from_toml_file(self.__config_file)
 
     def load_config(self) -> List[Item]:
         items = []
         try:
-            items += parse_dotfile_config(self.__config)
+            items += parse_dotfile_config(self.__config, self.__default_config_folder)
             items += PackageParser().parse_packages_config(self.__config)
         except KeyError as key_error:
-            log_error(f"Failed to parse configuration in {self.__config_path}. KeyError: {key_error}")
+            log_error(f"Failed to parse configuration in {self.__config_file}. KeyError: {key_error}")
             return items
         return items
 

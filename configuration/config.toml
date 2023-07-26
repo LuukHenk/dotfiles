@@ -31,17 +31,23 @@ search_names=["wget"]
 [[dotfiles]]
 name="Bashrc"
 group="Terminal Setup"
-repo_path="."
+repo_path="./bashrc"
 deploy_path="~/.bashrc"
 
 [[dotfiles]]
 name="Inputrc"
 group="Terminal Setup"
-repo_path="."
+repo_path="./inputrc"
 deploy_path="~/.inputrc"
 
 [[dotfiles]]
-name="nonsense"
-group="nonsense"
+name="non existing repo path"
+group="dotfile test"
 repo_path="./nonsense.txt"
+deploy_path="~/.nonsense.txt"
+
+[[dotfiles]]
+name="deploy path already existing"
+group="dotfile test"
+repo_path=""
 deploy_path="~/.nonsense.txt"
