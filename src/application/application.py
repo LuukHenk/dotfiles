@@ -5,17 +5,14 @@ from PySide6.QtCore import Qt, QObject, Slot
 from PySide6.QtWidgets import QApplication
 
 from configuration_loader.configuration_loader import ConfigurationLoader
-from data_layer.package_accessor import PackageAccessor
 from data_models.item import Item
 from installation_wizard.installation_wizard import InstallationWizard
 from installer.installer import Installer
 from application.main_window import MainWindow
-from stylesheet.stylesheets import StyleSheets
 
 
 def run_application():
     qt_app = QApplication(argv)
-    qt_app.setStyleSheet(StyleSheets().default_stylesheet)
     main_app = MainApplication()
     main_app.show_main_window()
     sys_exit(qt_app.exec_())
