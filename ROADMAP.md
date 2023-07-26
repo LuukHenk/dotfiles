@@ -5,10 +5,10 @@ Current dotfile version 0.3.1
 
 ### Must haves
 
-- Cleanup unused files, unused imports etc
 - Write tests
 - Update the readme and setup.cfg
   - https://packaging.python.org/en/latest/tutorials/packaging-projects/
+- Final cleanup
 
 ### Should haves
 

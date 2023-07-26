@@ -1,21 +1,30 @@
 # Dotfiles
-Personalised configuration setup for Linux Ubuntu
+My dotfiles, installation scripts, and packages
 
 ## The setup
-...
+... what is the purpose of my dotfiles
 
 ## Installation
 
 ### Requirements
 
-install before running setup:
-- Python3.11
+- Python3.11 > 
 - Python3-pip
-- pip install setuptools
-- pip install .
+- setuptools (via pip)
+
+### install
+
+```
+~ git clone https://github.com/LuukHenk/dotfiles
+~ cd dotfiles
+~ pip install .
+```
+
+## Usage
+`~ python src/run.py`
 
 ## References
 - Thanks to [Sidney Liebrand](https://github.com/SidOfc) for his vim statusbar
 - Thanks to [mathiasbynens](https://github.com/mathiasbynens/dotfiles) for some useful configuration filesettings
 
-<sub>Version 0.3.1</sub>
+<sub>Version 0.4.0</sub>
