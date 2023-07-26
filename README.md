@@ -8,9 +8,11 @@ Personalised configuration setup for Linux Ubuntu
 
 ### Requirements
 
-- Python >3.10
-- Pip
-...
+install before running setup:
+- Python3.11
+- Python3-pip
+- pip install setuptools
+- pip install .
 
 ## References
 - Thanks to [Sidney Liebrand](https://github.com/SidOfc) for his vim statusbar
