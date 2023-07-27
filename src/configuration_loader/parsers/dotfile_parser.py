@@ -1,4 +1,3 @@
-
 from os import getlogin
 from pathlib import Path
 from typing import List
@@ -14,9 +13,13 @@ def parse_dotfile_config(config: ConfigFormat, repo_folder: Path) -> List[Dotfil
     dotfiles = []
     for dotfile_config in config[ConfigKeys.DOTFILES]:
         deploy_path = __format_deploy_path(dotfile_config[ConfigKeys.DEPLOY_PATH])
-        repo_path = repo_folder / Path(dotfile_config[ConfigKeys.REPO_PATH]).expanduser()
+        repo_path = (
+            repo_folder / Path(dotfile_config[ConfigKeys.REPO_PATH]).expanduser()
+        )
         if not repo_path.exists():
-            log_error(f"Dotfile not found in the configuration folder: {dotfile_config[ConfigKeys.NAME]}")
+            log_error(
+                f"Dotfile not found in the configuration folder: {dotfile_config[ConfigKeys.NAME]}"
+            )
         dotfile = Dotfile(
             repo_path=repo_path,
             deploy_path=deploy_path,
@@ -26,6 +29,7 @@ def parse_dotfile_config(config: ConfigFormat, repo_folder: Path) -> List[Dotfil
         )
         dotfiles.append(dotfile)
     return dotfiles
+
 
 def __format_deploy_path(deploy_path_str: str) -> Path:
     if deploy_path_str and deploy_path_str[0] == "~":
