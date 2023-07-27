@@ -4,9 +4,34 @@ group="Programming Languages"
 search_names=["python3", "python3.11"]
 
 [[packages]]
+name="Cargo"
+group="Programming Languages"
+search_names=["cargo"]
+
+[[packages]]
+name="Rustc"
+group="Programming Languages"
+search_names=["rustc"]
+
+[[packages]]
 name="Spotify"
 group="Other"
 search_names=["spotify"]
+
+[[packages]]
+name="Dropbox"
+group="Other"
+search_names=["nautilus-dropbox"]
+
+[[packages]]
+name="Steam"
+group="Other"
+search_names=["steam"]
+
+[[packages]]
+name="Signal"
+group="Other"
+search_names=["signal-desktop"]
 
 [[packages]]
 name="Terminator"
