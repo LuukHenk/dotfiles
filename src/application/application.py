@@ -1,37 +1,43 @@
-from pathlib import Path
-from PySide6.QtCore import Slot
-from src.application.application_widget import ApplicationWidget
-from src.application.package_installer.package_installer import PackageInstaller
-from src.application.dotfile_deployer.dotfile_deployer import DotfileDeployer
+from sys import argv, exit as sys_exit
+from typing import List
 
-PACKAGES_CONFIG_FILENAME = "packages.json"
-DOTFILES_CONFIG_FILENAME = "dotfile_paths.json"
-class Application:
-    def __init__(self):
-        self.__repository_path = Path().absolute()/"etc"
-        
-        self.__application_widget = ApplicationWidget()
-        self.__application_widget.onInstall.connect(self.__on_install)
+from PySide6.QtCore import Qt, QObject, Slot
+from PySide6.QtWidgets import QApplication
 
-        self.__package_installer = PackageInstaller(
-            package_config_file_path=self.__repository_path/PACKAGES_CONFIG_FILENAME
+from configuration_loader.configuration_loader import ConfigurationLoader
+from data_models.item import Item
+from installation_wizard.installation_wizard import InstallationWizard
+from installer.installer import Installer
+from application.main_window import MainWindow
+
+
+def run_application():
+    qt_app = QApplication(argv)
+    main_app = MainApplication()
+    main_app.show_main_window()
+    sys_exit(qt_app.exec_())
+
+
+class MainApplication(QObject):
+    def __init__(self, parent=None):
+        super().__init__(parent=parent)
+        config = ConfigurationLoader().load_config()
+        self.__installation_wizard = InstallationWizard(config)
+        self.__installer = Installer()
+        self.__main_window = MainWindow(
+            self.__installation_wizard.installation_wizard_widget,
+            self.__installer.installation_status_widget,
         )
-        self.__application_widget.add_widget(self.__package_installer.package_widget)
+        self.__installation_wizard.install.connect(self.__on_installation_request, type=Qt.QueuedConnection)
+        self.__main_window.readyForInstallation.connect(self.__start_installation, type=Qt.QueuedConnection)
 
-        self.__dotfile_deployer = DotfileDeployer(
-            dotfiles_config_file_path=self.__repository_path/DOTFILES_CONFIG_FILENAME,
-            dotfile_directory=self.__repository_path
-        )
-        self.__application_widget.add_widget(self.__dotfile_deployer.dotfile_deployer_widget)
-        
+    def show_main_window(self):
+        self.__main_window.show()
 
-    @property
-    def application_widget(self):
-        return self.__application_widget
+    @Slot(object)
+    def __on_installation_request(self, items_to_install: List[Item]):
+        self.__installer.set_items_to_install(items_to_install)
+        self.__main_window.show_installation_status_widget()
 
-    @Slot()
-    def __on_install(self):
-        self.__dotfile_deployer.deploy_dotfiles()
-        installation_commands = self.__package_installer.get_installation_commands()
-        print(" && ".join(installation_commands))
-        
+    def __start_installation(self):
+        self.__installer.install()

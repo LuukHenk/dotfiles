@@ -1,22 +1,34 @@
 # Dotfiles
-Personalised configuration setup for Linux Ubuntu
+My dotfiles, installation scripts, and packages
 
 ## The setup
-My personalised configuration setup script performs the following tasks:
-* Check packages - Asks to check if the packages in `self.packages` are present
-* Symlink dotfiles - Asks to symlink the dotfiles found in `self.dotfiles` to their deploy location
-* Install Neovim plugins - Asks for installation and updating of the Neovim plugins (Using the Plug script: https://github.com/junegunn/vim-plug)
-* Install Gsettings - Asks for installation of the gsettings configuration found in `etc/gsettings.json`.
+
+The configuration/config.toml file contains all packages and dotfiles I want to display with my application.
 
 ## Installation
+
+### Requirements
+
+- Python3.11 >
+- Python3-pip
+- setuptools (via pip)
+- PySide6 (via pip)
+- tomlkit (via pip)
+
+### install
+
 ```
-$ git clone https://github.com/LuukHenk/dotfiles.git
-$ chmod +x dotfiles/setup
-$ ./dotfiles/setup
+~ git clone https://github.com/LuukHenk/dotfiles
+~ cd dotfiles
+~ pip install .
 ```
+
+## Usage
+
+`~ python src/run.py`
 
 ## References
-- Thanks to [Sidney Liebrand](https://github.com/SidOfc) for helping me building these dotfiles and his vim statusbar
+- Thanks to [Sidney Liebrand](https://github.com/SidOfc) for his vim statusbar
 - Thanks to [mathiasbynens](https://github.com/mathiasbynens/dotfiles) for some useful configuration filesettings
 
-<sub>Version 0.2.0</sub>
+<sub>Version 0.4.0</sub>

@@ -1,0 +1,59 @@
+[[packages]]
+name="Python"
+group="Programming Languages"
+search_names=["python3", "python3.11"]
+
+[[packages]]
+name="Spotify"
+group="Other"
+search_names=["spotify"]
+
+[[packages]]
+name="Terminator"
+group="Terminal Setup"
+search_names=["terminator"]
+
+[[packages]]
+name="Neovim"
+group="Terminal Setup"
+search_names=["nvim", "neovim"]
+
+[[packages]]
+name="NCDU"
+group="Terminal Setup"
+search_names=["ncdu"]
+
+[[packages]]
+name="wget"
+group="Terminal Setup"
+search_names=["wget"]
+
+[[dotfiles]]
+name="Bashrc"
+group="Terminal Setup"
+repo_path="./bashrc"
+deploy_path="~/.bashrc"
+
+[[dotfiles]]
+name="Inputrc"
+group="Terminal Setup"
+repo_path="./inputrc"
+deploy_path="~/.inputrc"
+
+[[dotfiles]]
+name="NeoVim configuration"
+group="Terminal Setup"
+repo_path="./init.vim"
+deploy_path="~/.config/nvim/init.vim"
+
+[[dotfiles]]
+name="NeoVim plugin script"
+group="Terminal Setup"
+repo_path="./plug.vim"
+deploy_path="~/.config/nvim/autoload/plug.vim"
+
+[[dotfiles]]
+name="Terminator configuration"
+group="Terminal Setup"
+repo_path="./terminator"
+deploy_path="~/.config/terminator/config"
