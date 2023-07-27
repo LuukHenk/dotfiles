@@ -2,15 +2,18 @@
 My dotfiles, installation scripts, and packages
 
 ## The setup
-... what is the purpose of my dotfiles
+
+The configuration/config.toml file contains all packages and dotfiles I want to display with my application.
 
 ## Installation
 
 ### Requirements
 
-- Python3.11 > 
+- Python3.11 >
 - Python3-pip
 - setuptools (via pip)
+- PySide6 (via pip)
+- tomlkit (via pip)
 
 ### install
 
@@ -21,6 +24,7 @@ My dotfiles, installation scripts, and packages
 ```
 
 ## Usage
+
 `~ python src/run.py`
 
 ## References

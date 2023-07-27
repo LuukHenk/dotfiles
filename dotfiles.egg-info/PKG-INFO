@@ -1,9 +1,10 @@
 Metadata-Version: 2.1
 Name: dotfiles
-Version: 0.3.0
-Summary: UNKNOWN
-Home-page: UNKNOWN
-License: UNKNOWN
+Version: 0.4.0
+Summary: 'My dotfiles, installation scripts, and packages'
+Home-page: 'https://github.com/LuukHenk/dotfiles'
+Author: 'Luuk Henk'
+License: 'MIT'
 Platform: UNKNOWN
 
 UNKNOWN
