@@ -1,5 +1,7 @@
+#![allow(dead_code)]
+
 use serde::Deserialize;
-use std::process::Command;
+use std::fs::copy;
 
 
 #[derive(Deserialize)]
@@ -27,20 +29,18 @@ impl ConfigManager{
 
     pub fn set_dotfiles(&self) {
         for dotfile in self.config.dotfiles.iter() {
-            ConfigManager::copy_file(&dotfile.repo_path, &dotfile.deploy_path)
+            ConfigManager::copy_file(&dotfile.repo_path, &dotfile.deploy_path);
         }
     }
 
     pub fn install_programs(&self) {
-        println!("Dummy; installing programs")
+        println!("Dummy; installing programs");
 
     }
 
     fn copy_file(source: &String, destination: &String) {
         println!("Copying {source} to {destination}");
-        Command::new("cp")
-        .args([source, destination])
-        .spawn()
-        .expect("failed to copy file");
+        let result = copy(source, destination);
+        println!("{:#?}", result);
     }
 }

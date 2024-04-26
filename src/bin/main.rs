@@ -17,7 +17,7 @@ fn main() {
     [[dotfiles]]
     name="test"
     repo_path="conf/test.txt"
-    deploy_path="~/test.txt"
+    deploy_path="conf/result.txt"
     "#;
 
 
