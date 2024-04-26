@@ -1,0 +1,36 @@
+programs = [
+  "python3",
+  "spotify",
+  "nautilus-dropbox",
+  "steam",
+  "signal-desktop",
+  "terminator",
+  "nvim",
+  "ncdu",
+  "wget"
+]
+
+[[dotfiles]]
+name="Bashrc"
+repo_path="./bashrc"
+deploy_path="~/.bashrc"
+
+[[dotfiles]]
+name="Inputrc"
+repo_path="./inputrc"
+deploy_path="~/.inputrc"
+
+[[dotfiles]]
+name="NeoVim configuration"
+repo_path="./init.vim"
+deploy_path="~/.config/nvim/init.vim"
+
+[[dotfiles]]
+name="NeoVim plugin script"
+repo_path="./plug.vim"
+deploy_path="~/.config/nvim/autoload/plug.vim"
+
+[[dotfiles]]
+name="Terminator configuration"
+repo_path="./terminator"
+deploy_path="~/.config/terminator/config"

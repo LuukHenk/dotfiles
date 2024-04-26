@@ -1,8 +1,1 @@
-.nvimlog
-build/
-.vscode
-.pylintrc
-**/__pycache__/
-/.vscode/
-/.pytest_cache/
-.idea
+/target
