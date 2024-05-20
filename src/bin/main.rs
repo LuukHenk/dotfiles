@@ -11,17 +11,26 @@ fn main() {
         "terminator",
         "nvim",
         "ncdu",
-        "wget"
+        "wget",
+        "htop",
+        "rustup"
     ]
 
     [[dotfiles]]
-    name="test"
+    name="test home dir"
     repo_path="conf/test.txt"
-    deploy_path="conf/result.txt"
+    deploy_path="~/result.txt"
+
+
+    [[dotfiles]]
+    name="test empty path"
+    repo_path="conf/test.txt"
+    deploy_path=""
+
     "#;
 
 
     let config_manager = ConfigManager::new(config_str);
     config_manager.set_dotfiles();
-    config_manager.install_programs();
+    // config_manager.install_programs();
 }

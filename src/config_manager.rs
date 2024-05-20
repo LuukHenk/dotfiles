@@ -1,8 +1,7 @@
-#![allow(dead_code)]
 use std::process::Command;
 use serde::Deserialize;
 use std::fs::copy;
-
+use home::home_dir;
 
 #[derive(Deserialize)]
 struct Config {
@@ -18,7 +17,7 @@ struct Dotfile {
 }
 
 pub struct ConfigManager {
-    config: Config
+    config: Config,
 }
 
 impl ConfigManager{
@@ -29,7 +28,10 @@ impl ConfigManager{
 
     pub fn set_dotfiles(&self) {
         for dotfile in self.config.dotfiles.iter() {
-            ConfigManager::copy_file(&dotfile.repo_path, &dotfile.deploy_path);
+            println!("Setting dotfile '{}'", dotfile.name);
+            let repo_path = ConfigManager::replace_home_dir_tide(&dotfile.repo_path);
+            let deploy_path = ConfigManager::replace_home_dir_tide(&dotfile.deploy_path);
+            ConfigManager::copy_file(&repo_path, &deploy_path);
         }
     }
 
@@ -52,4 +54,16 @@ impl ConfigManager{
         shell_command.args(["apt-get", "install", "-y", program_to_install]);
         shell_command
     }
+
+    fn replace_home_dir_tide(path: &String) -> String {
+        let home_dir_path = ConfigManager::get_home_dir_path();
+        path.replace("~", &home_dir_path)
+    }
+
+    fn get_home_dir_path() -> String {
+        let home_dir_path = home_dir().expect("Failed to get the home dir path");
+        let home_dir_path_str : &str = home_dir_path.to_str().expect("Failed to convert the home dir path to st");
+        String::from(home_dir_path_str)
+    }
+
 }
