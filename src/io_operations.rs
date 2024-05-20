@@ -22,8 +22,11 @@ impl IoOperations for UbuntuIoOperations {
         }
         command.args(arguments);
 
-        let command_result = command.spawn().expect("Failed to install program");
-        println!("{:#?}", command_result)
+        let mut child = command.spawn().expect("Failed to install program");
+        let result = child.wait();
+        if result.is_err() {
+            println!("{}", result.err().unwrap());
+        };
     }
 
     fn copy_file(&mut self, source: &String, destination: &String) {
