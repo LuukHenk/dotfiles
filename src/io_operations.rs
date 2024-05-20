@@ -1,9 +1,10 @@
 use home::home_dir;
 use std::fs::{copy, read_to_string};
 use std::process::Command;
+use std::str::FromStr;
 
 pub trait IoOperationsTrait {
-    fn install_programs(&mut self, programs_to_install: &Vec<String>);
+    fn run_command(&mut self, program: &str, arguments: Vec<&str>);
     fn copy_file(&mut self, source: &String, destination: &String);
     fn read_file(&self, file_path: &str) -> String;
     fn get_home_dir_path(&self) -> String;
@@ -12,20 +13,14 @@ pub trait IoOperationsTrait {
 pub struct IoOperations {}
 
 impl IoOperationsTrait for IoOperations {
-    fn install_programs(&mut self, programs_to_install: &Vec<String>) {
-        println!("Installing programs: {:#?}", programs_to_install);
-        let mut command = Command::new("sudo");
-
-        let mut arguments = Vec::from(["-S", "apt-get", "install", "-y"]);
-        for program_to_install in programs_to_install.iter() {
-            arguments.push(&program_to_install);
-        }
-        command.args(arguments);
-
-        let mut child = command.spawn().expect("Failed to install program");
+    fn run_command(&mut self, program: &str, args: Vec<&str>) {
+        let mut command = Command::new(program);
+        command.args(args);
+        let mut child = command.spawn().expect("Failed to spawn_command");
+        println!("Running command {:#?}", command);
         let result = child.wait();
         if result.is_err() {
-            println!("{}", result.err().unwrap());
+            println!("Error: '{}'", result.err().unwrap());
         };
     }
 
@@ -53,16 +48,17 @@ impl IoOperationsTrait for IoOperations {
 }
 
 pub struct FakeIoOperations {
-    pub installed_programs: Vec<String>,
+    pub commands_used: Vec<String>,
     pub copied_files: Vec<(String, String)>,
 }
 
 impl IoOperationsTrait for FakeIoOperations {
-    fn install_programs(&mut self, programs_to_install: &Vec<String>) {
-        for program_to_install_borrowed in programs_to_install.iter() {
-            let program_to_install = String::from(program_to_install_borrowed);
-            self.installed_programs.push(program_to_install);
-        }
+    fn run_command(&mut self, program: &str, arguments: Vec<&str>) {
+        let mut command: String = String::from(program);
+        command.push(' ');
+        let arguments_string: String = arguments.join(" ");
+        command.push_str(&arguments_string);
+        self.commands_used.push(command);
     }
 
     fn copy_file(&mut self, source: &String, destination: &String) {

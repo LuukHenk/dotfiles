@@ -37,7 +37,12 @@ impl ConfigManager {
     }
 
     pub fn install_programs(&self, io_operations: &mut dyn IoOperationsTrait) {
-        io_operations.install_programs(&self.config.programs);
+        println!("Installing programs: {:#?}", &self.config.programs);
+        let mut args = Vec::from(["apt-get", "-y", "install"]);
+        for program_to_install in self.config.programs.iter() {
+            args.push(&program_to_install);
+        }
+        io_operations.run_command("sudo", args);
     }
 
     fn replace_home_dir_tide(path: &String, io_operations: &dyn IoOperationsTrait) -> String {
@@ -122,7 +127,7 @@ mod tests {
         "#;
         let config_manager = ConfigManager::new(config_str);
         let mut io_operations = FakeIoOperations {
-            installed_programs: Vec::new(),
+            commands_used: Vec::new(),
             copied_files: Vec::new(),
         };
         let mut expected_copies = Vec::new();
@@ -136,7 +141,7 @@ mod tests {
         config_manager.set_dotfiles(&mut io_operations);
 
         // Assert
-        assert_eq!(io_operations.installed_programs.len(), 0);
+        assert_eq!(io_operations.commands_used.len(), 0);
         assert_eq!(io_operations.copied_files, expected_copies);
     }
 
@@ -166,7 +171,7 @@ mod tests {
         "#;
         let config_manager = ConfigManager::new(config_str);
         let mut io_operations = FakeIoOperations {
-            installed_programs: Vec::new(),
+            commands_used: Vec::new(),
             copied_files: Vec::new(),
         };
         let mut expected_copies = Vec::new();
@@ -187,7 +192,7 @@ mod tests {
         config_manager.set_dotfiles(&mut io_operations);
 
         // Assert
-        assert_eq!(io_operations.installed_programs.len(), 0);
+        assert_eq!(io_operations.commands_used.len(), 0);
         assert_eq!(io_operations.copied_files, expected_copies);
     }
 
@@ -217,20 +222,19 @@ mod tests {
         "#;
         let config_manager = ConfigManager::new(config_str);
         let mut io_operations = FakeIoOperations {
-            installed_programs: Vec::new(),
+            commands_used: Vec::new(),
             copied_files: Vec::new(),
         };
-        let mut expected_installed_programs = Vec::new();
-        expected_installed_programs.push("python3");
-        expected_installed_programs.push("htop");
+        let mut expected_commands_used = Vec::new();
+        expected_commands_used.push("sudo apt-get -S -y install python3 htop");
 
         // Act
         config_manager.install_programs(&mut io_operations);
 
         // Assert
         assert_eq!(
-            io_operations.installed_programs,
-            expected_installed_programs
+            io_operations.commands_used,
+            expected_commands_used
         );
         assert_eq!(io_operations.copied_files.len(), 0);
     }
