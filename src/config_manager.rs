@@ -1,28 +1,28 @@
+use crate::IoOperations;
 use serde::Deserialize;
 use toml::de::Error as TomlError;
-use crate::IoOperations;
 
 #[derive(Deserialize)]
 struct Config {
-   programs: Vec<String>,
-   dotfiles: Vec<Dotfile>
+    programs: Vec<String>,
+    dotfiles: Vec<Dotfile>,
 }
 
 #[derive(Deserialize)]
 struct Dotfile {
-   name: String,
-   repo_path: String,
-   deploy_path: String,
+    name: String,
+    repo_path: String,
+    deploy_path: String,
 }
 
 pub struct ConfigManager {
     config: Config,
 }
 
-impl ConfigManager{
+impl ConfigManager {
     pub fn new(config_str: &str) -> ConfigManager {
-        ConfigManager{
-            config:ConfigManager::parse_input(config_str)
+        ConfigManager {
+            config: ConfigManager::parse_input(config_str),
         }
     }
 
@@ -30,7 +30,8 @@ impl ConfigManager{
         for dotfile in self.config.dotfiles.iter() {
             println!("Setting dotfile '{}'", dotfile.name);
             let repo_path = ConfigManager::replace_home_dir_tide(&dotfile.repo_path, io_operations);
-            let deploy_path = ConfigManager::replace_home_dir_tide(&dotfile.deploy_path, io_operations);
+            let deploy_path =
+                ConfigManager::replace_home_dir_tide(&dotfile.deploy_path, io_operations);
             io_operations.copy_file(&repo_path, &deploy_path);
         }
     }
@@ -38,7 +39,6 @@ impl ConfigManager{
     pub fn install_programs(&self, io_operations: &mut dyn IoOperations) {
         for program_to_install in self.config.programs.iter() {
             io_operations.install_program(program_to_install);
-
         }
     }
 
@@ -52,11 +52,10 @@ impl ConfigManager{
         if result.is_err() {
             panic!("Failed to parse the input configuration")
         } else {
-            return result.unwrap()
+            return result.unwrap();
         }
     }
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -124,13 +123,16 @@ mod tests {
         deploy_path="someother/result.txt"
         "#;
         let config_manager = ConfigManager::new(config_str);
-        let mut io_operations = FakeIoOperations{
-            installed_programs:Vec::new(),
+        let mut io_operations = FakeIoOperations {
+            installed_programs: Vec::new(),
             copied_files: Vec::new(),
         };
         let mut expected_copies = Vec::new();
         expected_copies.push((String::from("conf/test.txt"), String::from("a/result.txt")));
-        expected_copies.push((String::from("some_location/test.txt"), String::from("someother/result.txt")));
+        expected_copies.push((
+            String::from("some_location/test.txt"),
+            String::from("someother/result.txt"),
+        ));
 
         // Act
         config_manager.set_dotfiles(&mut io_operations);
@@ -165,14 +167,23 @@ mod tests {
         deploy_path="~/result.txt"
         "#;
         let config_manager = ConfigManager::new(config_str);
-        let mut io_operations = FakeIoOperations{
-            installed_programs:Vec::new(),
+        let mut io_operations = FakeIoOperations {
+            installed_programs: Vec::new(),
             copied_files: Vec::new(),
         };
         let mut expected_copies = Vec::new();
-        expected_copies.push((String::from("home_dir_path/test.txt"), String::from("a/result.txt")));
-        expected_copies.push((String::from("some_location/test.txt"), String::from("home_dir_path/result.txt")));
-        expected_copies.push((String::from("home_dir_path/test.txt"), String::from("home_dir_path/result.txt")));
+        expected_copies.push((
+            String::from("home_dir_path/test.txt"),
+            String::from("a/result.txt"),
+        ));
+        expected_copies.push((
+            String::from("some_location/test.txt"),
+            String::from("home_dir_path/result.txt"),
+        ));
+        expected_copies.push((
+            String::from("home_dir_path/test.txt"),
+            String::from("home_dir_path/result.txt"),
+        ));
 
         // Act
         config_manager.set_dotfiles(&mut io_operations);
@@ -181,7 +192,7 @@ mod tests {
         assert_eq!(io_operations.installed_programs.len(), 0);
         assert_eq!(io_operations.copied_files, expected_copies);
     }
-    
+
     #[test]
     fn test_install_programs() {
         // Arrange
@@ -207,8 +218,8 @@ mod tests {
         deploy_path="~/result.txt"
         "#;
         let config_manager = ConfigManager::new(config_str);
-        let mut io_operations = FakeIoOperations{
-            installed_programs:Vec::new(),
+        let mut io_operations = FakeIoOperations {
+            installed_programs: Vec::new(),
             copied_files: Vec::new(),
         };
         let mut expected_installed_programs = Vec::new();
@@ -219,7 +230,10 @@ mod tests {
         config_manager.install_programs(&mut io_operations);
 
         // Assert
-        assert_eq!(io_operations.installed_programs, expected_installed_programs);
+        assert_eq!(
+            io_operations.installed_programs,
+            expected_installed_programs
+        );
         assert_eq!(io_operations.copied_files.len(), 0);
     }
 }

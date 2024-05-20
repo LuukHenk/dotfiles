@@ -30,9 +30,8 @@ fn main() {
 
     "#;
 
-
     let config_manager = ConfigManager::new(config_str);
-    let mut io_operations = UbuntuIoOperations{};
+    let mut io_operations = UbuntuIoOperations {};
     config_manager.set_dotfiles(&mut io_operations);
     config_manager.install_programs(&mut io_operations);
 }

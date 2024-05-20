@@ -1,6 +1,6 @@
-use std::process::Command;
-use std::fs::copy;
 use home::home_dir;
+use std::fs::copy;
+use std::process::Command;
 
 pub trait IoOperations {
     fn install_program(&mut self, program_to_install: &String);
@@ -8,9 +8,7 @@ pub trait IoOperations {
     fn get_home_dir_path(&self) -> String;
 }
 
-
-
-pub struct UbuntuIoOperations{}
+pub struct UbuntuIoOperations {}
 
 impl IoOperations for UbuntuIoOperations {
     fn install_program(&mut self, program_to_install: &String) {
@@ -32,7 +30,9 @@ impl IoOperations for UbuntuIoOperations {
 
     fn get_home_dir_path(&self) -> String {
         let home_dir_path = home_dir().expect("Failed to get the home dir path");
-        let home_dir_path_str : &str = home_dir_path.to_str().expect("Failed to convert the home dir path to st");
+        let home_dir_path_str: &str = home_dir_path
+            .to_str()
+            .expect("Failed to convert the home dir path to st");
         String::from(home_dir_path_str)
     }
 }
@@ -48,13 +48,9 @@ impl IoOperations for FakeIoOperations {
         self.installed_programs.push(installed_program);
     }
 
-    fn copy_file(&mut self, source: &String, destination: &String){
-        self.copied_files.push(
-            (
-                String::from(source),
-                String::from(destination)
-            )
-        );
+    fn copy_file(&mut self, source: &String, destination: &String) {
+        self.copied_files
+            .push((String::from(source), String::from(destination)));
     }
 
     fn get_home_dir_path(&self) -> String {
