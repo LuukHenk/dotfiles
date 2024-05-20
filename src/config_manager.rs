@@ -37,9 +37,7 @@ impl ConfigManager {
     }
 
     pub fn install_programs(&self, io_operations: &mut dyn IoOperations) {
-        for program_to_install in self.config.programs.iter() {
-            io_operations.install_program(program_to_install);
-        }
+        io_operations.install_programs(&self.config.programs);
     }
 
     fn replace_home_dir_tide(path: &String, io_operations: &dyn IoOperations) -> String {
