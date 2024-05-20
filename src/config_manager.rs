@@ -1,7 +1,8 @@
-use std::process::Command;
+
 use serde::Deserialize;
-use std::fs::copy;
-use home::home_dir;
+
+
+use crate::IoOperations;
 
 #[derive(Deserialize)]
 struct Config {
@@ -26,26 +27,25 @@ impl ConfigManager{
         ConfigManager{config}
     }
 
-    pub fn set_dotfiles(&self) {
+    pub fn set_dotfiles(&self, io_operations: &dyn IoOperations) {
         for dotfile in self.config.dotfiles.iter() {
             println!("Setting dotfile '{}'", dotfile.name);
-            let repo_path = ConfigManager::replace_home_dir_tide(&dotfile.repo_path);
-            let deploy_path = ConfigManager::replace_home_dir_tide(&dotfile.deploy_path);
-            ConfigManager::copy_file(&repo_path, &deploy_path);
+            let repo_path = ConfigManager::replace_home_dir_tide(&dotfile.repo_path, io_operations);
+            let deploy_path = ConfigManager::replace_home_dir_tide(&dotfile.deploy_path, io_operations);
+            ConfigManager::copy_file(&repo_path, &deploy_path, io_operations);
         }
     }
 
-    pub fn install_programs(&self) {
+    pub fn install_programs(&self, io_operations: &dyn IoOperations) {
         for program_to_install in self.config.programs.iter() {
-            let mut command = ConfigManager::create_install_command(program_to_install);
-            let result = command.spawn().expect("Failed to install program");
-            println!("{:#?}", result)
+            io_operations.install_program(program_to_install);
+
         }
     }
 
-    fn copy_file(source: &String, destination: &String) {
+    fn copy_file(source: &String, destination: &String, io_operations: &dyn IoOperations) {
         println!("Copying {source} to {destination}");
-        let result: Result<u64, std::io::Error> = copy(source, destination);
+        let result: Result<u64, std::io::Error> = io_operations.copy_file(source, destination);
         if result.is_ok() {
             println!("Succes!")
         } else {
@@ -53,21 +53,13 @@ impl ConfigManager{
         }
     }
 
-    fn create_install_command(program_to_install: &String) -> Command {
-        let mut shell_command = Command::new("sudo");
-        shell_command.args(["apt-get", "install", "-y", program_to_install]);
-        shell_command
-    }
 
-    fn replace_home_dir_tide(path: &String) -> String {
-        let home_dir_path = ConfigManager::get_home_dir_path();
+
+    fn replace_home_dir_tide(path: &String, io_operations: &dyn IoOperations) -> String {
+        let home_dir_path = io_operations.get_home_dir_path();
         path.replace("~", &home_dir_path)
     }
 
-    fn get_home_dir_path() -> String {
-        let home_dir_path = home_dir().expect("Failed to get the home dir path");
-        let home_dir_path_str : &str = home_dir_path.to_str().expect("Failed to convert the home dir path to st");
-        String::from(home_dir_path_str)
-    }
+
 
 }

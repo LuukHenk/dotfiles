@@ -1,4 +1,5 @@
 use dotfiles::ConfigManager;
+use dotfiles::UbuntuIoOperations;
 
 fn main() {
     let config_str: &str = r#"
@@ -31,6 +32,7 @@ fn main() {
 
 
     let config_manager = ConfigManager::new(config_str);
-    config_manager.set_dotfiles();
+    let io_operations = UbuntuIoOperations{};
+    config_manager.set_dotfiles(&io_operations);
     // config_manager.install_programs();
 }
