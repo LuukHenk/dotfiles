@@ -1,12 +1,7 @@
 use std::process::Command;
 use std::fs::copy;
-
 use home::home_dir;
 
-
-
-
-// https://stackoverflow.com/questions/63850791/unit-testing-mocking-and-traits-in-rust
 pub trait IoOperations {
     fn install_program(&mut self, program_to_install: &String);
     fn copy_file(&mut self, source: &String, destination: &String);
@@ -43,8 +38,8 @@ impl IoOperations for UbuntuIoOperations {
 }
 
 pub struct FakeIoOperations {
-    installed_programs: Vec<String>,
-    copied_files: Vec<(String, String)>,
+    pub installed_programs: Vec<String>,
+    pub copied_files: Vec<(String, String)>,
 }
 
 impl IoOperations for FakeIoOperations {

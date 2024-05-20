@@ -16,7 +16,7 @@ fn main() {
         "htop",
         "rustup"
     ]
-
+    
     [[dotfiles]]
     name="test home dir"
     repo_path="conf/test.txt"
@@ -32,7 +32,7 @@ fn main() {
 
 
     let config_manager = ConfigManager::new(config_str);
-    let io_operations = UbuntuIoOperations{};
-    config_manager.set_dotfiles(&io_operations);
-    // config_manager.install_programs();
+    let mut io_operations = UbuntuIoOperations{};
+    config_manager.set_dotfiles(&mut io_operations);
+    config_manager.install_programs(&mut io_operations);
 }
