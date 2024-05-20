@@ -12,25 +12,25 @@ programs = [
 
 [[dotfiles]]
 name="Bashrc"
-repo_path="./bashrc"
+repo_path="conf/bashrc"
 deploy_path="~/.bashrc"
 
 [[dotfiles]]
 name="Inputrc"
-repo_path="./inputrc"
+repo_path="conf/inputrc"
 deploy_path="~/.inputrc"
 
 [[dotfiles]]
 name="NeoVim configuration"
-repo_path="./init.vim"
+repo_path="conf/nvim_init.vim"
 deploy_path="~/.config/nvim/init.vim"
 
 [[dotfiles]]
 name="NeoVim plugin script"
-repo_path="./plug.vim"
+repo_path="conf/nvim_autoload_plug.vim"
 deploy_path="~/.config/nvim/autoload/plug.vim"
 
 [[dotfiles]]
 name="Terminator configuration"
-repo_path="./terminator"
+repo_path="conf/terminator"
 deploy_path="~/.config/terminator/config"
