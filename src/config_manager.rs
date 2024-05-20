@@ -1,4 +1,4 @@
-use crate::IoOperations;
+use crate::IoOperationsTrait;
 use serde::Deserialize;
 use toml::de::Error as TomlError;
 
@@ -26,7 +26,7 @@ impl ConfigManager {
         }
     }
 
-    pub fn set_dotfiles(&self, io_operations: &mut dyn IoOperations) {
+    pub fn set_dotfiles(&self, io_operations: &mut dyn IoOperationsTrait) {
         for dotfile in self.config.dotfiles.iter() {
             println!("Setting dotfile '{}'", dotfile.name);
             let repo_path = ConfigManager::replace_home_dir_tide(&dotfile.repo_path, io_operations);
@@ -36,11 +36,11 @@ impl ConfigManager {
         }
     }
 
-    pub fn install_programs(&self, io_operations: &mut dyn IoOperations) {
+    pub fn install_programs(&self, io_operations: &mut dyn IoOperationsTrait) {
         io_operations.install_programs(&self.config.programs);
     }
 
-    fn replace_home_dir_tide(path: &String, io_operations: &dyn IoOperations) -> String {
+    fn replace_home_dir_tide(path: &String, io_operations: &dyn IoOperationsTrait) -> String {
         let home_dir_path = io_operations.get_home_dir_path();
         path.replace("~", &home_dir_path)
     }

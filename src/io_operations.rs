@@ -2,16 +2,16 @@ use home::home_dir;
 use std::fs::{copy, read_to_string};
 use std::process::Command;
 
-pub trait IoOperations {
+pub trait IoOperationsTrait {
     fn install_programs(&mut self, programs_to_install: &Vec<String>);
     fn copy_file(&mut self, source: &String, destination: &String);
     fn read_file(&self, file_path: &str) -> String;
     fn get_home_dir_path(&self) -> String;
 }
 
-pub struct UbuntuIoOperations {}
+pub struct IoOperations {}
 
-impl IoOperations for UbuntuIoOperations {
+impl IoOperationsTrait for IoOperations {
     fn install_programs(&mut self, programs_to_install: &Vec<String>) {
         println!("Installing programs: {:#?}", programs_to_install);
         let mut command = Command::new("sudo");
@@ -57,7 +57,7 @@ pub struct FakeIoOperations {
     pub copied_files: Vec<(String, String)>,
 }
 
-impl IoOperations for FakeIoOperations {
+impl IoOperationsTrait for FakeIoOperations {
     fn install_programs(&mut self, programs_to_install: &Vec<String>) {
         for program_to_install_borrowed in programs_to_install.iter() {
             let program_to_install = String::from(program_to_install_borrowed);

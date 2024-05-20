@@ -1,11 +1,11 @@
 use dotfiles::ConfigManager;
+use dotfiles::IoOperationsTrait;
 use dotfiles::IoOperations;
-use dotfiles::UbuntuIoOperations;
 
 const CONFIG_PATH: &str = "configuration.toml";
 
 fn main() {
-    let mut io_operations = UbuntuIoOperations {};
+    let mut io_operations = IoOperations {};
     let config_string = io_operations.read_file(CONFIG_PATH);
     let config_manager = ConfigManager::new(config_string.as_str());
 
