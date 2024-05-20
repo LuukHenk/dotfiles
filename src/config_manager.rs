@@ -1,5 +1,5 @@
 #![allow(dead_code)]
-
+use std::process::Command;
 use serde::Deserialize;
 use std::fs::copy;
 
@@ -34,13 +34,22 @@ impl ConfigManager{
     }
 
     pub fn install_programs(&self) {
-        println!("Dummy; installing programs");
-
+        for program_to_install in self.config.programs.iter() {
+            let mut command = ConfigManager::create_install_command(program_to_install);
+            let result = command.spawn().expect("Failed to install program");
+            println!("{:#?}", result)
+        }
     }
 
     fn copy_file(source: &String, destination: &String) {
         println!("Copying {source} to {destination}");
         let result = copy(source, destination);
         println!("{:#?}", result);
+    }
+
+    fn create_install_command(program_to_install: &String) -> Command {
+        let mut shell_command = Command::new("sudo");
+        shell_command.args(["apt-get", "install", "-y", program_to_install]);
+        shell_command
     }
 }
