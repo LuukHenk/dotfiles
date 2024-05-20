@@ -53,8 +53,6 @@ impl ConfigManager{
         }
     }
 
-
-
     fn replace_home_dir_tide(path: &String, io_operations: &dyn IoOperations) -> String {
         let home_dir_path = io_operations.get_home_dir_path();
         path.replace("~", &home_dir_path)
