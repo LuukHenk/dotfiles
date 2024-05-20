@@ -45,8 +45,12 @@ impl ConfigManager{
 
     fn copy_file(source: &String, destination: &String) {
         println!("Copying {source} to {destination}");
-        let result = copy(source, destination);
-        println!("{:#?}", result);
+        let result: Result<u64, std::io::Error> = copy(source, destination);
+        if result.is_ok() {
+            println!("Succes!")
+        } else {
+            println!("{}", result.unwrap_err());
+        }
     }
 
     fn create_install_command(program_to_install: &String) -> Command {
