@@ -1,0 +1,1 @@
+Install files with snap as well

@@ -1,36 +1,37 @@
 programs = [
-  "python3",
-  "spotify",
-  "nautilus-dropbox",
-  "steam",
-  "signal-desktop",
-  "terminator",
-  "nvim",
-  "ncdu",
-  "wget"
+    "htop",
+    "python3",
+    # "spotify", SNAP
+    "nautilus-dropbox",
+    # "steam", SNAP
+    # "signal-desktop", SNAP
+    "terminator",
+    # "nvim", SNAP
+    "ncdu",
+    "wget",
 ]
 
 [[dotfiles]]
-name="Bashrc"
-repo_path="conf/bashrc"
-deploy_path="~/.bashrc"
+name = "Bashrc"
+repo_path = "conf/bashrc"
+deploy_path = "~/.bashrc"
 
 [[dotfiles]]
-name="Inputrc"
-repo_path="conf/inputrc"
-deploy_path="~/.inputrc"
+name = "Inputrc"
+repo_path = "conf/inputrc"
+deploy_path = "~/.inputrc"
 
 [[dotfiles]]
-name="NeoVim configuration"
-repo_path="conf/nvim_init.vim"
-deploy_path="~/.config/nvim/init.vim"
+name = "NeoVim configuration"
+repo_path = "conf/nvim_init.vim"
+deploy_path = "~/.config/nvim/init.vim"
 
 [[dotfiles]]
-name="NeoVim plugin script"
-repo_path="conf/nvim_autoload_plug.vim"
-deploy_path="~/.config/nvim/autoload/plug.vim"
+name = "NeoVim plugin script"
+repo_path = "conf/nvim_autoload_plug.vim"
+deploy_path = "~/.config/nvim/autoload/plug.vim"
 
 [[dotfiles]]
-name="Terminator configuration"
-repo_path="conf/terminator"
-deploy_path="~/.config/terminator/config"
+name = "Terminator configuration"
+repo_path = "conf/terminator"
+deploy_path = "~/.config/terminator/config"
