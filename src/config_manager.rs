@@ -38,7 +38,7 @@ impl ConfigManager {
 
     pub fn install_programs(&self, io_operations: &mut dyn IoOperationsTrait) {
         println!("Installing programs: {:#?}", &self.config.programs);
-        let mut args = Vec::from(["apt-get", "-y", "install"]);
+        let mut args = Vec::from(["apt-get", "install"]);
         for program_to_install in self.config.programs.iter() {
             args.push(&program_to_install);
         }
