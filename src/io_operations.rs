@@ -1,7 +1,6 @@
 use home::home_dir;
 use std::fs::{copy, read_to_string};
 use std::process::Command;
-use std::str::FromStr;
 
 pub trait IoOperationsTrait {
     fn run_command(&mut self, program: &str, arguments: Vec<&str>);
