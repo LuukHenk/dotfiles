@@ -1,14 +1,16 @@
 programs = [
     "htop",
-    "python3",
-    # "spotify", SNAP
     "nautilus-dropbox",
+    "ncdu",
+    "python3",
+    "terminator",
+    "wget",
     # "steam", SNAP
     # "signal-desktop", SNAP
-    "terminator",
     # "nvim", SNAP
-    "ncdu",
-    "wget",
+    # "spotify", SNAP
+    # "code", SNAP
+    # "flatpack" PACKAGE MANAGER
 ]
 
 [[dotfiles]]
