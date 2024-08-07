@@ -226,7 +226,7 @@ mod tests {
             copied_files: Vec::new(),
         };
         let mut expected_commands_used = Vec::new();
-        expected_commands_used.push("sudo apt-get -S -y install python3 htop");
+        expected_commands_used.push("sudo apt-get install python3 htop");
 
         // Act
         config_manager.install_programs(&mut io_operations);
