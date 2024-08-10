@@ -1,3 +1,5 @@
+use std::path::Path;
+
 use crate::IoOperationsTrait;
 use serde::Deserialize;
 use toml::de::Error as TomlError;
@@ -32,6 +34,7 @@ impl ConfigManager {
             let repo_path = ConfigManager::replace_home_dir_tide(&dotfile.repo_path, io_operations);
             let deploy_path =
                 ConfigManager::replace_home_dir_tide(&dotfile.deploy_path, io_operations);
+            self.create_folder_path(&deploy_path, io_operations);
             io_operations.copy_file(&repo_path, &deploy_path);
         }
     }
@@ -45,6 +48,14 @@ impl ConfigManager {
         io_operations.run_command("sudo", args);
     }
 
+    fn create_folder_path(&self, dotfile_path: &String, io_operations: &mut dyn IoOperationsTrait) {
+        let path = Path::new(dotfile_path);
+        let parent = path.parent();
+        if parent.is_some() {
+            io_operations.create_folder_path(parent.unwrap());
+        }
+    }
+
     fn replace_home_dir_tide(path: &String, io_operations: &dyn IoOperationsTrait) -> String {
         let home_dir_path = io_operations.get_home_dir_path();
         path.replace("~", &home_dir_path)
@@ -55,7 +66,7 @@ impl ConfigManager {
         if result.is_err() {
             panic!("Failed to parse the input configuration")
         } else {
-            return result.unwrap();
+            result.unwrap()
         }
     }
 }
@@ -129,6 +140,7 @@ mod tests {
         let mut io_operations = FakeIoOperations {
             commands_used: Vec::new(),
             copied_files: Vec::new(),
+            folder_paths_created: Vec::new(),
         };
         let mut expected_copies = Vec::new();
         expected_copies.push((String::from("conf/test.txt"), String::from("a/result.txt")));
@@ -142,6 +154,75 @@ mod tests {
 
         // Assert
         assert_eq!(io_operations.commands_used.len(), 0);
+        assert_eq!(io_operations.copied_files, expected_copies);
+    }
+
+    #[test]
+    fn test_set_dotfiles_when_deploy_file_path_is_in_root() {
+        // Arrange
+        let config_str = r#"
+        programs = []
+
+        [[dotfiles]]
+        name="test set dotfiles"
+        repo_path="conf/test.txt"
+        deploy_path="/result.txt"
+
+        "#;
+        let config_manager = ConfigManager::new(config_str);
+        let mut io_operations = FakeIoOperations {
+            commands_used: Vec::new(),
+            copied_files: Vec::new(),
+            folder_paths_created: Vec::new(),
+        };
+        let mut expected_copies = Vec::new();
+        expected_copies.push((String::from("conf/test.txt"), String::from("/result.txt")));
+        let mut expected_folder_paths_created = Vec::new();
+        expected_folder_paths_created.push(String::from(""));
+
+        // Act
+        config_manager.set_dotfiles(&mut io_operations);
+
+        // Assert
+        assert_eq!(io_operations.folder_paths_created.len(), 1);
+        assert_eq!(io_operations.copied_files, expected_copies);
+    }
+
+    #[test]
+    fn test_set_dotfiles_when_deploy_file_path_has_a_parent() {
+        // Arrange
+        let config_str = r#"
+        programs = []
+
+        [[dotfiles]]
+        name="test set dotfiles"
+        repo_path="conf/test.txt"
+        deploy_path="some_parent/nested_parent/result.txt"
+
+        "#;
+        let config_manager = ConfigManager::new(config_str);
+        let mut io_operations = FakeIoOperations {
+            commands_used: Vec::new(),
+            copied_files: Vec::new(),
+            folder_paths_created: Vec::new(),
+        };
+        let mut expected_copies = Vec::new();
+        expected_copies.push((
+            String::from("conf/test.txt"),
+            String::from("some_parent/nested_parent/result.txt"),
+        ));
+        let mut expected_folder_paths_created = Vec::new();
+        expected_folder_paths_created.push(String::from("some_parent/nested_parent"));
+
+        // Act
+        config_manager.set_dotfiles(&mut io_operations);
+
+        // Assert
+        assert_eq!(io_operations.folder_paths_created.len(), 1);
+        assert_eq!(
+            io_operations.folder_paths_created,
+            expected_folder_paths_created
+        );
         assert_eq!(io_operations.copied_files, expected_copies);
     }
 
@@ -173,6 +254,7 @@ mod tests {
         let mut io_operations = FakeIoOperations {
             commands_used: Vec::new(),
             copied_files: Vec::new(),
+            folder_paths_created: Vec::new(),
         };
         let mut expected_copies = Vec::new();
         expected_copies.push((
@@ -224,6 +306,7 @@ mod tests {
         let mut io_operations = FakeIoOperations {
             commands_used: Vec::new(),
             copied_files: Vec::new(),
+            folder_paths_created: Vec::new(),
         };
         let mut expected_commands_used = Vec::new();
         expected_commands_used.push("sudo apt-get install python3 htop");
@@ -232,10 +315,7 @@ mod tests {
         config_manager.install_programs(&mut io_operations);
 
         // Assert
-        assert_eq!(
-            io_operations.commands_used,
-            expected_commands_used
-        );
+        assert_eq!(io_operations.commands_used, expected_commands_used);
         assert_eq!(io_operations.copied_files.len(), 0);
     }
 }

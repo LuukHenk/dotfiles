@@ -1,9 +1,11 @@
 use home::home_dir;
-use std::fs::{copy, read_to_string};
+use std::fs::{copy, create_dir_all, read_to_string};
+use std::path::Path;
 use std::process::Command;
 
 pub trait IoOperationsTrait {
     fn run_command(&mut self, program: &str, arguments: Vec<&str>);
+    fn create_folder_path(&mut self, path: &Path);
     fn copy_file(&mut self, source: &String, destination: &String);
     fn read_file(&self, file_path: &str) -> String;
     fn get_home_dir_path(&self) -> String;
@@ -20,6 +22,13 @@ impl IoOperationsTrait for IoOperations {
         let result = child.wait();
         if result.is_err() {
             println!("Error: '{}'", result.err().unwrap());
+        };
+    }
+
+    fn create_folder_path(&mut self, path: &Path) {
+        let result = create_dir_all(path);
+        if result.is_err() {
+            println!("{}", result.unwrap_err())
         };
     }
 
@@ -49,6 +58,7 @@ impl IoOperationsTrait for IoOperations {
 pub struct FakeIoOperations {
     pub commands_used: Vec<String>,
     pub copied_files: Vec<(String, String)>,
+    pub folder_paths_created: Vec<String>,
 }
 
 impl IoOperationsTrait for FakeIoOperations {
@@ -58,6 +68,10 @@ impl IoOperationsTrait for FakeIoOperations {
         let arguments_string: String = arguments.join(" ");
         command.push_str(&arguments_string);
         self.commands_used.push(command);
+    }
+    fn create_folder_path(&mut self, path: &Path) {
+        let folder_path_created: String = String::from(path.to_str().unwrap());
+        self.folder_paths_created.push(folder_path_created)
     }
 
     fn copy_file(&mut self, source: &String, destination: &String) {
