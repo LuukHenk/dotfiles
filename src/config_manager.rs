@@ -6,8 +6,15 @@ use toml::de::Error as TomlError;
 
 #[derive(Deserialize)]
 struct Config {
-    programs: Vec<String>,
+    apt_packages: Vec<String>,
+    snap_packages: Vec<SnapPackage>,
     dotfiles: Vec<Dotfile>,
+}
+
+#[derive(Deserialize)]
+struct SnapPackage {
+    name: String,
+    classic: bool,
 }
 
 #[derive(Deserialize)]
@@ -39,13 +46,22 @@ impl ConfigManager {
         }
     }
 
-    pub fn install_programs(&self, io_operations: &mut dyn IoOperationsTrait) {
-        println!("Installing programs: {:#?}", &self.config.programs);
+    pub fn install_apt_programs(&self, io_operations: &mut dyn IoOperationsTrait) {
+        println!("Installing apt packages: {:#?}", &self.config.apt_packages);
         let mut args = Vec::from(["apt-get", "install"]);
-        for program_to_install in self.config.programs.iter() {
+        for program_to_install in self.config.apt_packages.iter() {
             args.push(&program_to_install);
         }
         io_operations.run_command("sudo", args);
+    }
+
+    pub fn install_snap_programs(&self, io_operations: &mut dyn IoOperationsTrait) {
+        for program_to_install in self.config.snap_packages.iter() {
+            println!("Installing snap package: {:#?}", program_to_install.name);
+            let mut args = Vec::from(["snap", "install", &program_to_install.name]);
+            if program_to_install.classic {args.push("--classic");}
+            io_operations.run_command("sudo", args);
+        }
     }
 
     fn create_folder_path(&self, dotfile_path: &String, io_operations: &mut dyn IoOperationsTrait) {
@@ -88,7 +104,8 @@ mod tests {
     fn test_create_config_manager_with_required_config_keys() {
         // Arrange
         let config_str = r#"
-        programs = []
+        apt_packages = []
+        snap_packages = []
         dotfiles = []
         "#;
         // Act
@@ -99,9 +116,13 @@ mod tests {
     fn test_create_config_manager_with_some_values() {
         // Arrange
         let config_str = r#"
-        programs = [
+        apt_packages = [
             "python3",
-            "htop",
+            "htop"
+        ]
+        snap_packages = [
+            {name = "nvim", classic = true},
+            {name = "htop", classic = false},
         ]
         [[dotfiles]]
         name="test 1"
@@ -121,9 +142,13 @@ mod tests {
     fn test_set_dotfiles_basic() {
         // Arrange
         let config_str = r#"
-        programs = [
+        apt_packages = [
             "python3",
-            "htop",
+            "htop"
+        ]
+        snap_packages = [
+            {name = "nvim", classic = true},
+            {name = "htop", classic = false},
         ]
 
         [[dotfiles]]
@@ -161,7 +186,14 @@ mod tests {
     fn test_set_dotfiles_when_deploy_file_path_is_in_root() {
         // Arrange
         let config_str = r#"
-        programs = []
+        apt_packages = [
+            "python3",
+            "htop"
+        ]
+        snap_packages = [
+            {name = "nvim", classic = true},
+            {name = "htop", classic = false},
+        ]
 
         [[dotfiles]]
         name="test set dotfiles"
@@ -192,7 +224,14 @@ mod tests {
     fn test_set_dotfiles_when_deploy_file_path_has_a_parent() {
         // Arrange
         let config_str = r#"
-        programs = []
+        apt_packages = [
+            "python3",
+            "htop"
+        ]
+        snap_packages = [
+            {name = "nvim", classic = true},
+            {name = "htop", classic = false},
+        ]
 
         [[dotfiles]]
         name="test set dotfiles"
@@ -230,11 +269,14 @@ mod tests {
     fn test_set_dotfiles_with_home_path() {
         // Arrange
         let config_str = r#"
-        programs = [
+        apt_packages = [
             "python3",
-            "htop",
+            "htop"
         ]
-
+        snap_packages = [
+            {name = "nvim", classic = true},
+            {name = "htop", classic = false},
+        ]
         [[dotfiles]]
         name="test set dotfiles"
         repo_path="~/test.txt"
@@ -279,12 +321,16 @@ mod tests {
     }
 
     #[test]
-    fn test_install_programs() {
+    fn test_install_apt_programs() {
         // Arrange
         let config_str = r#"
-        programs = [
+        apt_packages = [
             "python3",
             "htop"
+        ]
+        snap_packages = [
+            {name = "nvim", classic = true},
+            {name = "htop", classic = false},
         ]
 
         [[dotfiles]]
@@ -312,7 +358,54 @@ mod tests {
         expected_commands_used.push("sudo apt-get install python3 htop");
 
         // Act
-        config_manager.install_programs(&mut io_operations);
+        config_manager.install_apt_programs(&mut io_operations);
+
+        // Assert
+        assert_eq!(io_operations.commands_used, expected_commands_used);
+        assert_eq!(io_operations.copied_files.len(), 0);
+
+    }
+    #[test]
+    fn test_install_snap_programs() {
+        // Arrange
+        let config_str = r#"
+        apt_packages = [
+            "python3",
+            "htop"
+        ]
+        snap_packages = [
+            {name = "nvim", classic = true},
+            {name = "htop", classic = false},
+        ]
+
+        [[dotfiles]]
+        name="test set dotfiles"
+        repo_path="~/test.txt"
+        deploy_path="a/result.txt"
+
+        [[dotfiles]]
+        name="test set dotfiles"
+        repo_path="some_location/test.txt"
+        deploy_path="~/result.txt"
+
+        [[dotfiles]]
+        name="test set dotfiles"
+        repo_path="~/test.txt"
+        deploy_path="~/result.txt"
+        "#;
+        let config_manager = ConfigManager::new(config_str);
+        let mut io_operations = FakeIoOperations {
+            commands_used: Vec::new(),
+            copied_files: Vec::new(),
+            folder_paths_created: Vec::new(),
+        };
+        let mut expected_commands_used = Vec::new();
+        expected_commands_used.push("sudo snap install nvim --classic");
+        expected_commands_used.push("sudo snap install htop");
+
+
+        // Act
+        config_manager.install_snap_programs(&mut io_operations);
 
         // Assert
         assert_eq!(io_operations.commands_used, expected_commands_used);

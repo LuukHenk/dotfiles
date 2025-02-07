@@ -9,5 +9,6 @@ fn main() {
     let config_string = io_operations.read_file(CONFIG_PATH);
     let config_manager = ConfigManager::new(config_string.as_str());
     config_manager.set_dotfiles(&mut io_operations);
-    config_manager.install_programs(&mut io_operations);
+    config_manager.install_apt_programs(&mut io_operations);
+    config_manager.install_snap_programs(&mut io_operations);
 }

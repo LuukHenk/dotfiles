@@ -1,17 +1,21 @@
-programs = [
+apt_packages = [
     "htop",
     "nautilus-dropbox",
     "ncdu",
     "python3",
     "terminator",
     "wget",
-    # "steam", SNAP
-    # "signal-desktop", SNAP
-    # "nvim", SNAP
-    # "spotify", SNAP
-    # "code", SNAP
-    # "flatpack" PACKAGE MANAGER
 ]
+
+snap_packages = [
+    {name = "nvim", classic = true},
+    {name = "steam", classic = false},
+    {name = "signal-desktop", classic = false},
+    {name = "spotify", classic = false},
+    {name = "code", classic = false},
+]
+
+
 
 [[dotfiles]]
 name = "Bashrc"
