@@ -1,4 +1,9 @@
-sudo apt install rustup
-sudo apt install build-essential
-rustup default stable
 
+
+# Dotfiles
+
+My personalized configuration setup for Linux Ubuntu
+
+# Setup dotfiles
+
+run setup.sh to install the dotfiles and programs
