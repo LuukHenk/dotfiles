@@ -29,13 +29,8 @@ deploy_path = "~/.inputrc"
 
 [[dotfiles]]
 name = "NeoVim configuration"
-repo_path = "conf/nvim_init.vim"
-deploy_path = "~/.config/nvim/init.vim"
-
-[[dotfiles]]
-name = "NeoVim plugin script"
-repo_path = "conf/nvim_autoload_plug.vim"
-deploy_path = "~/.config/nvim/autoload/plug.vim"
+repo_path = "conf/nvim.lua"
+deploy_path = "~/.config/nvim/init.lua"
 
 [[dotfiles]]
 name = "Terminator configuration"

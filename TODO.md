@@ -1,1 +1,3 @@
-Install files with snap as well
+- Allow setting config only (no need to install every package)
+- Add autojump utility
+- integrate asdf
